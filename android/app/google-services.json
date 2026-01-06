@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "549887739198",
+    "project_id": "acgn-client",
+    "storage_bucket": "acgn-client.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549887739198:android:aff012d31019fc2926586f",
+        "android_client_info": {
+          "package_name": "com.gua.player.client"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjC2ubmiARDFmLNYP8EnLmLl0IlOsRIjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

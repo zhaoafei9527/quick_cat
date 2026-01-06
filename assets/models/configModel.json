@@ -1,0 +1,304 @@
+{
+  "advertise": [
+    {
+      "cover": "string",
+      "description": "string",
+      "href": "string",
+      "id": "string",
+      "position": 0,
+      "sortCode": 0,
+      "title": "string"
+    }
+  ],
+  "announcement": {
+    "content": "string",
+    "cover": "string",
+    "jumpUrl": "string",
+    "title": "string"
+  },
+  "avPostCategory": [
+    {
+      "canClose": true,
+      "canCloseBanner": true,
+      "id": 0,
+      "name": "string",
+      "postLocation": 0,
+      "postType": "string",
+      "showType": 0,
+      "tags": [
+        "string"
+      ]
+    }
+  ],
+  "cartoonCategory": [
+    {
+      "canClose": true,
+      "canCloseBanner": true,
+      "id": 0,
+      "name": "string",
+      "postLocation": 0,
+      "postType": "string",
+      "showType": 0,
+      "tags": [
+        "string"
+      ]
+    }
+  ],
+  "category": [
+    {
+      "canClose": true,
+      "canCloseBanner": true,
+      "id": 0,
+      "name": "string",
+      "postLocation": 0,
+      "postType": "string",
+      "showType": 0,
+      "tags": [
+        "string"
+      ]
+    }
+  ],
+  "cdnKey": "string",
+  "comicCategory": [
+    {
+      "canClose": true,
+      "canCloseBanner": true,
+      "id": 0,
+      "name": "string",
+      "postLocation": 0,
+      "postType": "string",
+      "showType": 0,
+      "tags": [
+        "string"
+      ]
+    }
+  ],
+  "comicsArgs": {
+    "category": [
+      {
+        "id": 0,
+        "name": "string"
+      }
+    ],
+    "contentStatus": [
+      {
+        "id": 0,
+        "name": "string"
+      }
+    ],
+    "payType": [
+      {
+        "id": 0,
+        "name": "string"
+      }
+    ],
+    "sort": [
+      {
+        "id": 0,
+        "name": "string"
+      }
+    ],
+    "tag": [
+      {
+        "id": 0,
+        "name": "string"
+      }
+    ]
+  },
+  "domain": [
+    {
+      "type": "string",
+      "urls": [
+        "string"
+      ]
+    }
+  ],
+  "h5ShareCfgs": {
+    "datingPath": "string",
+    "domain": "string",
+    "longVidPath": "string",
+    "postPath": "string",
+    "shortVidPath": "string"
+  },
+  "infoPostCategory": [
+    {
+      "canClose": true,
+      "canCloseBanner": true,
+      "id": 0,
+      "name": "string",
+      "postLocation": 0,
+      "postType": "string",
+      "showType": 0,
+      "tags": [
+        "string"
+      ]
+    }
+  ],
+  "mediaArgs": {
+    "cartoonTag": [
+      {
+        "id": 0,
+        "name": "string"
+      }
+    ],
+    "longTag": [
+      {
+        "id": 0,
+        "name": "string"
+      }
+    ],
+    "mediaType": [
+      {
+        "id": 0,
+        "name": "string"
+      }
+    ],
+    "payType": [
+      {
+        "id": 0,
+        "name": "string"
+      }
+    ],
+    "shortTag": [
+      {
+        "id": 0,
+        "name": "string"
+      }
+    ],
+    "sort": [
+      {
+        "id": 0,
+        "name": "string"
+      }
+    ]
+  },
+  "miniDramaCategory": [
+    {
+      "canClose": true,
+      "canCloseBanner": true,
+      "id": 0,
+      "name": "string",
+      "postLocation": 0,
+      "postType": "string",
+      "showType": 0,
+      "tags": [
+        "string"
+      ]
+    }
+  ],
+  "miniDramaCategoryEn": [
+    {
+      "canClose": true,
+      "canCloseBanner": true,
+      "id": 0,
+      "name": "string",
+      "postLocation": 0,
+      "postType": "string",
+      "showType": 0,
+      "tags": [
+        "string"
+      ]
+    }
+  ],
+  "miniDramaCategoryHk": [
+    {
+      "canClose": true,
+      "canCloseBanner": true,
+      "id": 0,
+      "name": "string",
+      "postLocation": 0,
+      "postType": "string",
+      "showType": 0,
+      "tags": [
+        "string"
+      ]
+    }
+  ],
+  "notificationInfo": [
+    {
+      "content": "string",
+      "jumpUrl": "string",
+      "title": "string"
+    }
+  ],
+  "photoCategory": [
+    {
+      "canClose": true,
+      "canCloseBanner": true,
+      "id": 0,
+      "name": "string",
+      "postLocation": 0,
+      "postType": "string",
+      "showType": 0,
+      "tags": [
+        "string"
+      ]
+    }
+  ],
+  "post1stCategory": [
+    {
+      "canClose": true,
+      "canCloseBanner": true,
+      "id": 0,
+      "name": "string",
+      "postLocation": 0,
+      "postType": "string",
+      "showType": 0,
+      "tags": [
+        "string"
+      ]
+    }
+  ],
+  "post2ndCategory": [
+    {
+      "canClose": true,
+      "canCloseBanner": true,
+      "id": 0,
+      "name": "string",
+      "postLocation": 0,
+      "postType": "string",
+      "showType": 0,
+      "tags": [
+        "string"
+      ]
+    }
+  ],
+  "postCategory": [
+    {
+      "canClose": true,
+      "canCloseBanner": true,
+      "id": 0,
+      "name": "string",
+      "postLocation": 0,
+      "postType": "string",
+      "showType": 0,
+      "tags": [
+        "string"
+      ]
+    }
+  ],
+  "runningLight4Play": "string",
+  "shortCategory": [
+    {
+      "canClose": true,
+      "canCloseBanner": true,
+      "id": 0,
+      "name": "string",
+      "postLocation": 0,
+      "postType": "string",
+      "showType": 0,
+      "tags": [
+        "string"
+      ]
+    }
+  ],
+  "version": {
+    "description": "string",
+    "downloadLink": "string",
+    "forcedUpdate": true,
+    "hasNewVersion": true,
+    "md5": "string",
+    "serverVersion": "string",
+    "size": "string"
+  }
+}

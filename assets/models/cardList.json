@@ -1,0 +1,82 @@
+{
+  "vipList": [
+    {
+      "cardType": "会员卡",
+      "color": "#EB658A",
+      "itemList": [
+        {
+          "id": 15553,
+          "vipType": 5,
+          "name": "",
+          "title": "季卡",
+          "desc": "月卡2",
+          "rigtTitle": "月卡2",
+          "preMoney": 20000,
+          "money": 10000,
+          "canUseCoin": false,
+          "dayCount": 90,
+          "downLoadCount": 5,
+          "movieTicket": 0,
+          "giftCoin": 0,
+          "movieRate": 90,
+          "status": 0,
+          "updatedAt": "0001-01-01T00:00:00Z",
+          "sort": 3,
+          "banner": null,
+          "image": "image/u6/oz/1l5/ey/b0e837b108326b8a6cca6862381733db.png",
+          "rights": [
+            {
+              "type": 4,
+              "name": "🌟万部精选VIP大作免费看",
+              "desc": "百元立享超值季卡，新用户的好选择‼️",
+              "isOpen": true,
+              "image": "image/l6/m7/2zx/239/1d4c7c284c2492fcfa8de3a69f11b9fa.png"
+            },
+            {
+              "type": 2,
+              "name": "万部短视频免费看",
+              "desc": "💦真人女神VIP短视频观无限观看",
+              "isOpen": true,
+              "image": "image/l6/m7/2zx/239/1d4c7c284c2492fcfa8de3a69f11b9fa.png"
+            },
+            {
+              "type": 5,
+              "name": "购片享折扣",
+              "desc": "🌟购买精选优质付费大作8折优惠\n",
+              "isOpen": true,
+              "image": "image/op/22u/h/1j5/a5c1f01e4697630b72bfdb25ffe52e17.png"
+            },
+            {
+              "type": 7,
+              "name": "任意评论留言",
+              "desc": "发表精彩评论领金币，和B友一起想色就色😍",
+              "isOpen": true,
+              "image": "image/rl/4/2y1/yk/45f08470ddcc54f923910d4b67497eae.png"
+            },
+            {
+              "type": 16,
+              "name": "离线缓存5部流畅观看",
+              "desc": "免费缓存「5」部视频随心看😍",
+              "isOpen": true,
+              "image": "image/xd/210/2s/7t/d54cd17136c4f34f53b10c9f46360336.png"
+            }
+          ],
+          "rchgType": [
+            {
+              "type": "alipay",
+              "typeName": "支付宝"
+            },
+            {
+              "type": "wechat",
+              "typeName": "微信"
+            }
+          ],
+          "rchgUse": 2,
+          "wordColor": "#850E06",
+          "priceDesc": "优惠价",
+          "buyDesc": "开通会员"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "payModes": [
+    {
+      "desc": "",
+      "giftGold": 0,
+      "goldBase": 0,
+      "id": 0,
+      "name": "",
+      "payAmount": 0,
+      "rchgUse": 0,
+      "vipDay": 0
+    }
+  ]
+}

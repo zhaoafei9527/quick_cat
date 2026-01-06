@@ -1,0 +1,45 @@
+{
+  "rechargeData": {
+    "amount": 0,
+    "createdAt": "string",
+    "finishedAt": "string",
+    "id": 0,
+    "realAmount": 0,
+    "status": 0,
+    "tradeNo": "string"
+  },
+  "withdrawData": {
+    "accountName": "string",
+    "accountNo": "string",
+    "amount": 0,
+    "bankBranch": "string",
+    "bankCode": "string",
+    "bankName": "string",
+    "createdAt": "string",
+    "finishedAt": "string",
+    "id": 0,
+    "mode": "string",
+    "orderType": 0,
+    "phoneNo": "string",
+    "realAmount": 0,
+    "status": 0,
+    "tradeNo": "string",
+    "userId": 0,
+    "userName": "string",
+    "wtdrStatusType": 0
+  },
+  "wlGameData": {
+    "category": 0,
+    "createdAt": "string",
+    "game": 0,
+    "gameId": "string",
+    "gameStartTime": 0,
+    "id": 0,
+    "profit": 0,
+    "recordId": "string",
+    "time": 0,
+    "updatedAt": "string",
+    "userId": 0,
+    "validBet": 0
+  }
+}

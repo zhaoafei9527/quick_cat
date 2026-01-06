@@ -1,0 +1,156 @@
+{
+  "payModes": [
+    {
+      "id": 7,
+      "rchgUse": 1,
+      "name": "1金币测试",
+      "desc": "test",
+      "goldBase": 1,
+      "giftGold": 0,
+      "payAmount": 100,
+      "rchgType": [
+        {
+          "type": "wechat",
+          "typeName": "支付宝"
+        },
+        {
+          "type": "alipay",
+          "typeName": "支付宝"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "rchgUse": 1,
+      "name": "5元test",
+      "desc": "",
+      "goldBase": 6,
+      "giftGold": 0,
+      "payAmount": 500,
+      "rchgType": [
+        {
+          "type": "wechat",
+          "typeName": "支付宝"
+        },
+        {
+          "type": "alipay",
+          "typeName": "支付宝"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "rchgUse": 1,
+      "name": "10金币",
+      "desc": "",
+      "goldBase": 10,
+      "giftGold": 0,
+      "payAmount": 1000,
+      "rchgType": [
+        {
+          "type": "wechat",
+          "typeName": "支付宝"
+        },
+        {
+          "type": "alipay",
+          "typeName": "支付宝"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "rchgUse": 1,
+      "name": "50元",
+      "desc": "50金币",
+      "goldBase": 50,
+      "giftGold": 0,
+      "payAmount": 5000,
+      "rchgType": [
+        {
+          "type": "alipay",
+          "typeName": "支付宝"
+        },
+        {
+          "type": "wechat",
+          "typeName": "支付宝"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "rchgUse": 1,
+      "name": "100元",
+      "desc": "无优惠",
+      "goldBase": 100,
+      "giftGold": 0,
+      "payAmount": 10000,
+      "rchgType": [
+        {
+          "type": "alipay",
+          "typeName": "支付宝"
+        },
+        {
+          "type": "wechat",
+          "typeName": "支付宝"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "rchgUse": 1,
+      "name": "200元 加赠50%",
+      "desc": "加赠50%",
+      "goldBase": 300,
+      "giftGold": 0,
+      "payAmount": 20000,
+      "rchgType": [
+        {
+          "type": "wechat",
+          "typeName": "微信"
+        },
+        {
+          "type": "alipay",
+          "typeName": "支付宝"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "rchgUse": 1,
+      "name": "300元 加赠100%",
+      "desc": "加赠100%",
+      "goldBase": 600,
+      "giftGold": 0,
+      "payAmount": 30000,
+      "rchgType": [
+        {
+          "type": "wechat",
+          "typeName": "微信"
+        },
+        {
+          "type": "alipay",
+          "typeName": "支付宝"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "rchgUse": 1,
+      "name": "500金币",
+      "desc": "",
+      "goldBase": 500,
+      "giftGold": 0,
+      "payAmount": 50000,
+      "rchgType": [
+        {
+          "type": "wechat",
+          "typeName": "微信"
+        },
+        {
+          "type": "alipay",
+          "typeName": "支付宝"
+        }
+      ]
+    }
+  ]
+}

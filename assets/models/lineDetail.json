@@ -1,0 +1,41 @@
+{
+  "chargeType": 2,
+  "direction": 1,
+  "id": 0,
+  "ip": "154.123.33.03",
+  "localeCode": "CH",
+  "name": "meiguoxianlu",
+  "proxyConfig": {
+    "ss": {
+      "cipher": "string",
+      "password": "string",
+      "plugin": "string",
+      "pluginOpts": {
+        "host": "string",
+        "mode": "string"
+      },
+      "port": 0,
+      "server": "string",
+      "udp": true
+    },
+    "type": "string",
+    "vmess": {
+      "alterId": 0,
+      "cipher": "string",
+      "network": "string",
+      "port": 0,
+      "server": "string",
+      "skipCertVerify": true,
+      "tls": true,
+      "uUid": "string",
+      "upd": true,
+      "wsHeaders": {
+        "additionalProp1": "string",
+        "additionalProp2": "string",
+        "additionalProp3": "string"
+      },
+      "wsPath": "string"
+    }
+  },
+  "proxyType": "ss"
+}

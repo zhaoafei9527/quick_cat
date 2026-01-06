@@ -1,0 +1,208 @@
+{
+  "mediaList": [
+    {
+      "actorV2": [
+        {
+          "avatar": "",
+          "background": "",
+          "count": 0,
+          "country": "",
+          "desc": "",
+          "id": 0,
+          "name": "",
+          "rank": 0,
+          "recomment": true,
+          "watchCount": 0
+        }
+      ],
+      "actors": "",
+      "addedTime": "",
+      "bango": "",
+      "comments": 0,
+      "companies": {
+        "background": "",
+        "contentType": 0,
+        "count": 0,
+        "cover": "",
+        "desc": "",
+        "id": 0,
+        "name": "",
+        "rank": 0
+      },
+      "coverImg": "",
+      "createdAt": "",
+      "desc": "",
+      "dislikes": 0,
+      "episodeId": 0,
+      "episodeNum": 0,
+      "favs": 0,
+      "height": 0,
+      "id": 0,
+      "isBuy": true,
+      "isDislike": true,
+      "isLike": true,
+      "isR18": true,
+      "isUpNotify": true,
+      "likes": 0,
+      "movieDiscount": 0,
+      "payType": 0,
+      "playTime": 0,
+      "populars": 0,
+      "preTime": 0,
+      "preVideoUrl": "",
+      "price": 0,
+      "publisher": {
+        "avatar": "",
+        "cares": 0,
+        "desc": "",
+        "fans": 0,
+        "id": 0,
+        "isFollow": true,
+        "level": 0,
+        "likes": 0,
+        "name": ""
+      },
+      "rankChange": 0,
+      "sell": 0,
+      "tags": [
+        ""
+      ],
+      "title": "",
+      "upcomingDate": "",
+      "videoType": 0,
+      "videoUrl": "",
+      "watchTimes": 0,
+      "width": 0
+    }
+  ],
+  "miniDramaList": [
+    {
+      "addedTime": "",
+      "comments": 0,
+      "contentStatus": 0,
+      "country": "",
+      "coverImg": "",
+      "desc": "",
+      "dislikes": 0,
+      "epiCount": 0,
+      "episodes": [
+        {
+          "epiNo": 0,
+          "epiSt": "",
+          "mediaId": 0,
+          "playable": true
+        }
+      ],
+      "favs": 0,
+      "firstEpisode": {
+        "actorV2": [
+          {
+            "avatar": "",
+            "background": "",
+            "count": 0,
+            "country": "",
+            "desc": "",
+            "id": 0,
+            "name": "",
+            "rank": 0,
+            "recomment": true,
+            "watchCount": 0
+          }
+        ],
+        "actors": "",
+        "addedTime": "",
+        "bango": "",
+        "comments": 0,
+        "companies": {
+          "background": "",
+          "contentType": 0,
+          "count": 0,
+          "cover": "",
+          "desc": "",
+          "id": 0,
+          "name": "",
+          "rank": 0
+        },
+        "coverImg": "",
+        "createdAt": "",
+        "desc": "",
+        "dislikes": 0,
+        "episodeId": 0,
+        "episodeNum": 0,
+        "favs": 0,
+        "height": 0,
+        "id": 0,
+        "isBuy": true,
+        "isDislike": true,
+        "isLike": true,
+        "isR18": true,
+        "isUpNotify": true,
+        "likes": 0,
+        "movieDiscount": 0,
+        "payType": 0,
+        "playTime": 0,
+        "populars": 0,
+        "preTime": 0,
+        "preVideoUrl": "",
+        "price": 0,
+        "publisher": {
+          "avatar": "",
+          "cares": 0,
+          "desc": "",
+          "fans": 0,
+          "id": 0,
+          "isFollow": true,
+          "level": 0,
+          "likes": 0,
+          "name": ""
+        },
+        "rankChange": 0,
+        "sell": 0,
+        "tags": [
+          ""
+        ],
+        "title": "",
+        "upcomingDate": "",
+        "videoType": 0,
+        "videoUrl": "",
+        "watchTimes": 0,
+        "width": 0
+      },
+      "genres": [
+        ""
+      ],
+      "id": 0,
+      "isBuy": true,
+      "isDislike": true,
+      "isFav": true,
+      "isLike": true,
+      "isR18": true,
+      "isUpcomingNotify": true,
+      "lastEpiAddedAt": "",
+      "lastEpiNo": 0,
+      "lastEpiSt": "",
+      "likes": 0,
+      "populars": 0,
+      "publisher": {
+        "avatar": "",
+        "cares": 0,
+        "desc": "",
+        "fans": 0,
+        "id": 0,
+        "isFollow": true,
+        "level": 0,
+        "likes": 0,
+        "name": ""
+      },
+      "rank": 0,
+      "sells": 0,
+      "title": "",
+      "upcomingDate": "",
+      "userLastEpiNo": 0,
+      "userLastEpiSt": "",
+      "userLastEpiWatchAt": "",
+      "watchTimes": 0,
+      "year": 0
+    }
+  ]
+}

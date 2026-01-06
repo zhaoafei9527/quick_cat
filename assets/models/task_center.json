@@ -1,0 +1,28 @@
+{
+  "activityValue": 0,
+  "prizeInfoList": [
+    {
+      "activityValue": 0,
+      "id": 0,
+      "image": "string",
+      "openImage": "string",
+      "prizeCount": 0,
+      "prizeType": 0,
+      "status": 0,
+      "title": "string"
+    }
+  ],
+  "taskInfoList": [
+    {
+      "activityValue": 0,
+      "currParam": 0,
+      "desc": "string",
+      "goTo": "string",
+      "id": 0,
+      "param": 0,
+      "status": 0,
+      "taskType": 0,
+      "title": "string"
+    }
+  ]
+}

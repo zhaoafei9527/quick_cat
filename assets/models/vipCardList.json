@@ -1,0 +1,64 @@
+{
+  "cardInfoList": [
+    {
+      "growthValue": 0,
+      "activityTime": "string",
+      "canUseCoin": true,
+      "cardTypeId": "string",
+      "cardTypeNum": 0,
+      "dayCount": 0,
+      "desc": "string",
+      "downLoadCount": 0,
+      "freeGame": true,
+      "getMedalImg": "string",
+      "giftCoin": 0,
+      "icon": "string",
+      "id": 0,
+      "isActivityCard": true,
+      "isNewUserCard": true,
+      "medalBackgroudImg": "string",
+      "money": 0,
+      "movieRate": 0,
+      "movieTicket": 0,
+      "name": "string",
+      "notGetMedalImg": "string",
+      "notUserVipImage": "string",
+      "preMoney": 0,
+      "rchgType": [
+        {
+          "type": "string",
+          "typeName": "string"
+        }
+      ],
+      "rchgUse": 0,
+      "rightDataList": [
+        {
+          "isLight": false,
+          "createdAt": "string",
+          "desc": "string",
+          "id": 0,
+          "image": "string",
+          "name": "string",
+          "rank": 0,
+          "status": 0,
+          "updatedAt": "string"
+        }
+      ],
+      "setMedal": true,
+      "sort": 0,
+      "status": 0,
+      "title": "string",
+      "userVipImage": "string",
+      "vipType": 0
+    }
+  ],
+  "userInfo": {
+    "avatar": "string",
+    "cardId": 0,
+    "growthValue": 0,
+    "id": 0,
+    "nickName": "string",
+    "vipExpire": "string",
+    "vipType": 0
+  }
+}

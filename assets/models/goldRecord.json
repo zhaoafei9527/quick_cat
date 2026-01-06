@@ -1,0 +1,12 @@
+{
+  "Goldlist": [
+    {
+      "coinAmount": 0,
+      "createdAt": "string",
+      "currencyType": 0,
+      "desc": "string",
+      "orderNo": "string"
+    }
+  ],
+  "total": 0
+}

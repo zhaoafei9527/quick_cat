@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Modify this file to customize your launch splash screen -->
+<!-- android/app/src/main/res/drawable/launch_background.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 背景色（可选） -->
+    <item android:drawable="@android:color/black" />
+
+    <!-- 中心图（或全屏图），如果是全屏可以用 match_parent -->
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/launch_image" />
+    </item>
+</layer-list>
