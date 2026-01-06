@@ -1,5 +1,5 @@
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/plugins_utils/HttpRequester/http_requester.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/plugins_utils/HttpRequester/http_requester.dart';
 
 class AiTagStringList extends BaseNetModel {
   @override

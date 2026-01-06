@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,13 +7,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/ads_type.dart';
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/model/home/config_model_model.dart';
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/data/ads_type.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/model/home/config_model_model.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 import '../../utils/dimens.dart';
 import '../model/home/topic_list_model.dart';
 import '../views/comment_refresh_view.dart';

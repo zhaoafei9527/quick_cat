@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/views/page_pull_view.dart';
+import 'package:quick_cat_client/app/views/page_pull_view.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:

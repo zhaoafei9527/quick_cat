@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
 import 'package:flutter/widgets.dart';
 
 // 🌎 Project imports:

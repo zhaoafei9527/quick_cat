@@ -1,18 +1,18 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/themes/theme_manager.dart';
-import 'package:acgn_client/app/widget/common_widget.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/widget/common_widget.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/model/home/config_model_model.dart';
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/dimens.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/model/home/config_model_model.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
 
 Future showAnnounceDialog(BuildContext context) async {
   ShareKeys shareKeys = Get.find<ShareKeys>();

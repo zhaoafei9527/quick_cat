@@ -11,10 +11,10 @@ import 'package:get/get.dart';
 import 'package:universal_html/html.dart' as html;
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/dialog/common_dialog.dart';
-import 'package:acgn_client/app/model/home/user_info_model.dart';
-import 'package:acgn_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/dialog/common_dialog.dart';
+import 'package:quick_cat_client/app/model/home/user_info_model.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
 import '../../../../conf/api_res.dart';
 import '../../../model/activity_model.dart';
 import '../../../model/home/gold_task_model.dart';

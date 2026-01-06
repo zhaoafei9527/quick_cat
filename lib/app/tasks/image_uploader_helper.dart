@@ -1,4 +1,4 @@
-import 'package:acgn_client/app/model/cut_info.dart';
+import 'package:quick_cat_client/app/model/cut_info.dart';
 
 class UploadState {
   final String? localPath; // Local path of the selected image

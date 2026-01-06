@@ -2,8 +2,8 @@
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/model/bill_info_model.dart';
-import 'package:acgn_client/conf/api_res.dart';
+import 'package:quick_cat_client/app/model/bill_info_model.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
 
 class GameDetailsPageController extends GetxController {
   final count = 0.obs;

@@ -1,15 +1,15 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/model/home/topic_list_model.dart';
-import 'package:acgn_client/conf/api_res.dart';
-import 'package:acgn_client/conf/config.dart';
-import 'package:acgn_client/utils/array_util.dart';
+import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/conf/config.dart';
+import 'package:quick_cat_client/utils/array_util.dart';
 import '../../../../utils/light_model.dart';
 import '../../../../utils/text_util.dart';
 import '../../../../utils/toast_util.dart';

@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,13 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/pubspec.dart';
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/plugins_utils/ImageLoader/ImageLoader.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/dimens.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/data/pubspec.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 import '../controllers/splash_page_controller.dart';
 
 class SplashPageView extends GetView<SplashPageController> {

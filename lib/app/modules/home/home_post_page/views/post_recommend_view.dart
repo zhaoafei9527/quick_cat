@@ -1,19 +1,19 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/model/post_list_model.dart';
-import 'package:acgn_client/conf/api_res.dart';
-import 'package:acgn_client/r.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/model/post_list_model.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/r.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/app/views/pull_refresh_view.dart';
-import 'package:acgn_client/app/widget/post_item.dart';
-import 'package:acgn_client/plugins_utils/ImageLoader/ImageLoader.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/views/pull_refresh_view.dart';
+import 'package:quick_cat_client/app/widget/post_item.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 import '../../../../../utils/dimens.dart';
 import '../../../../data/ads_type.dart';
 import '../../../../model/home/config_model_model.dart';

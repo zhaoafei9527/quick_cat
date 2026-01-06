@@ -2,7 +2,7 @@
 import 'package:url_launcher/url_launcher.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 
 // ignore_for_file: deprecated_member_use
 

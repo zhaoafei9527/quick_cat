@@ -11,12 +11,12 @@ import 'package:get/get.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/modules/home/home_game_page/controllers/game_web_view_controller.dart';
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/dimens.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/modules/home/home_game_page/controllers/game_web_view_controller.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 
 class GameWebViewPage extends GetView<GameWebViewPageController> {
   const GameWebViewPage({Key? key}) : super(key: key);

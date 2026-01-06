@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/model/home/topic_list_model.dart';
-import 'package:acgn_client/app/widget/application_iterm.dart';
-import 'package:acgn_client/app/widget/recommend_iterm.dart';
-import 'package:acgn_client/app/widget/search_video_cover.dart';
-import 'package:acgn_client/app/widget/short_video_cover.dart';
+import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
+import 'package:quick_cat_client/app/widget/application_iterm.dart';
+import 'package:quick_cat_client/app/widget/recommend_iterm.dart';
+import 'package:quick_cat_client/app/widget/search_video_cover.dart';
+import 'package:quick_cat_client/app/widget/short_video_cover.dart';
 import '../../utils/dimens.dart';
 import '../data/enum.dart';
 import 'long_video_cover.dart';

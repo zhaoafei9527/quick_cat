@@ -6,15 +6,15 @@ import 'dart:convert';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/conf/api_res.dart';
-import 'package:acgn_client/conf/config.dart';
-import 'package:acgn_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
-import 'package:acgn_client/plugins_utils/HttpRequester/HttpRequester.dart';
-import 'package:acgn_client/plugins_utils/HttpRequester/http_requester.dart';
-import 'package:acgn_client/utils/app_util.dart';
-import 'package:acgn_client/utils/light_model.dart';
-import 'package:acgn_client/utils/logger_utils.dart';
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/conf/config.dart';
+import 'package:quick_cat_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
+import 'package:quick_cat_client/plugins_utils/HttpRequester/HttpRequester.dart';
+import 'package:quick_cat_client/plugins_utils/HttpRequester/http_requester.dart';
+import 'package:quick_cat_client/utils/app_util.dart';
+import 'package:quick_cat_client/utils/light_model.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 import '../../../data/ads_type.dart';
 import '../../../data/share_key.dart';
 import '../../../model/home/config_model_model.dart';

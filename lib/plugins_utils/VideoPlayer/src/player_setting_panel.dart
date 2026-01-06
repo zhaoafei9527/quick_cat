@@ -7,7 +7,7 @@
 // import 'package:video_player/video_player.dart';
 //
 // // 🌎 Project imports:
-// import 'package:acgn_client/utils/dimens.dart';
+// import 'package:quick_cat_client/utils/dimens.dart';
 //
 // class PlayerSettingPanel extends StatefulWidget {
 //   final PlayerNotifier? notifier;

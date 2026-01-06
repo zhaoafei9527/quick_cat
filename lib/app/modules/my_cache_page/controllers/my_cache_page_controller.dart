@@ -1,5 +1,5 @@
-import 'package:acgn_client/app/model/home/video_play_model.dart';
-import 'package:acgn_client/plugins_utils/VideoPlayer/src/m3u8_cache_manager.dart';
+import 'package:quick_cat_client/app/model/home/video_play_model.dart';
+import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/m3u8_cache_manager.dart';
 import 'package:get/get.dart';
 
 class MyCachePageController extends GetxController {

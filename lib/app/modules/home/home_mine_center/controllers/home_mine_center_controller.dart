@@ -1,6 +1,6 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/dialog/common_dialog.dart';
-import 'package:acgn_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
+import 'package:quick_cat_client/app/dialog/common_dialog.dart';
+import 'package:quick_cat_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -8,13 +8,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/ads_type.dart';
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/model/home/config_model_model.dart';
-import 'package:acgn_client/app/model/home/qrmodel.dart';
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/conf/api_res.dart';
+import 'package:quick_cat_client/app/data/ads_type.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/model/home/config_model_model.dart';
+import 'package:quick_cat_client/app/model/home/qrmodel.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
 import '../../../../../r.dart';
 import '../../../../dialog/accont_qr_dialog.dart';
 import '../../../../model/home/gold_task_model.dart';

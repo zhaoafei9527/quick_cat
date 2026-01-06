@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/pubspec.dart';
+import 'package:quick_cat_client/app/data/pubspec.dart';
 
 class AppConfig {
   static const DEBUG = Pubspec.debug;

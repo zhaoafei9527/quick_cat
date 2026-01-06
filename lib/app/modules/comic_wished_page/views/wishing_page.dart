@@ -1,8 +1,8 @@
-import 'package:acgn_client/app/themes/theme_manager.dart';
-import 'package:acgn_client/app/widget/common_app_bar.dart';
-import 'package:acgn_client/app/widget/text_field.dart';
-import 'package:acgn_client/utils/dimens.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/widget/common_app_bar.dart';
+import 'package:quick_cat_client/app/widget/text_field.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';

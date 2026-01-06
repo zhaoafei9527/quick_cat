@@ -1,11 +1,11 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/dialog/common_dialog.dart';
-import 'package:acgn_client/app/model/envelope_model.dart';
-import 'package:acgn_client/app/model/home/user_info_model.dart';
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/utils/app_util.dart';
-import 'package:acgn_client/utils/dimens.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/dialog/common_dialog.dart';
+import 'package:quick_cat_client/app/model/envelope_model.dart';
+import 'package:quick_cat_client/app/model/home/user_info_model.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/utils/app_util.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:

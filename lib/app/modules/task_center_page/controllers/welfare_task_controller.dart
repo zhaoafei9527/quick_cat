@@ -5,11 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/model/home/user_info_model.dart';
-import 'package:acgn_client/app/model/task_center_model.dart';
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/model/home/user_info_model.dart';
+import 'package:quick_cat_client/app/model/task_center_model.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 import '../../../../conf/api_res.dart';
 import '../../../../utils/app_util.dart';
 import '../../../../utils/dimens.dart';

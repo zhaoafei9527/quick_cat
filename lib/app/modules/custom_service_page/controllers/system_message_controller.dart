@@ -2,7 +2,7 @@
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/model/msg_notify_list_model.dart';
+import 'package:quick_cat_client/app/model/msg_notify_list_model.dart';
 import '../../../../conf/api_res.dart';
 
 class SystemMessageController extends GetxController {

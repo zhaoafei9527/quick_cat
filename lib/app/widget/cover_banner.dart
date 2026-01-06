@@ -1,12 +1,12 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:card_swiper/card_swiper.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/plugins_utils/ImageLoader/ImageLoader.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import 'package:get/get.dart';
 import '../../utils/dimens.dart';
 import '../data/ads_type.dart';

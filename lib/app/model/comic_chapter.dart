@@ -1,6 +1,6 @@
-import 'package:acgn_client/app/model/comic_info_model.dart';
-import 'package:acgn_client/app/model/home/topic_list_model.dart';
-import 'package:acgn_client/plugins_utils/HttpRequester/src/base_net_model.dart';
+import 'package:quick_cat_client/app/model/comic_info_model.dart';
+import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
+import 'package:quick_cat_client/plugins_utils/HttpRequester/src/base_net_model.dart';
 
 class ChapterDetails extends BaseNetModel {
   @override

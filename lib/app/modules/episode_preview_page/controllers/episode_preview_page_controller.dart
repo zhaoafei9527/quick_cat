@@ -1,5 +1,5 @@
-import 'package:acgn_client/app/model/episode_preview.dart';
-import 'package:acgn_client/conf/api_res.dart';
+import 'package:quick_cat_client/app/model/episode_preview.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

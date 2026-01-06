@@ -1,8 +1,8 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/model/home/topic_list_model.dart';
-import 'package:acgn_client/app/widget/comic_topic_builder.dart';
-import 'package:acgn_client/conf/api_res.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
+import 'package:quick_cat_client/app/widget/comic_topic_builder.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:

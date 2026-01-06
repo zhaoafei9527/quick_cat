@@ -1,5 +1,5 @@
 // 🌎 Project imports:
-import 'package:acgn_client/plugins_utils/HttpRequester/http_requester.dart';
+import 'package:quick_cat_client/plugins_utils/HttpRequester/http_requester.dart';
 
 /// 红包模型
 class ActivityModel extends BaseNetModel {

@@ -1,7 +1,7 @@
 // 🎯 Dart imports:
 
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,17 +9,17 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/ads_type.dart';
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/model/home/config_model_model.dart';
-import 'package:acgn_client/app/model/list_comment.dart';
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/app/views/pull_refresh_view.dart';
-import 'package:acgn_client/conf/api_res.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/array_util.dart';
-import 'package:acgn_client/utils/dimens.dart';
-import 'package:acgn_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/app/data/ads_type.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/model/home/config_model_model.dart';
+import 'package:quick_cat_client/app/model/list_comment.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/views/pull_refresh_view.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/array_util.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
 import '../../utils/screen.dart';
 import '../dialog/common_dialog.dart';
 import '../dialog/input_dialog.dart';

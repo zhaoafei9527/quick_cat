@@ -1,12 +1,12 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/model/home/topic_list_model.dart';
-import 'package:acgn_client/app/model/home/video_play_model.dart';
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/conf/api_res.dart';
-import 'package:acgn_client/plugins_utils/VideoPlayer/fjik_tiktok_player.dart';
-import 'package:acgn_client/utils/text_util.dart';
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
+import 'package:quick_cat_client/app/model/home/video_play_model.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/plugins_utils/VideoPlayer/fjik_tiktok_player.dart';
+import 'package:quick_cat_client/utils/text_util.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:

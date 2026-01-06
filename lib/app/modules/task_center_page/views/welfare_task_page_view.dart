@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/widget/common_app_bar.dart';
-import 'package:acgn_client/app/widget/common_widget.dart';
-import 'package:acgn_client/plugins_utils/ImageLoader/ImageLoader.dart';
-import 'package:acgn_client/utils/screen.dart';
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/widget/common_app_bar.dart';
+import 'package:quick_cat_client/app/widget/common_widget.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
+import 'package:quick_cat_client/utils/screen.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 import '../../../../utils/dimens.dart';
 import '../../../routes/app_pages.dart';
 import '../../../themes/app_colors.dart';

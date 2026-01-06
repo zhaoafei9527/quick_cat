@@ -5,10 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/dialog/update_dialog.dart';
-import 'package:acgn_client/app/model/home/config_model_model.dart';
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/dialog/update_dialog.dart';
+import 'package:quick_cat_client/app/model/home/config_model_model.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 
 class AboutUsPageController extends GetxController {
   final count = 0.obs;

@@ -1,14 +1,14 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/ads_type.dart';
-import 'package:acgn_client/app/model/home/config_model_model.dart';
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/plugins_utils/ImageLoader/ImageLoader.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/dimens.dart';
+import 'package:quick_cat_client/app/data/ads_type.dart';
+import 'package:quick_cat_client/app/model/home/config_model_model.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
 
 class HeadAnimateView extends StatefulWidget {
   const HeadAnimateView({super.key});

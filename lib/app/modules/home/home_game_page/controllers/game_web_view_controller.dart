@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/plugins_utils/VideoPlayer/fijk_player.dart';
+import 'package:quick_cat_client/plugins_utils/VideoPlayer/fijk_player.dart';
 import 'package:flutter/services.dart';
 
 // 📦 Package imports:
@@ -7,12 +7,12 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/dialog/common_dialog.dart';
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
-import 'package:acgn_client/utils/app_util.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/dialog/common_dialog.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
+import 'package:quick_cat_client/utils/app_util.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 
 class GameWebViewPageController extends GetxController {
   RxBool enterLoading = false.obs;

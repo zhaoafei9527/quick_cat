@@ -1,4 +1,4 @@
-import 'package:acgn_client/plugins_utils/HttpRequester/http_requester.dart';
+import 'package:quick_cat_client/plugins_utils/HttpRequester/http_requester.dart';
 
 /// 粘贴版信息
 class CutInfo {

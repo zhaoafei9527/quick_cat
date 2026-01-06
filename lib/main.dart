@@ -18,10 +18,10 @@ import 'package:universal_html/html.dart' as html;
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/utils/isolate_manager.dart';
-import 'package:acgn_client/utils/logger_utils.dart';
-import 'package:acgn_client/utils/light_model.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/utils/isolate_manager.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/utils/light_model.dart';
 import 'app/data/common_binding.dart';
 import 'app/data/pubspec.dart';
 import 'app/routes/app_pages.dart';

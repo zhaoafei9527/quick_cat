@@ -1,28 +1,28 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/data/ads_type.dart';
-import 'package:acgn_client/app/themes/theme_manager.dart';
-import 'package:acgn_client/app/views/page_pull_view.dart';
-import 'package:acgn_client/app/widget/ad_view.dart';
-import 'package:acgn_client/app/widget/comic_topic_builder.dart';
-import 'package:acgn_client/conf/api_res.dart';
+import 'package:quick_cat_client/app/data/ads_type.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/views/page_pull_view.dart';
+import 'package:quick_cat_client/app/widget/ad_view.dart';
+import 'package:quick_cat_client/app/widget/comic_topic_builder.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/model/home/topic_list_model.dart';
-import 'package:acgn_client/app/modules/search_page/views/search_result_view.dart';
-import 'package:acgn_client/app/modules/search_page/views/search_view.dart';
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/plugins_utils/ImageLoader/ImageLoader.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/array_util.dart';
-import 'package:acgn_client/utils/common_util.dart';
-import 'package:acgn_client/utils/screen.dart';
-import 'package:acgn_client/utils/time_util.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
+import 'package:quick_cat_client/app/modules/search_page/views/search_result_view.dart';
+import 'package:quick_cat_client/app/modules/search_page/views/search_view.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/array_util.dart';
+import 'package:quick_cat_client/utils/common_util.dart';
+import 'package:quick_cat_client/utils/screen.dart';
+import 'package:quick_cat_client/utils/time_util.dart';
 import 'package:path/path.dart';
 import '../../../../utils/dimens.dart';
 import '../../../widget/common_widget.dart';

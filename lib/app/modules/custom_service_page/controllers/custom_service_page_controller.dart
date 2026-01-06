@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
 import '../../../../conf/api_res.dart';
 import '../../../../plugins_utils/HttpRequester/http_requester.dart';
 import '../../../model/home/services_model.dart';

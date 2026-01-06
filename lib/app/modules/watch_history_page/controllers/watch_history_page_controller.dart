@@ -1,9 +1,9 @@
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/data/watch_record.dart';
-import 'package:acgn_client/app/model/home/topic_list_model.dart';
-import 'package:acgn_client/app/model/post_list_model.dart';
-import 'package:acgn_client/app/widget/comic_topic_builder.dart';
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/data/watch_record.dart';
+import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
+import 'package:quick_cat_client/app/model/post_list_model.dart';
+import 'package:quick_cat_client/app/widget/comic_topic_builder.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

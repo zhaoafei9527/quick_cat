@@ -1,16 +1,16 @@
 // 📦 Package imports:
-import 'package:acgn_client/app/data/ads_type.dart';
-import 'package:acgn_client/app/dialog/accont_qr_dialog.dart';
-import 'package:acgn_client/app/dialog/advertise_dialog.dart';
-import 'package:acgn_client/app/dialog/common_dialog.dart';
-import 'package:acgn_client/app/model/home/config_model_model.dart';
+import 'package:quick_cat_client/app/data/ads_type.dart';
+import 'package:quick_cat_client/app/dialog/accont_qr_dialog.dart';
+import 'package:quick_cat_client/app/dialog/advertise_dialog.dart';
+import 'package:quick_cat_client/app/dialog/common_dialog.dart';
+import 'package:quick_cat_client/app/model/home/config_model_model.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/model/home/bottom_bar_model_model.dart';
-import 'package:acgn_client/conf/api_res.dart';
-import 'package:acgn_client/r.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/model/home/bottom_bar_model_model.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/r.dart';
 
 class HomeController extends GetxController {
   final count = 0.obs;

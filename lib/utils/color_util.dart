@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/utils/text_util.dart';
+import 'package:quick_cat_client/utils/text_util.dart';
 
 class ColorUtil {
   // 字符串转颜色

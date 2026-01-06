@@ -7,11 +7,11 @@ import 'package:cached_network_image_platform_interface/cached_network_image_pla
 import 'package:path/path.dart' as path;
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/address.dart';
-import 'package:acgn_client/plugins_utils/ImageLoader/src/cache_image.dart';
-import 'package:acgn_client/plugins_utils/ImageLoader/src/my_image_cache_manager.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/dimens.dart';
+import 'package:quick_cat_client/app/data/address.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/src/cache_image.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/src/my_image_cache_manager.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
 
 class ImageLoader {
   String? address;

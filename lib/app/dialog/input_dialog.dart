@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/dimens.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
 import '../../utils/screen.dart';
 import '../widget/text_field.dart';
 

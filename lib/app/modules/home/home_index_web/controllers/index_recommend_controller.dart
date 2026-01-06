@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/ads_type.dart';
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/views/pull_refresh_view.dart';
-import 'package:acgn_client/conf/api_res.dart';
+import 'package:quick_cat_client/app/data/ads_type.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/views/pull_refresh_view.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
 import '../../../../../utils/dimens.dart';
 import '../../../../model/home/config_model_model.dart';
 import '../../../../model/home/topic_list_model.dart';

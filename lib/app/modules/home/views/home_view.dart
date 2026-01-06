@@ -1,8 +1,8 @@
 // 🐦 Flutter imports:
 import 'dart:io';
 
-import 'package:acgn_client/app/themes/theme_manager.dart';
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,17 +10,17 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/pubspec.dart';
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/modules/home/home_index_web/views/home_index_web_view.dart';
-import 'package:acgn_client/app/modules/home/home_mine_center/views/home_mine_center_view.dart';
-import 'package:acgn_client/app/modules/home/home_recommend_page/views/home_recommend_page_view.dart';
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/app/widget/floating_ads_manager.dart';
-import 'package:acgn_client/utils/app_util.dart';
-import 'package:acgn_client/utils/dimens.dart';
-import 'package:acgn_client/utils/logger_utils.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/data/pubspec.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/modules/home/home_index_web/views/home_index_web_view.dart';
+import 'package:quick_cat_client/app/modules/home/home_mine_center/views/home_mine_center_view.dart';
+import 'package:quick_cat_client/app/modules/home/home_recommend_page/views/home_recommend_page_view.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/app/widget/floating_ads_manager.dart';
+import 'package:quick_cat_client/utils/app_util.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 import '../controllers/home_controller.dart';
 import '../home_game_page/views/home_game_page_view.dart';
 import '../home_post_page/views/home_post_page_view.dart';

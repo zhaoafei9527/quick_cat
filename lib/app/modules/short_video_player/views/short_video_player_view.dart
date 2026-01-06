@@ -1,17 +1,17 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/themes/theme_manager.dart';
-import 'package:acgn_client/app/widget/common_widget.dart';
-import 'package:acgn_client/conf/api_res.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/widget/common_widget.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/dimens.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 import '../../../../plugins_utils/VideoPlayer/fjik_tiktok_player.dart';
 import '../../../data/share_key.dart';
 import '../../../model/home/topic_list_model.dart';

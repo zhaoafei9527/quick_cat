@@ -1,6 +1,6 @@
 // 🌎 Project imports:
 
-import 'package:acgn_client/r.dart';
+import 'package:quick_cat_client/r.dart';
 
 Map<String, String> gameIconInsert = {
   "insert1": R.assetsImgIconGameBtn1,

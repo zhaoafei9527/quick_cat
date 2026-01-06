@@ -12,10 +12,10 @@
 
 import 'dart:math';
 
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/app/widget/fire_work_animation.dart';
-import 'package:acgn_client/app/widget/gloab_notification.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/widget/fire_work_animation.dart';
+import 'package:quick_cat_client/app/widget/gloab_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

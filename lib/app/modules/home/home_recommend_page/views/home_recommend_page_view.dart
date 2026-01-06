@@ -1,24 +1,24 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/model/home/config_model_model.dart';
-import 'package:acgn_client/app/model/home/topic_list_model.dart';
-import 'package:acgn_client/app/modules/home/home_index_web/views/home_index_web_view.dart';
-import 'package:acgn_client/app/modules/home/home_index_web/views/home_tab_pull_view.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/model/home/config_model_model.dart';
+import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
+import 'package:quick_cat_client/app/modules/home/home_index_web/views/home_index_web_view.dart';
+import 'package:quick_cat_client/app/modules/home/home_index_web/views/home_tab_pull_view.dart';
 
-import 'package:acgn_client/app/themes/theme_manager.dart';
-import 'package:acgn_client/app/views/page_pull_view.dart';
-import 'package:acgn_client/app/widget/full_bg.dart';
-import 'package:acgn_client/conf/api_res.dart';
-import 'package:acgn_client/utils/dimens.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/views/page_pull_view.dart';
+import 'package:quick_cat_client/app/widget/full_bg.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/widget/common_widget.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/widget/common_widget.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 import '../../../../../plugins_utils/ImageLoader/ImageLoader.dart';
 import '../../../../../r.dart';
 import '../../../../data/ads_type.dart';

@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/app/widget/common_app_bar.dart';
-import 'package:acgn_client/app/widget/text_field.dart';
-import 'package:acgn_client/utils/dimens.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/app/widget/common_app_bar.dart';
+import 'package:quick_cat_client/app/widget/text_field.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 import '../../../../plugins_utils/ImageLoader/ImageLoader.dart';
 import '../../../data/share_key.dart';
 import '../controllers/withdraw_cash_bank_controller.dart';

@@ -1,12 +1,12 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/model/bill_info_model.dart';
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/app/widget/common_app_bar.dart';
-import 'package:acgn_client/app/widget/common_widget.dart';
-import 'package:acgn_client/utils/dimens.dart';
-import 'package:acgn_client/utils/time_util.dart';
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/model/bill_info_model.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/app/widget/common_app_bar.dart';
+import 'package:quick_cat_client/app/widget/common_widget.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/time_util.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

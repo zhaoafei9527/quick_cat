@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:photo_view/photo_view.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/plugins_utils/ImageLoader/ImageLoader.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import '../../utils/dimens.dart';
 import '../../utils/screen.dart';
 import '../themes/app_colors.dart';

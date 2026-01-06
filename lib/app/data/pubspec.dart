@@ -5,7 +5,7 @@
 class Pubspec {
   static final buildDate = DateTime.utc(2023, 11, 17, 4, 37, 28);
 
-  static const name = '91player_client';
+  static const name = 'gua_client';
 
   static const description = 'A new Flutter project.';
 

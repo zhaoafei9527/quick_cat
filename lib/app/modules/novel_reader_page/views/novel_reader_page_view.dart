@@ -1,14 +1,14 @@
-import 'package:acgn_client/app/data/ads_type.dart';
-import 'package:acgn_client/app/model/comic_info_model.dart';
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/app/themes/theme_manager.dart';
-import 'package:acgn_client/app/widget/ad_view.dart';
-import 'package:acgn_client/app/widget/common_widget.dart';
-import 'package:acgn_client/app/widget/reader_common_widget.dart';
-import 'package:acgn_client/plugins_utils/VideoPlayer/src/player_setting_panel.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/dimens.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/data/ads_type.dart';
+import 'package:quick_cat_client/app/model/comic_info_model.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/widget/ad_view.dart';
+import 'package:quick_cat_client/app/widget/common_widget.dart';
+import 'package:quick_cat_client/app/widget/reader_common_widget.dart';
+import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/player_setting_panel.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';

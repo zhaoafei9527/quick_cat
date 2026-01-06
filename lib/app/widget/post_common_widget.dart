@@ -1,15 +1,15 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/model/post_list_model.dart';
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/conf/api_res.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/common_util.dart';
-import 'package:acgn_client/utils/dimens.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/model/post_list_model.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/common_util.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
 import 'package:get/get.dart';
 
 Widget buildEmojiIconView(

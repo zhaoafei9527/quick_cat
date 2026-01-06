@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/widget/common_app_bar.dart';
+import 'package:quick_cat_client/app/widget/common_app_bar.dart';
 import '../../../../utils/dimens.dart';
 import '../../../model/home/user_info_model.dart';
 import '../../../themes/app_colors.dart';

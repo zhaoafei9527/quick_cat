@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
 import 'app_colors.dart';
 
 // ignore: avoid_classes_with_only_static_members

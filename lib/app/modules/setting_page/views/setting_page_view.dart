@@ -1,18 +1,18 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/themes/theme_manager.dart';
-import 'package:acgn_client/r.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/r.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/dialog/accont_qr_dialog.dart';
-import 'package:acgn_client/app/model/home/user_info_model.dart';
-import 'package:acgn_client/app/widget/common_app_bar.dart';
-import 'package:acgn_client/app/widget/text_field.dart';
-import 'package:acgn_client/plugins_utils/ImageLoader/ImageLoader.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/dialog/accont_qr_dialog.dart';
+import 'package:quick_cat_client/app/model/home/user_info_model.dart';
+import 'package:quick_cat_client/app/widget/common_app_bar.dart';
+import 'package:quick_cat_client/app/widget/text_field.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 import '../../../../utils/dimens.dart';
 import '../../../routes/app_pages.dart';
 import '../../../themes/app_colors.dart';

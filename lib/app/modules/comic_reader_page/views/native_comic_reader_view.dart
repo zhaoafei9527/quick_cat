@@ -1,4 +1,4 @@
-import 'package:acgn_client/app/data/address.dart';
+import 'package:quick_cat_client/app/data/address.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -12,7 +12,7 @@ class NativeComicReaderView extends StatefulWidget {
 }
 
 class _NativeComicReaderViewState extends State<NativeComicReaderView> {
-  static const platform = MethodChannel('com.acgn_client/comic_reader');
+  static const platform = MethodChannel('com.quick_cat_client/comic_reader');
   bool _isInitialized = false;
   bool _isError = false;
   String? _errorMessage;
@@ -105,7 +105,7 @@ class _NativeComicReaderViewState extends State<NativeComicReaderView> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: AndroidView(
-        viewType: 'com.acgn_client/comic_reader_view',
+        viewType: 'com.quick_cat_client/comic_reader_view',
         creationParams: const {},
         creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: (id) {

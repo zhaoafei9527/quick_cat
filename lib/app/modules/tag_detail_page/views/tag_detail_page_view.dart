@@ -1,17 +1,17 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/themes/theme_manager.dart';
-import 'package:acgn_client/app/widget/comic_topic_builder.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/widget/comic_topic_builder.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/model/home/topic_list_model.dart';
-import 'package:acgn_client/app/widget/common_app_bar.dart';
-import 'package:acgn_client/app/widget/common_widget.dart';
-import 'package:acgn_client/utils/dimens.dart';
+import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
+import 'package:quick_cat_client/app/widget/common_app_bar.dart';
+import 'package:quick_cat_client/app/widget/common_widget.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
 import '../../../views/page_pull_view.dart';
 import '../controllers/tag_detail_page_controller.dart';
 

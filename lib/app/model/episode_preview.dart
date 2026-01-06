@@ -1,6 +1,6 @@
-import 'package:acgn_client/app/model/comic_chapter.dart';
-import 'package:acgn_client/app/model/home/topic_list_model.dart';
-import 'package:acgn_client/plugins_utils/HttpRequester/http_requester.dart';
+import 'package:quick_cat_client/app/model/comic_chapter.dart';
+import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
+import 'package:quick_cat_client/plugins_utils/HttpRequester/http_requester.dart';
 
 class EpisodePreviewModel extends BaseNetModel {
   @override

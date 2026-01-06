@@ -1,7 +1,7 @@
-import 'package:acgn_client/app/themes/theme_manager.dart';
-import 'package:acgn_client/app/widget/common_app_bar.dart';
-import 'package:acgn_client/app/widget/common_widget.dart';
-import 'package:acgn_client/plugins_utils/ImageLoader/ImageLoader.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/widget/common_app_bar.dart';
+import 'package:quick_cat_client/app/widget/common_widget.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

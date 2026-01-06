@@ -1,8 +1,8 @@
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/dimens.dart';
-import 'package:acgn_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:marquee/marquee.dart';

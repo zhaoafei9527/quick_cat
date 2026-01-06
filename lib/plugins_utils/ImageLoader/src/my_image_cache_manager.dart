@@ -9,7 +9,7 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/address.dart';
+import 'package:quick_cat_client/app/data/address.dart';
 import 'decrypt_image.dart';
 
 class MyImageCacheManager extends CacheManager {

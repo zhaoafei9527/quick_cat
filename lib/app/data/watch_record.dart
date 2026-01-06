@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/model/home/topic_list_model.dart';
-import 'package:acgn_client/app/model/post_list_model.dart';
-import 'package:acgn_client/conf/config.dart';
-import 'package:acgn_client/utils/light_model.dart';
-import 'package:acgn_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
+import 'package:quick_cat_client/app/model/post_list_model.dart';
+import 'package:quick_cat_client/conf/config.dart';
+import 'package:quick_cat_client/utils/light_model.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
 
 class WatchRecord {
   static const String storageRelease = "_key_watch_record_";

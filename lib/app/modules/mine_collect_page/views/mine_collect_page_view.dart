@@ -1,18 +1,18 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/themes/theme_manager.dart';
-import 'package:acgn_client/app/widget/comic_topic_builder.dart';
-import 'package:acgn_client/app/widget/full_bg.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/widget/comic_topic_builder.dart';
+import 'package:quick_cat_client/app/widget/full_bg.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/widget/post_item.dart';
-import 'package:acgn_client/conf/api_res.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/widget/post_item.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
 import '../../../../utils/dimens.dart';
 import '../../../model/home/topic_list_model.dart';
 import '../../../themes/app_colors.dart';

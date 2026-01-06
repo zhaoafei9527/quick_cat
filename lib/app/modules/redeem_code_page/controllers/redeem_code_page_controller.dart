@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
 import '../../../../conf/api_res.dart';
 import '../../../../plugins_utils/HttpRequester/src/net_client.dart';
 

@@ -6,7 +6,7 @@ import 'dart:isolate';
 import 'package:flutter/foundation.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/plugins_utils/ImageLoader/src/decrypt_image.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/src/decrypt_image.dart';
 
 class IsolateManager {
   // 单例

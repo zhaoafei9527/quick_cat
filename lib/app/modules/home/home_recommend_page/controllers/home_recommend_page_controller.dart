@@ -1,11 +1,11 @@
 
 // 📦 Package imports:
-import 'package:acgn_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/model/home/config_model_model.dart';
+import 'package:quick_cat_client/app/model/home/config_model_model.dart';
 import '../../../../data/enum.dart';
 
 class HomeRecommendPageController extends GetxController

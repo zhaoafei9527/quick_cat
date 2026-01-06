@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/app/views/page_pull_view.dart';
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/views/page_pull_view.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 import '../../../../conf/api_res.dart';
 import '../../../../plugins_utils/HttpRequester/http_requester.dart';
 import '../../../data/enum.dart';

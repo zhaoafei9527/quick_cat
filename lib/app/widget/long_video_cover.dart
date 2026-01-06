@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/plugins_utils/ImageLoader/ImageLoader.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import '../../r.dart';
 import '../../utils/common_util.dart';
 import '../../utils/dimens.dart';

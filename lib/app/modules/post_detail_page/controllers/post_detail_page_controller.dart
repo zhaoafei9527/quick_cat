@@ -1,14 +1,14 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/data/watch_record.dart';
-import 'package:acgn_client/utils/text_util.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/data/watch_record.dart';
+import 'package:quick_cat_client/utils/text_util.dart';
 import 'package:flutter/services.dart';
 
 // 📦 Package imports:
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/conf/api_res.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
 import '../../../data/ads_type.dart';
 import '../../../model/home/config_model_model.dart';
 import '../../../model/post_list_model.dart';

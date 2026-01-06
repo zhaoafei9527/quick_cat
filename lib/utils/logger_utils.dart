@@ -11,7 +11,7 @@ import 'package:date_format/date_format.dart' as fmt;
 import 'package:logger/logger.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/utils/misc_util.dart';
+import 'package:quick_cat_client/utils/misc_util.dart';
 
 // global log class
 final log = _Log._();

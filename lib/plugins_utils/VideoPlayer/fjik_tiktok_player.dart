@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'package:acgn_client/app/dialog/comment_dialog.dart';
-import 'package:acgn_client/app/model/home/config_model_model.dart';
-import 'package:acgn_client/app/model/home/video_play_model.dart';
-import 'package:acgn_client/app/themes/theme_manager.dart';
-import 'package:acgn_client/plugins_utils/VideoPlayer/src/fijk_tiktok_panel.dart';
-import 'package:acgn_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/app/dialog/comment_dialog.dart';
+import 'package:quick_cat_client/app/model/home/config_model_model.dart';
+import 'package:quick_cat_client/app/model/home/video_play_model.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/fijk_tiktok_panel.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/rendering.dart';

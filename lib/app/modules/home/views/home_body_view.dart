@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
 import '../../../../utils/screen.dart';
 
 Widget buildHomeBodyView(String bgPath,

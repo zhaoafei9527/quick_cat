@@ -4,10 +4,10 @@ import 'dart:io' if (dart.library.io) 'dart:io';
 import 'dart:ui' as ui;
 
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/model/home/services_model.dart';
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/conf/api_res.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/model/home/services_model.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,14 +29,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart' as dio;
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/dialog/common_dialog.dart';
-import 'package:acgn_client/app/model/cut_info.dart';
-import 'package:acgn_client/utils/array_util.dart';
-import 'package:acgn_client/utils/brower_util.dart';
-import 'package:acgn_client/utils/logger_utils.dart';
-import 'package:acgn_client/utils/platform_util.dart';
-import 'package:acgn_client/utils/text_util.dart';
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/app/dialog/common_dialog.dart';
+import 'package:quick_cat_client/app/model/cut_info.dart';
+import 'package:quick_cat_client/utils/array_util.dart';
+import 'package:quick_cat_client/utils/brower_util.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/utils/platform_util.dart';
+import 'package:quick_cat_client/utils/text_util.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 import '../app/data/share_key.dart';
 import '../app/modules/home/controllers/home_controller.dart';
 import '../conf/config.dart';

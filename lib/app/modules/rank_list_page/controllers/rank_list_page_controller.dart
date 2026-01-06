@@ -1,4 +1,4 @@
-import 'package:acgn_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -2,7 +2,7 @@
 import 'dart:math' hide log;
 
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/widget/comic_topic_builder.dart';
+import 'package:quick_cat_client/app/widget/comic_topic_builder.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -10,23 +10,23 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/ads_type.dart';
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/model/home/config_model_model.dart';
-import 'package:acgn_client/app/model/home/topic_list_model.dart';
-import 'package:acgn_client/app/model/post_list_model.dart';
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/app/views/pull_refresh_view.dart';
-import 'package:acgn_client/app/widget/long_video_cover.dart';
-import 'package:acgn_client/app/widget/post_item.dart';
-import 'package:acgn_client/app/widget/short_video_cover.dart';
-import 'package:acgn_client/conf/api_res.dart';
-import 'package:acgn_client/conf/config.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/array_util.dart';
-import 'package:acgn_client/utils/dimens.dart';
-import 'package:acgn_client/utils/logger_utils.dart';
-import 'package:acgn_client/utils/text_util.dart';
+import 'package:quick_cat_client/app/data/ads_type.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/model/home/config_model_model.dart';
+import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
+import 'package:quick_cat_client/app/model/post_list_model.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/views/pull_refresh_view.dart';
+import 'package:quick_cat_client/app/widget/long_video_cover.dart';
+import 'package:quick_cat_client/app/widget/post_item.dart';
+import 'package:quick_cat_client/app/widget/short_video_cover.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/conf/config.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/array_util.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/utils/text_util.dart';
 
 /// 搜索结果页面
 class SearchResultView extends StatefulWidget {

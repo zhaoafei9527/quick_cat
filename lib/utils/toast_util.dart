@@ -2,7 +2,7 @@
 import 'dart:async';
 
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -10,8 +10,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/r.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/r.dart';
 import '../app/data/enum.dart';
 import 'dimens.dart';
 import 'text_util.dart';

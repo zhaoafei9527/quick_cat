@@ -1,8 +1,8 @@
 // 🌎 Project imports:
-import 'package:acgn_client/app/model/comic_info_model.dart';
-import 'package:acgn_client/app/model/home/video_play_model.dart';
-import 'package:acgn_client/app/model/post_list_model.dart';
-import 'package:acgn_client/plugins_utils/HttpRequester/http_requester.dart';
+import 'package:quick_cat_client/app/model/comic_info_model.dart';
+import 'package:quick_cat_client/app/model/home/video_play_model.dart';
+import 'package:quick_cat_client/app/model/post_list_model.dart';
+import 'package:quick_cat_client/plugins_utils/HttpRequester/http_requester.dart';
 import '../../data/enum.dart';
 
 class CategoryTopics extends BaseNetModel {

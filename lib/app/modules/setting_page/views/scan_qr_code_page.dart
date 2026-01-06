@@ -1,6 +1,6 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/widget/common_app_bar.dart';
+import 'package:quick_cat_client/app/widget/common_app_bar.dart';
 import '../../../../utils/dimens.dart';
 import '../../../themes/app_colors.dart';
 import '../../../widget/common_widget.dart';

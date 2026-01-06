@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/plugins_utils/ImageLoader/ImageLoader.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import '../../utils/array_util.dart';
 import '../../utils/dimens.dart';
 import '../data/ads_type.dart';

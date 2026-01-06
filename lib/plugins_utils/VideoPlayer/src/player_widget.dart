@@ -1,6 +1,6 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/model/home/video_play_model.dart';
-import 'package:acgn_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/model/home/video_play_model.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 
@@ -8,15 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/dialog/common_dialog.dart';
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/conf/api_res.dart';
-import 'package:acgn_client/conf/config.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/dimens.dart';
-import 'package:acgn_client/utils/light_model.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/dialog/common_dialog.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/conf/config.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/light_model.dart';
 import '../../../app/data/enum.dart';
 import '../../../app/model/home/topic_list_model.dart';
 import '../../../utils/toast_util.dart';

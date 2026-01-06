@@ -7,10 +7,10 @@ import 'package:get/get.dart';
 import 'package:path/path.dart' as path;
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/address.dart';
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/model/home/user_info_model.dart';
-import 'package:acgn_client/conf/config.dart';
+import 'package:quick_cat_client/app/data/address.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/model/home/user_info_model.dart';
+import 'package:quick_cat_client/conf/config.dart';
 import '../../utils/array_util.dart';
 import '../../utils/light_model.dart';
 import '../../utils/text_util.dart';

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
 
 class CustomMiddleware extends GetMiddleware {
   @override

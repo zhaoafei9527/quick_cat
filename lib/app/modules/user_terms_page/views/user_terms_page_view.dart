@@ -1,18 +1,18 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/modules/home/home_mine_center/views/home_mine_center_view.dart';
-import 'package:acgn_client/app/themes/theme_manager.dart';
-import 'package:acgn_client/utils/time_util.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/modules/home/home_mine_center/views/home_mine_center_view.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/utils/time_util.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/app/widget/common_app_bar.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/widget/common_app_bar.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 import '../../../../plugins_utils/ImageLoader/ImageLoader.dart';
 import '../../../../utils/dimens.dart';
 import '../../../themes/app_colors.dart';

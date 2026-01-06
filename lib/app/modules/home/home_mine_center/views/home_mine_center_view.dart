@@ -1,16 +1,16 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/data/ads_type.dart';
-import 'package:acgn_client/app/dialog/accont_qr_dialog.dart';
-import 'package:acgn_client/app/dialog/announce_dialog.dart';
-import 'package:acgn_client/app/dialog/common_dialog.dart';
-import 'package:acgn_client/app/model/home/user_info_model.dart';
-import 'package:acgn_client/app/model/home/video_play_model.dart';
-import 'package:acgn_client/app/themes/theme_manager.dart';
-import 'package:acgn_client/app/widget/cover_banner.dart';
-import 'package:acgn_client/plugins_utils/VideoPlayer/src/m3u8_cache_manager.dart';
-import 'package:acgn_client/utils/app_util.dart';
-import 'package:acgn_client/utils/time_util.dart';
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/app/data/ads_type.dart';
+import 'package:quick_cat_client/app/dialog/accont_qr_dialog.dart';
+import 'package:quick_cat_client/app/dialog/announce_dialog.dart';
+import 'package:quick_cat_client/app/dialog/common_dialog.dart';
+import 'package:quick_cat_client/app/model/home/user_info_model.dart';
+import 'package:quick_cat_client/app/model/home/video_play_model.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/widget/cover_banner.dart';
+import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/m3u8_cache_manager.dart';
+import 'package:quick_cat_client/utils/app_util.dart';
+import 'package:quick_cat_client/utils/time_util.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
@@ -18,11 +18,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/plugins_utils/ImageLoader/ImageLoader.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/dimens.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
 import '../../../../../utils/screen.dart';
 import '../../../../data/share_key.dart';
 import '../../../../model/home/config_model_model.dart';

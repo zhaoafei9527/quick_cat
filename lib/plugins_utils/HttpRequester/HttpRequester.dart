@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:math' hide log;
 
 // 🐦 Flutter imports:
-import 'package:acgn_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
+import 'package:quick_cat_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
 import 'package:flutter/foundation.dart';
 
 // 📦 Package imports:
@@ -16,15 +16,15 @@ import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/conf/config.dart';
-import 'package:acgn_client/plugins_utils/HttpRequester/http_requester.dart';
-import 'package:acgn_client/plugins_utils/HttpRequester/src/base_resp_bean.dart';
-import 'package:acgn_client/plugins_utils/HttpRequester/src/default_net_decoder.dart';
-import 'package:acgn_client/plugins_utils/HttpRequester/src/dio_client.dart';
-import 'package:acgn_client/utils/array_util.dart';
-import 'package:acgn_client/utils/logger_utils.dart';
-import 'package:acgn_client/utils/platform_util.dart';
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/conf/config.dart';
+import 'package:quick_cat_client/plugins_utils/HttpRequester/http_requester.dart';
+import 'package:quick_cat_client/plugins_utils/HttpRequester/src/base_resp_bean.dart';
+import 'package:quick_cat_client/plugins_utils/HttpRequester/src/default_net_decoder.dart';
+import 'package:quick_cat_client/plugins_utils/HttpRequester/src/dio_client.dart';
+import 'package:quick_cat_client/utils/array_util.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/utils/platform_util.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 import '../../app/data/pubspec.dart';
 import '../../app/data/share_key.dart';
 import '../../utils/app_util.dart';

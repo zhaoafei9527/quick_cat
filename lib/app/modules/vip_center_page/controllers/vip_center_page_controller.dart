@@ -2,14 +2,14 @@
 import 'dart:async';
 
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/dialog/common_dialog.dart';
-import 'package:acgn_client/app/model/home/pay_list_model.dart';
-import 'package:acgn_client/app/model/home/services_model.dart';
-import 'package:acgn_client/app/model/home/user_info_model.dart';
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/conf/api_res.dart';
-import 'package:acgn_client/r.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/dialog/common_dialog.dart';
+import 'package:quick_cat_client/app/model/home/pay_list_model.dart';
+import 'package:quick_cat_client/app/model/home/services_model.dart';
+import 'package:quick_cat_client/app/model/home/user_info_model.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/r.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

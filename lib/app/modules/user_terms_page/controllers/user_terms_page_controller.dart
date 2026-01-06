@@ -6,9 +6,9 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/model/home/user_info_model.dart';
-import 'package:acgn_client/r.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/model/home/user_info_model.dart';
+import 'package:quick_cat_client/r.dart';
 import '../../../../conf/api_res.dart';
 import '../../../model/vip_card_list_model.dart';
 

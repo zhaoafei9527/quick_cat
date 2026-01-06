@@ -1,14 +1,14 @@
 //观看数万，亿展示
 
 // 📦 Package imports:
-import 'package:acgn_client/app/data/ads_type.dart';
-import 'package:acgn_client/app/model/home/config_model_model.dart';
-import 'package:acgn_client/app/model/home/topic_list_model.dart';
+import 'package:quick_cat_client/app/data/ads_type.dart';
+import 'package:quick_cat_client/app/model/home/config_model_model.dart';
+import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/address.dart';
-import 'package:acgn_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/data/address.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
 
 Future<MediaInfo?> getAdsMediaInfo(AdsType adsType) async {
   MediaInfo? adMedia;

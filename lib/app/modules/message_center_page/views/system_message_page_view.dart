@@ -1,14 +1,14 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/app/views/pull_refresh_view.dart';
-import 'package:acgn_client/app/widget/common_app_bar.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/app/views/pull_refresh_view.dart';
+import 'package:quick_cat_client/app/widget/common_app_bar.dart';
 import '../../../../utils/dimens.dart';
 import '../controllers/message_center_page_controller.dart';
 

@@ -1,5 +1,5 @@
 // // 🐦 Flutter imports:
-// import 'package:acgn_client/app/themes/theme_manager.dart';
+// import 'package:quick_cat_client/app/themes/theme_manager.dart';
 // import 'package:flutter/material.dart';
 //
 // // 📦 Package imports:
@@ -11,8 +11,8 @@
 // import 'package:video_player/video_player.dart';
 //
 // // 🌎 Project imports:
-// import 'package:acgn_client/app/model/home/video_play_model.dart';
-// import 'package:acgn_client/plugins_utils/VideoPlayer/src/player_ui_controls.dart';
+// import 'package:quick_cat_client/app/model/home/video_play_model.dart';
+// import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/player_ui_controls.dart';
 // import '../../../app/themes/app_colors.dart';
 //
 // class PlayerProgressBar extends StatefulWidget {

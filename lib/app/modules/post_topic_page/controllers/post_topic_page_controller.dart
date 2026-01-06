@@ -2,7 +2,7 @@
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/conf/api_res.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
 import '../../../model/post_list_model.dart';
 import '../../../views/pull_refresh_view.dart';
 

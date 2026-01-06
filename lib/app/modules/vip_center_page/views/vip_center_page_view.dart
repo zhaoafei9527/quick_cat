@@ -1,9 +1,9 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/model/home/pay_list_model.dart';
-import 'package:acgn_client/app/model/home/user_info_model.dart';
-import 'package:acgn_client/app/modules/home/home_index_web/views/home_tab_pull_view.dart';
-import 'package:acgn_client/app/widget/common_app_bar.dart';
-import 'package:acgn_client/plugins_utils/ImageLoader/ImageLoader.dart';
+import 'package:quick_cat_client/app/model/home/pay_list_model.dart';
+import 'package:quick_cat_client/app/model/home/user_info_model.dart';
+import 'package:quick_cat_client/app/modules/home/home_index_web/views/home_tab_pull_view.dart';
+import 'package:quick_cat_client/app/widget/common_app_bar.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:

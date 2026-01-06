@@ -1,5 +1,5 @@
 // 🌎 Project imports:
-import 'package:acgn_client/conf/config.dart';
+import 'package:quick_cat_client/conf/config.dart';
 import '../../utils/light_model.dart';
 import '../../utils/text_util.dart';
 

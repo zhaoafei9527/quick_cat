@@ -86,7 +86,7 @@ Future<void> replaceWithBaseCodeText(String directoryPath) async {
         // 在文件头部添加导入语句（使用绝对路径）
         if (!content.contains('base_code_text.dart')) {
           const baseCodeTextImport =
-              "import 'package:acgn_client/base_code_text.dart';";
+              "import 'package:quick_cat_client/base_code_text.dart';";
           content = '$baseCodeTextImport\n$content';
         }
 

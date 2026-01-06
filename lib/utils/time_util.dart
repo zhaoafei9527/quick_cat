@@ -3,7 +3,7 @@ import 'package:date_format/date_format.dart';
 import 'package:intl/intl.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/utils/text_util.dart';
+import 'package:quick_cat_client/utils/text_util.dart';
 
 /// 时间工具类
 class TimeUtil {

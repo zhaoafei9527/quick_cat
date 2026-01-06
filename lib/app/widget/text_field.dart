@@ -1,9 +1,9 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
 import 'package:get/get.dart';
 
 class GetCommonTextField extends StatefulWidget {

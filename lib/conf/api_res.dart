@@ -1,26 +1,26 @@
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/model/ai_generate_model.dart';
-import 'package:acgn_client/app/model/comic_chapter.dart';
-import 'package:acgn_client/app/model/comic_info_model.dart';
-import 'package:acgn_client/app/model/cut_info.dart';
-import 'package:acgn_client/app/model/episode_preview.dart';
-import 'package:acgn_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/app/model/ai_generate_model.dart';
+import 'package:quick_cat_client/app/model/comic_chapter.dart';
+import 'package:quick_cat_client/app/model/comic_info_model.dart';
+import 'package:quick_cat_client/app/model/cut_info.dart';
+import 'package:quick_cat_client/app/model/episode_preview.dart';
+import 'package:quick_cat_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/model/activity_model.dart';
-import 'package:acgn_client/app/model/bill_info_model.dart';
-import 'package:acgn_client/app/model/check_in_model.dart';
-import 'package:acgn_client/app/model/envelope_model.dart';
-import 'package:acgn_client/app/model/home/pay_list_model.dart';
-import 'package:acgn_client/app/model/home/qrcode_info_model.dart';
-import 'package:acgn_client/app/model/home/qrmodel.dart';
-import 'package:acgn_client/app/model/list_comment.dart';
-import 'package:acgn_client/app/model/user_balance_model.dart';
-import 'package:acgn_client/plugins_utils/HttpRequester/HttpRequester.dart';
-import 'package:acgn_client/plugins_utils/HttpRequester/http_requester.dart';
-import 'package:acgn_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/model/activity_model.dart';
+import 'package:quick_cat_client/app/model/bill_info_model.dart';
+import 'package:quick_cat_client/app/model/check_in_model.dart';
+import 'package:quick_cat_client/app/model/envelope_model.dart';
+import 'package:quick_cat_client/app/model/home/pay_list_model.dart';
+import 'package:quick_cat_client/app/model/home/qrcode_info_model.dart';
+import 'package:quick_cat_client/app/model/home/qrmodel.dart';
+import 'package:quick_cat_client/app/model/list_comment.dart';
+import 'package:quick_cat_client/app/model/user_balance_model.dart';
+import 'package:quick_cat_client/plugins_utils/HttpRequester/HttpRequester.dart';
+import 'package:quick_cat_client/plugins_utils/HttpRequester/http_requester.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
 import 'package:get/get.dart' hide FormData;
 import '../app/data/share_key.dart';
 import '../app/model/barrages_model.dart';

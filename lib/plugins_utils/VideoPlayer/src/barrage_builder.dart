@@ -3,8 +3,8 @@ import 'dart:async';
 import 'dart:math';
 
 // 🐦 Flutter imports:
-import 'package:acgn_client/app/model/barrages_model.dart';
-import 'package:acgn_client/conf/api_res.dart';
+import 'package:quick_cat_client/app/model/barrages_model.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
 import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 
@@ -12,9 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/utils/dimens.dart';
-import 'package:acgn_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
 import '../../../utils/screen.dart';
 
 /// 对外控制器：支持在运行时向播放列表追加视频

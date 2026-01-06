@@ -9,8 +9,8 @@ import 'dart:typed_data';
 // 📦 Package imports:
 
 // 🌎 Project imports:
-import 'package:acgn_client/utils/isolate_manager.dart';
-import 'package:acgn_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/utils/isolate_manager.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
 
 List<Uint8List> _featuresList = [
   Uint8List.fromList([0xff, 0xd8, 0xff]), //jpg,jpeg

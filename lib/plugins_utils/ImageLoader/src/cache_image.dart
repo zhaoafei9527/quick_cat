@@ -12,8 +12,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/plugins_utils/ImageLoader/src/decrypt_image.dart';
-import 'package:acgn_client/plugins_utils/ImageLoader/src/progress_data.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/src/decrypt_image.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/src/progress_data.dart';
 
 class CachedImage extends StatefulWidget {
   final String url;

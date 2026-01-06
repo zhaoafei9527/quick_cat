@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
 import '../themes/app_colors.dart';
 
 /// 基础的部底弹出

@@ -1,17 +1,17 @@
 // 🐦 Flutter imports:
 import 'dart:ui';
 
-import 'package:acgn_client/app/data/address.dart';
-import 'package:acgn_client/app/data/enum.dart';
-import 'package:acgn_client/app/data/share_key.dart';
-import 'package:acgn_client/app/model/home/config_model_model.dart';
-import 'package:acgn_client/app/model/home/topic_list_model.dart';
-import 'package:acgn_client/app/routes/app_pages.dart';
-import 'package:acgn_client/app/themes/app_colors.dart';
-import 'package:acgn_client/app/widget/comic_topic_builder.dart';
-import 'package:acgn_client/app/widget/full_bg.dart';
-import 'package:acgn_client/conf/api_res.dart';
-import 'package:acgn_client/utils/keep_alive_wrapper.dart';
+import 'package:quick_cat_client/app/data/address.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/model/home/config_model_model.dart';
+import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/app/widget/comic_topic_builder.dart';
+import 'package:quick_cat_client/app/widget/full_bg.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/utils/keep_alive_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,11 +19,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/themes/theme_manager.dart';
-import 'package:acgn_client/app/widget/common_widget.dart';
-import 'package:acgn_client/r.dart';
-import 'package:acgn_client/utils/dimens.dart';
-import 'package:acgn_client/utils/screen.dart';
+import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/app/widget/common_widget.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
+import 'package:quick_cat_client/utils/screen.dart';
 import '../../../../data/ads_type.dart';
 import '../../../../dialog/announce_dialog.dart';
 import '../../../../views/round_under_line_tab_indicator.dart';

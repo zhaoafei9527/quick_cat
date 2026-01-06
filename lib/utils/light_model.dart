@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 // 🌎 Project imports:
-import 'package:acgn_client/utils/text_util.dart';
+import 'package:quick_cat_client/utils/text_util.dart';
 
 // 延迟初始化实例
 late final LightModel lightKV;

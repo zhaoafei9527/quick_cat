@@ -2,7 +2,7 @@
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:acgn_client/app/modules/home/home_recommend_page/controllers/home_recommend_page_controller.dart';
+import 'package:quick_cat_client/app/modules/home/home_recommend_page/controllers/home_recommend_page_controller.dart';
 import '../controllers/home_controller.dart';
 import '../home_game_page/controllers/home_game_page_controller.dart';
 import '../home_index_web/controllers/home_index_web_controller.dart';

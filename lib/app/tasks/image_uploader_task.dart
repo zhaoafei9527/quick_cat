@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:acgn_client/app/model/cut_info.dart';
-import 'package:acgn_client/conf/api_res.dart';
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/app/model/cut_info.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart' as dio;
 import 'dart:developer' as developer;

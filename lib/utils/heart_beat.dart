@@ -2,7 +2,7 @@
 import 'dart:async';
 
 // 🌎 Project imports:
-import 'package:acgn_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
 
 void main() {
   // 创建 Heartbeat 实例并启动

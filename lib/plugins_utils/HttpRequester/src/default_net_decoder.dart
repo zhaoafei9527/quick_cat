@@ -8,10 +8,10 @@ import 'package:encrypt/encrypt.dart';
 import 'package:get/get.dart' hide Response;
 
 // 🌎 Project imports:
-import 'package:acgn_client/conf/config.dart';
-import 'package:acgn_client/utils/logger_utils.dart';
-import 'package:acgn_client/utils/text_util.dart';
-import 'package:acgn_client/utils/toast_util.dart';
+import 'package:quick_cat_client/conf/config.dart';
+import 'package:quick_cat_client/utils/logger_utils.dart';
+import 'package:quick_cat_client/utils/text_util.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 import '../HttpRequester.dart';
 import '../http_requester.dart';
 import 'base_resp_bean.dart';
