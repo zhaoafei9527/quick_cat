@@ -544,6 +544,26 @@ class ApiRes {
     return model;
   }
 
+  /// path sharegift/list 邀请有礼活动列表
+  static Future<InvitedListModel?>  getInvitedList() async {
+    InvitedListModel? model;
+    String? path = "sharegift/list";
+    Map<String, dynamic> data = {};
+    model = await _basePostNet<InvitedListModel>(
+        BaseParams(InvitedListModel(), path: path, data: data));
+    return model;
+  }
+
+  /// path sharegift/receive 邀请有礼领取奖励
+  static Future  getInvitedReceive() async {
+    ActivityModel? model;
+    String? path = "sharegift/receive";
+    Map<String, dynamic> data = {};
+    model = await _basePostNet(
+        BaseParams(null, path: path, data: data));
+    return model;
+  }
+
   /// path user/vipRedEnv 签到领取红包
   static Future<EnvelopeModel?> checkInEnv() async {
     EnvelopeModel? model;

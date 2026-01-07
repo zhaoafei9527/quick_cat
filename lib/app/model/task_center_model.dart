@@ -1,4 +1,5 @@
 // 🌎 Project imports:
+import 'package:quick_cat_client/app/data/enum.dart';
 import 'package:quick_cat_client/plugins_utils/HttpRequester/http_requester.dart';
 
 class WelfareTaskCenter extends BaseNetModel {
@@ -55,8 +56,6 @@ class WelfareTaskCenter extends BaseNetModel {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-
-
 
     if (prizeList != null) {
       data['prizeList'] = prizeList?.map((v) => v.toJson()).toList();
@@ -192,6 +191,82 @@ class TaskInfoList {
     data['status'] = status;
     data['taskType'] = taskType;
     data['title'] = title;
+    return data;
+  }
+}
+
+class InvitedListModel extends BaseNetModel {
+  @override
+  InvitedListModel fromJson(Map<String, dynamic> json) {
+    return InvitedListModel.fromJson(json);
+  }
+
+  List<InvitedModel>? list;
+  int? shareGiftTotal; // 今天是否已经领取
+
+  InvitedListModel({this.shareGiftTotal, this.list});
+
+  InvitedListModel.fromJson(Map<String, dynamic> json) {
+    shareGiftTotal = json['shareGiftTotal'];
+    if (json['list'] != null) {
+      list = <InvitedModel>[];
+      json['list'].forEach((v) {
+        list?.add(InvitedModel.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['shareGiftTotal'] = shareGiftTotal;
+    if (list != null) {
+      data['list'] = list?.map((v) => v.toJson()).toList();
+    }
+
+    return data;
+  }
+}
+
+class InvitedModel extends BaseNetModel {
+  @override
+  InvitedModel fromJson(Map<String, dynamic> json) {
+    return InvitedModel.fromJson(json);
+  }
+
+  int? id;
+  String? title;
+  int? num;
+  int? vipDays;
+  String? remark;
+  InviteReceiveStatus? receiveStatus;
+
+  InvitedModel(
+      {this.id,
+      this.title,
+      this.num,
+      this.vipDays,
+      this.remark,
+      this.receiveStatus});
+
+  InvitedModel.fromJson(Map<String, dynamic> json) {
+    title = json['title'];
+    id = json['id'];
+    num = json['num'];
+    vipDays = json['vipDays'];
+    remark = json['remark'];
+    receiveStatus = InviteReceiveStatus.values.firstWhere(
+        (e) => e.index == (json['receiveStatus'] ?? 0),
+        orElse: () => InviteReceiveStatus.notInvite);
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
+    data['id'] = id;
+    data['num'] = num;
+    data['vipDays'] = vipDays;
+    data['remark'] = remark;
+    data['receiveStatus'] = receiveStatus?.index;
     return data;
   }
 }

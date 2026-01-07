@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:quick_cat_client/app/data/enum.dart';
 import 'package:quick_cat_client/app/dialog/common_dialog.dart';
 import 'package:quick_cat_client/app/routes/app_pages.dart';
 import 'package:quick_cat_client/r.dart';
@@ -63,11 +64,17 @@ class InvitedPageView extends GetView<InvitedPageController> {
               Text("已成功邀请",
                   style: TextStyle(fontSize: Dimens.pt30, color: Colors.white)),
               SizedBox(width: Dimens.pt12),
-              Image.asset(shareTextInsert["insert${controller.count}"]!,
-                  width: Dimens.pt56, height: Dimens.pt76),
-              SizedBox(width: Dimens.pt17),
-              Image.asset(shareTextInsert["insert3"]!,
-                  width: Dimens.pt56, height: Dimens.pt76),
+              Obx(() => Row(
+                  children: List.generate(
+                      logic.numList.length,
+                      (index) => Row(children: [
+                            Image.asset(
+                                shareTextInsert[
+                                    "insert${logic.numList[index]}"]!,
+                                width: Dimens.pt56,
+                                height: Dimens.pt76),
+                            SizedBox(width: Dimens.pt10),
+                          ])))),
               SizedBox(width: Dimens.pt12),
               Text("人",
                   style: TextStyle(
@@ -81,51 +88,52 @@ class InvitedPageView extends GetView<InvitedPageController> {
                 color: Color(0xFF2A2D8A),
                 padding: EdgeInsets.symmetric(
                     horizontal: Dimens.pt30, vertical: Dimens.pt30),
-                child: Row(
+                child: Obx(() => Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ...List.generate(
-                          4,
-                          (index) => SizedBox(
-                              width: (screen.screenWidth - Dimens.pt60) / 4,
-                              child: Column(children: [
-                                Image.asset(R.assetsImgIconShareVip,
-                                    height: Dimens.pt80),
-                                SizedBox(height: Dimens.pt15),
-                                Text("邀请${index * 5 + 5}位好友",
+                    children: List.generate(logic.invitedList.length, (index) {
+                      InviteReceiveStatus status =
+                          logic.invitedList[index].receiveStatus ??
+                              InviteReceiveStatus.none;
+
+                      return SizedBox(
+                          width: (screen.screenWidth - Dimens.pt60) / 4,
+                          child: Column(children: [
+                            Image.asset(R.assetsImgIconShareVip,
+                                height: Dimens.pt80),
+                            SizedBox(height: Dimens.pt15),
+                            Text(logic.invitedList[index].title ?? '',
+                                style: TextStyle(
+                                    fontSize: Dimens.pt22,
+                                    color: Color(0xFFB3DDFC))),
+                            SizedBox(height: Dimens.pt24),
+                            Stack(
+                                alignment: Alignment.center,
+                                clipBehavior: Clip.none,
+                                children: [
+                                  getHengLine(
+                                      w: double.infinity,
+                                      h: .75,
+                                      color: Colors.white.withOpacity(.5)),
+                                  Image.asset(R.assetsImgIconSharePoin,
+                                      width: Dimens.pt15)
+                                ]),
+                            SizedBox(height: Dimens.pt24),
+                            Container(
+                                decoration: BoxDecoration(
+                                    color:
+                                        getInviteReceiveStatusBgColor(status),
+                                    borderRadius:
+                                        BorderRadius.circular(Dimens.pt45)),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: Dimens.pt23,
+                                    vertical: Dimens.pt9),
+                                child: Text(getInviteReceiveStatusDesc(status),
                                     style: TextStyle(
-                                        fontSize: Dimens.pt22,
-                                        color: Color(0xFFB3DDFC))),
-                                SizedBox(height: Dimens.pt24),
-                                Stack(
-                                    alignment: Alignment.center,
-                                    clipBehavior: Clip.none,
-                                    children: [
-                                      getHengLine(
-                                          w: double.infinity,
-                                          h: .75,
-                                          color: Colors.white.withOpacity(.5)),
-                                      Image.asset(R.assetsImgIconSharePoin,
-                                          width: Dimens.pt15)
-                                    ]),
-                                SizedBox(height: Dimens.pt24),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: index < logic.count.value
-                                          ? AppColors.primaryColor
-                                          : Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(Dimens.pt45)),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: Dimens.pt23,
-                                      vertical: Dimens.pt9),
-                                  child: Text("未完成",
-                                      style: TextStyle(
-                                          fontSize: Dimens.pt20,
-                                          color: Color(0xFF020150))),
-                                )
-                              ])))
-                    ])),
+                                        fontSize: Dimens.pt20,
+                                        color: getInviteReceiveStatusTextColor(
+                                            status))))
+                          ]));
+                    })))),
             SizedBox(height: Dimens.pt40),
             GestureDetector(
                 onTap: () => showShareAccountDialog(),

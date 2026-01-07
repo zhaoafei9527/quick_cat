@@ -164,31 +164,36 @@ String getPayTypeIcon(rechargeType) {
   return icon;
 }
 
+dismissDialog() {
+  if (Get.isDialogOpen ?? false) {
+    Get.back();
+  }
+}
+
 Future showLoadingDialog({double? size}) {
   return Get.dialog(
       Dialog(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          // insetPadding: EdgeInsets.symmetric(horizontal: screen.screenWidth / 2),
+          insetPadding: EdgeInsets.zero,
           child: Align(
-            alignment: Alignment.center,
-            child: Container(
-                width: Dimens.pt200,
-                height: Dimens.pt130,
-                decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(Dimens.pt12)),
-                child: Center(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                      getLoadingWidget(size: size, color: Colors.white),
-                      SizedBox(height: Dimens.pt12),
-                      Text("加载中...",
-                          style: TextStyle(
-                              fontSize: Dimens.pt28, color: Colors.white))
-                    ]))),
-          )),
+              alignment: Alignment.center,
+              child: Container(
+                  width: Dimens.pt200,
+                  height: Dimens.pt130,
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(Dimens.pt12)),
+                  child: Center(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                        getLoadingWidget(size: size, color: Colors.white),
+                        SizedBox(height: Dimens.pt12),
+                        Text("加载中...",
+                            style: TextStyle(
+                                fontSize: Dimens.pt28, color: Colors.white))
+                      ]))))),
       barrierColor: Colors.transparent);
 }
 

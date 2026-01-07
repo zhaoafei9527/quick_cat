@@ -29,7 +29,7 @@ class Pubspec {
 
   static const versionIsPreRelease = false;
 
-  static const debug = false;
+  static const debug = true;
 
   static const qiye = false;
 
@@ -47,13 +47,13 @@ class Pubspec {
 
   static const dev_h5_lines = <dynamic>[
     // "http://192.168.100.227:21111",
-    "https://acgn-api.htqhfqp.com"
+    "https://catapp.htqhfqp.com"
   ];
 
   static const dev_app_lines = <dynamic>[
     // "http://192.168.100.227:21111",
     // "https://vapp.hxc1t.com",
-    "https://acgn-api.htqhfqp.com"
+    "https://catapp.htqhfqp.com"
     // "http://192.168.0.119:21111"
   ];
 

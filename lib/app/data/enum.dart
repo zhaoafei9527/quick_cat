@@ -1,4 +1,7 @@
 // TopicShowType Enum类
+import 'package:flutter/material.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
+
 enum TopicShowType {
   none, // 无意义
   fiveGrid, // 五宫格 showType = 1
@@ -181,4 +184,51 @@ enum AiTaskStatus {
   aiTaskDoing, // ai任务进行中
   aiTaskDone, // ai任务已完成
   aiTaskFailed, // ai任务失败
+}
+
+enum InviteReceiveStatus {
+  none, // 无意义
+  notInvite, // 未完成
+  invited, // 已完成
+  received, // 已领取
+}
+
+
+Color getInviteReceiveStatusTextColor(InviteReceiveStatus status) {
+  switch (status) {
+    case InviteReceiveStatus.notInvite:
+      return const Color(0xFF020150); //  "未完成"
+    case InviteReceiveStatus.invited:
+      return Colors.white; // "已完成"
+    case InviteReceiveStatus.received:
+      return const Color(0xFF969291); //  "已领取"
+    default:
+      return const Color(0xFF000000); // Default to black
+  }
+}
+
+Color getInviteReceiveStatusBgColor(InviteReceiveStatus status) {
+  switch (status) {
+    case InviteReceiveStatus.notInvite:
+      return Colors.white; //  "未完成"
+    case InviteReceiveStatus.invited:
+      return AppColors.mainRed; // "已完成"
+    case InviteReceiveStatus.received:
+      return const Color(0xFFD4D4D4); //  "已领取"
+    default:
+      return const Color(0xFF000000); // Default to black
+  }
+}
+
+String getInviteReceiveStatusDesc(InviteReceiveStatus status) {
+  switch (status) {
+    case InviteReceiveStatus.notInvite:
+      return "未完成";
+    case InviteReceiveStatus.invited:
+      return "已完成";
+    case InviteReceiveStatus.received:
+      return "已领取";
+    default:
+      return "";
+  }
 }
