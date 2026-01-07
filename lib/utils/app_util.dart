@@ -320,7 +320,7 @@ class AppUtils {
     Get.toNamed(Routes.ACTIVITY_WEB_PAGE, arguments: {
       "title": "在线客服",
       "uri":
-          "${shareKeys.baseUrl}/zoudoboh-h5service/?theme=theme1&$queryString"
+          "${shareKeys.baseUrl}/zoudoboh-h5service/?theme=theme3&$queryString"
     });
   }
 

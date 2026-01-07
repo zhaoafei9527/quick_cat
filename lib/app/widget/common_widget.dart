@@ -251,8 +251,7 @@ Widget buildPayTypeWidget(PaymentType? paymentType,
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: theme.getColor(ThemeColor.spring),
-              borderRadius: BorderRadius.circular(Dimens.pt12)
-          ),
+              borderRadius: BorderRadius.circular(Dimens.pt12)),
           child: Text("免费",
               style: TextStyle(
                   fontSize: fontSize ?? Dimens.pt22,
@@ -264,8 +263,7 @@ Widget buildPayTypeWidget(PaymentType? paymentType,
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: AppColors.mainRed,
-              borderRadius: BorderRadius.circular(Dimens.pt12)
-          ),
+              borderRadius: BorderRadius.circular(Dimens.pt12)),
           child: Text("VIP",
               style: TextStyle(
                   fontSize: fontSize ?? Dimens.pt22, color: Colors.white)));
@@ -557,17 +555,21 @@ Widget getHengLine(
     double paddingTop = 0,
     double paddingBottom = 0,
     double paddingLeft = 0,
+    double radius = 0,
     double paddingRight = 0}) {
   if (w <= 0) w = double.infinity;
   return Container(
-      margin: EdgeInsets.only(
-          top: paddingTop,
-          bottom: paddingBottom,
-          left: paddingLeft,
-          right: paddingRight),
-      height: h,
-      width: w,
-      color: color ?? AppColors.divideColor);
+    margin: EdgeInsets.only(
+        top: paddingTop,
+        bottom: paddingBottom,
+        left: paddingLeft,
+        right: paddingRight),
+    height: h,
+    width: w,
+    decoration: BoxDecoration(
+        color: color ?? AppColors.divideColor,
+        borderRadius: BorderRadius.circular(radius ?? 0)),
+  );
 }
 
 Widget buildTextInput(

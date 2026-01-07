@@ -13,6 +13,7 @@ import 'package:quick_cat_client/app/routes/app_pages.dart';
 import 'package:quick_cat_client/app/views/pull_refresh_view.dart';
 import 'package:quick_cat_client/app/widget/post_item.dart';
 import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
+import 'package:quick_cat_client/utils/app_util.dart';
 import 'package:quick_cat_client/utils/screen.dart';
 import '../../../../../utils/dimens.dart';
 import '../../../../data/ads_type.dart';
@@ -125,15 +126,18 @@ Widget buildRecommendGameView({bool? showHotGame}) {
                     color: Colors.white)),
             Spacer(),
             GestureDetector(
-                // onTap: ()=>A,
+                onTap: () => AppUtils.jumpToHome(index:3),
                 child: Row(children: [
-              Text("更多游戏",
-                  style: TextStyle(
-                      fontSize: Dimens.pt24, color: const Color(0xFFA3A3A7))),
-              SizedBox(width: Dimens.pt5),
-              Image.asset(R.assetsImgIconArrowRight,
-                  width: Dimens.pt20, height: Dimens.pt20, color: Colors.white)
-            ]))
+                  Text("更多游戏",
+                      style: TextStyle(
+                          fontSize: Dimens.pt24,
+                          color: const Color(0xFFA3A3A7))),
+                  SizedBox(width: Dimens.pt5),
+                  Image.asset(R.assetsImgIconArrowRight,
+                      width: Dimens.pt20,
+                      height: Dimens.pt20,
+                      color: Colors.white)
+                ]))
           ])),
       SizedBox(height: Dimens.pt25),
       FutureBuilder(
@@ -194,7 +198,8 @@ Widget buildRecommendGameView({bool? showHotGame}) {
         height: Dimens.pt84,
         color: Color(0xFF232323).withOpacity(.6),
         padding: EdgeInsets.symmetric(horizontal: Dimens.pt30),
-        margin: EdgeInsets.symmetric(horizontal:(showHotGame??true)? Dimens.pt30:0),
+        margin: EdgeInsets.symmetric(
+            horizontal: (showHotGame ?? true) ? Dimens.pt30 : 0),
         child: Row(children: [
           Image.asset(R.assetsImgTextHomeBalance, height: Dimens.pt40),
           SizedBox(width: Dimens.pt15),

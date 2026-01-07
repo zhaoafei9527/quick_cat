@@ -78,8 +78,8 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
                                   _buildMineUtilsBtnView(
                                       title: "设置",
                                       color: AppColors.textYellowColor,
-                                      onTap: () => Get.toNamed(
-                                          Routes.SETTING_PAGE),
+                                      onTap: () =>
+                                          Get.toNamed(Routes.SETTING_PAGE),
                                       icon: R.assetsImgIconMinePhone),
                                   _buildMineUtilsBtnView(
                                       title: "绑定手机号",
@@ -207,7 +207,7 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
             child: _buildColumnUtilItem(
                 title: "邀请分享",
                 icon: R.assetsImgIconMineShare,
-                onTap:() => Get.toNamed(Routes.INVITED_PAGE)))
+                onTap: () => Get.toNamed(Routes.INVITED_PAGE)))
         // Expanded(
         //     child: _buildColumnUtilItem(
         //         title: "活动",
@@ -346,19 +346,24 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
                             Spacer(),
                             if (user.vipType == 0)
                               Container(
-                                  // width: Dimens.pt132,
-                                  height: Dimens.pt42,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: Dimens.pt10),
+                                  width: Dimens.pt146,
+                                  height: Dimens.pt52,
                                   alignment: Alignment.center,
-                                  color: theme.getColor(ThemeColor.bg),
-                                  child: Text(
-                                      "${user.vipType == 0 ? '去开通' : user.cardName}",
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.circular(Dimens.pt45),
+                                    gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        colors: [
+                                          Color(0xFFFFEBD5),
+                                          Color(0xFFFFD6AA)
+                                        ]),
+                                  ),
+                                  child: Text("立即开通",
                                       style: TextStyle(
-                                          fontSize: Dimens.pt26,
-                                          fontWeight: FontWeight.w600,
-                                          color: theme.getColor(
-                                              ThemeColor.textYellow))))
+                                          fontSize: Dimens.pt24,
+                                          color: AppColors.mainTextColor33)))
                           ]),
                           SizedBox(height: Dimens.pt22),
                           GestureDetector(
@@ -605,7 +610,7 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
           ])),
       Row(mainAxisAlignment: MainAxisAlignment.end, children: [
         GestureDetector(
-            onTap: () => Get.toNamed(Routes.WEEKLY_CHECK_TASK_PAGE),
+            onTap: () => Get.toNamed(Routes.MESSAGE_CENTER_PAGE),
             child: Container(
                 width: Dimens.pt64,
                 height: Dimens.pt64,
@@ -616,7 +621,7 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
                 child: Image.asset(R.assetsImgIconMineMessage))),
         SizedBox(width: Dimens.pt25),
         GestureDetector(
-            onTap: () => Get.toNamed(Routes.WEEKLY_CHECK_TASK_PAGE),
+            onTap: () => AppUtils.goToCustomServicePage(),
             child: Container(
                 width: Dimens.pt64,
                 height: Dimens.pt64,
@@ -628,12 +633,11 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
         SizedBox(width: Dimens.pt25),
       ]),
       Positioned(
-        top: Dimens.pt100,
-        child: GestureDetector(
-            onTap: () => Get.toNamed(Routes.WEEKLY_CHECK_TASK_PAGE),
-            child: Image.asset(R.assetsImgIconMineSigin,
-                width: Dimens.pt99, height: Dimens.pt80)),
-      ),
+          top: Dimens.pt100,
+          child: GestureDetector(
+              onTap: () => Get.toNamed(Routes.WEEKLY_CHECK_TASK_PAGE),
+              child: Image.asset(R.assetsImgIconMineSigin,
+                  width: Dimens.pt99, height: Dimens.pt80))),
     ]);
   }
 

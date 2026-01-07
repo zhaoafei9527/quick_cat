@@ -8,7 +8,10 @@ import 'package:get/get.dart';
 import 'package:quick_cat_client/app/routes/app_pages.dart';
 import 'package:quick_cat_client/app/themes/app_colors.dart';
 import 'package:quick_cat_client/app/widget/common_app_bar.dart';
+import 'package:quick_cat_client/app/widget/common_widget.dart';
 import 'package:quick_cat_client/app/widget/text_field.dart';
+import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/app_util.dart';
 import 'package:quick_cat_client/utils/dimens.dart';
 import 'package:quick_cat_client/utils/screen.dart';
 import '../../../../plugins_utils/ImageLoader/ImageLoader.dart';
@@ -25,167 +28,217 @@ class WithdrawCashBankView extends GetView<WithdrawCashBankController> {
         backgroundColor: AppColors.bgColor,
         body: GetX<WithdrawCashBankController>(
             builder: (WithdrawCashBankController logic) {
-          logic.count.value;
+          ShareKeys shareKeys = Get.find<ShareKeys>();
           return GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () => FocusScope.of(Get.context!).unfocus(),
               child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
                   child: SingleChildScrollView(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          logic.bankCard.value.bankName != null &&
-                                  logic.bankCard.value.bankName != ""
-                              ? Container(
-                                  width: screen.screenWidth,
-                                  height: Dimens.pt162,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xFF1D1A19),
-                                      borderRadius:
-                                          BorderRadius.circular(Dimens.pt12)),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      // mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(height: Dimens.pt4),
-                                        Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              SizedBox(width: Dimens.pt70),
-                                              Text(
-                                                "到账银行卡",
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                        logic.bankCard.value.bankName != null &&
+                                logic.bankCard.value.bankName != ""
+                            ? Container(
+                                width: screen.screenWidth,
+                                height: Dimens.pt162,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFF1D1A19),
+                                    borderRadius:
+                                        BorderRadius.circular(Dimens.pt12)),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    // mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(height: Dimens.pt4),
+                                      Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            SizedBox(width: Dimens.pt70),
+                                            Text("到账银行卡",
                                                 style: TextStyle(
-                                                  fontSize: Dimens.pt28,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              SizedBox(width: Dimens.pt30),
-                                              // ImageLoader.withP(logic.bankCard.value.img??"",
-                                              //     width: Dimens.pt45).load(),
-                                              Obx(() => ImageLoader.withP(
-                                                      logic.bankCard.value
-                                                              .img ??
-                                                          "",
-                                                      width: Dimens.pt45)
-                                                  .load()),
-                                              SizedBox(width: Dimens.pt15),
-                                              Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    SizedBox(
-                                                        height: Dimens.pt35),
-                                                    Text(
-                                                      logic.bankCard.value
-                                                              .bankName ??
-                                                          '',
-                                                      style: TextStyle(
-                                                        fontSize: Dimens.pt32,
-                                                        color: Colors.white,
-                                                      ),
+                                                    fontSize: Dimens.pt28,
+                                                    color: Colors.white)),
+                                            SizedBox(width: Dimens.pt30),
+                                            // ImageLoader.withP(logic.bankCard.value.img??"",
+                                            //     width: Dimens.pt45).load(),
+                                            Obx(() => ImageLoader.withP(
+                                                    logic.bankCard.value.img ??
+                                                        "",
+                                                    width: Dimens.pt45)
+                                                .load()),
+                                            SizedBox(width: Dimens.pt15),
+                                            Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(height: Dimens.pt35),
+                                                  Text(
+                                                    logic.bankCard.value
+                                                            .bankName ??
+                                                        '',
+                                                    style: TextStyle(
+                                                      fontSize: Dimens.pt32,
+                                                      color: Colors.white,
                                                     ),
-                                                    Text("2分钟内到账",
-                                                        style: TextStyle(
+                                                  ),
+                                                  Text("2分钟内到账",
+                                                      style: TextStyle(
                                                           fontSize: Dimens.pt24,
                                                           color: const Color(
-                                                              0xFF8A8785),
-                                                        ))
-                                                  ])
-                                            ])
-                                      ]))
-                              : Container(),
-                          SizedBox(height: Dimens.pt35),
-                          GestureDetector(
-                              onTap: () =>
-                                  Get.toNamed(Routes.BINDING_BANK_CARD),
-                              child: Container(
-                                  width: screen.screenWidth,
-                                  height: Dimens.pt162,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xFF1D1A19),
-                                      borderRadius:
-                                          BorderRadius.circular(Dimens.pt12)),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.add,
-                                            size: Dimens.pt34,
-                                            color: Colors.white),
-                                        SizedBox(width: Dimens.pt10),
-                                        Text(
-                                            logic.bankCard.value.bankName !=
-                                                        null &&
-                                                    logic.bankCard.value
-                                                            .bankName !=
-                                                        ""
-                                                ? "更换绑定银行卡"
-                                                : "立即绑定银行卡",
-                                            style: TextStyle(
-                                                fontSize: Dimens.pt28,
-                                                color: Colors.white))
-                                      ]))),
-                          SizedBox(height: Dimens.pt45),
-                          Text("提现金额",
+                                                              0xFF8A8785)))
+                                                ])
+                                          ])
+                                    ]))
+                            : Container(),
+                        SizedBox(height: Dimens.pt35),
+                        GestureDetector(
+                            onTap: () => Get.toNamed(Routes.BINDING_BANK_CARD),
+                            child: Container(
+                                width: screen.screenWidth,
+                                height: Dimens.pt162,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFF1F1E22),
+                                    borderRadius:
+                                        BorderRadius.circular(Dimens.pt8)),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.add,
+                                          size: Dimens.pt34,
+                                          color: Color(0xFFFFDB9E)),
+                                      SizedBox(width: Dimens.pt10),
+                                      Text(
+                                          logic.bankCard.value.bankName !=
+                                                      null &&
+                                                  logic.bankCard.value
+                                                          .bankName !=
+                                                      ""
+                                              ? "更换绑定银行卡"
+                                              : "立即绑定银行卡",
+                                          style: TextStyle(
+                                              fontSize: Dimens.pt28,
+                                              color: Color(0xFFFFDB9E)))
+                                    ]))),
+                        SizedBox(height: Dimens.pt10),
+                        Container(
+                            width: screen.screenWidth,
+                            height: Dimens.pt84,
+                            decoration: BoxDecoration(
+                                color: const Color(0xFF1F1E22),
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.pt8)),
+                            padding:
+                                EdgeInsets.symmetric(horizontal: Dimens.pt30),
+                            child: Row(children: [
+                              Image.asset(R.assetsImgTextHomeBalance,
+                                  height: Dimens.pt40),
+                              SizedBox(width: Dimens.pt15),
+                              Obx(() => Text("¥${shareKeys.userBalance.value}",
+                                  style: TextStyle(
+                                      fontSize: Dimens.pt40,
+                                      color: Color(0xFFFFDB9E),
+                                      fontWeight: FontWeight.w500)))
+                            ])),
+                        SizedBox(height: Dimens.pt40),
+                        Row(children: [
+                          Text("提现币类:",
                               style: TextStyle(
-                                  fontSize: Dimens.pt32, color: Colors.white)),
-                          SizedBox(height: Dimens.pt45),
-                          Container(
-                              padding:
-                                  EdgeInsets.symmetric(vertical: Dimens.pt20),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color:
-                                              Colors.white.withOpacity(.1)))),
-                              child: Row(children: [
-                                Text("¥",
-                                    style: TextStyle(
-                                        fontSize: Dimens.pt58,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white)),
-                                SizedBox(width: Dimens.pt20),
-                                Expanded(child: _buildCashInputView())
-                              ])),
-                          SizedBox(height: Dimens.pt25),
-                          _buildBalanceView(logic),
-                          SizedBox(height: Dimens.pt80),
-                          GestureDetector(
-                              onTap: () => logic.bindingPhone(),
-                              child: Container(
-                                  width: screen.screenWidth,
-                                  height: Dimens.pt84,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.primaryColor,
-                                      borderRadius:
-                                          BorderRadius.circular(Dimens.pt45)),
-                                  child: Text("提现",
-                                      style: TextStyle(
-                                          fontSize: Dimens.pt32,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white)))),
-                          SizedBox(height: Dimens.pt40),
-                          Text("提现说明",
+                                  fontSize: Dimens.pt28, color: Colors.white)),
+                          SizedBox(width: Dimens.pt15),
+                          Text("人民币",
                               style: TextStyle(
-                                  fontSize: Dimens.pt32,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600)),
-                          SizedBox(height: Dimens.pt25),
-                          _buildTip("1.单笔提现金额 200 ～ 30000元"),
-                          _buildTip("2.每天最多提现5单，总金额不超过 150000 元"),
-                          _buildTip("3.审核通过超过30分钟未到账时请及时联系在线客服"),
-                          _buildTip(
-                              "4.提现前请核对您的银行卡信息是否有误，避免提现失败，提现前核查银行卡状态是否正常，避免提现后资金异常无法使用"),
-                          _buildTip(
-                              "5.提现资金均为正常金流，无需担心资金安全，如果提现后银行卡出现异常状态，请联系在线客服进行反馈"),
+                                  fontSize: Dimens.pt28,
+                                  color: Colors.white.withOpacity(.6)))
                         ]),
-                  )));
+                        SizedBox(height: Dimens.pt30),
+                        Row(children: [
+                          Text("提现金额:",
+                              style: TextStyle(
+                                  fontSize: Dimens.pt28, color: Colors.white)),
+                          SizedBox(width: Dimens.pt15),
+                          Expanded(
+                              child: Container(
+                                  height: Dimens.pt72,
+                                  alignment: Alignment.centerLeft,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: Dimens.pt15),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xFF1F1E22),
+                                      borderRadius:
+                                          BorderRadius.circular(Dimens.pt8)),
+                                  child: _buildCashInputView()))
+                        ]),
+                        SizedBox(height: Dimens.pt30),
+                        getHengLine(color: Color(0xFF606060), h: Dimens.pt1),
+                        SizedBox(height: Dimens.pt30),
+                        Text("提现规则",
+                            style: TextStyle(
+                                fontSize: Dimens.pt28, color: Colors.white)),
+                        SizedBox(height: Dimens.pt15),
+                        Text.rich(
+                            TextSpan(
+                                text: "1.请流水足够后在行提现,流水规则请参考【客服助手】自行查询流水标准查询",
+                                children: [
+                                  TextSpan(
+                                      text:
+                                          "（如未达流水频繁提现，可能会判定为异常，造成短时间内系统禁止提现，损失您的权益）\n",
+                                      style:
+                                          TextStyle(color: Color(0xFFFFDB9E))),
+                                  TextSpan(
+                                      text: "2.提现后会经过人工审核，确保您的资金安全，请耐心等候"
+                                          " 3.单笔提现金额200～30000元（整数提现）"
+                                          " 4.如提现后长时间未通过审核，可能是提现款项系统卡单，此笔订单将会原路返回，请不用担心"
+                                          " 6.提现前请核对您的银行卡信息是否有误，避免提现失败，提现前核查银行卡状态是否正常，避免提现后资金异常无法使用"
+                                          " 7.提现资金均为正常金流，无需担心资金安全，如果提现后银行卡出现异常状态，请联系在线客服进行反馈")
+                                ]),
+                            style: TextStyle(
+                                fontSize: Dimens.pt24,
+                                color: Color(0xFF83827E))),
+                        SizedBox(height: Dimens.pt70),
+                        GestureDetector(
+                            onTap: () => logic.bindingPhone(),
+                            child: Container(
+                                width: screen.screenWidth,
+                                height: Dimens.pt76,
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: Dimens.pt45),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                        colors: [
+                                          Color(0xFFE8C07D),
+                                          Color(0xFFD29B28)
+                                        ]),
+                                    borderRadius:
+                                        BorderRadius.circular(Dimens.pt45)),
+                                child: Text("确认提现",
+                                    style: TextStyle(
+                                        fontSize: Dimens.pt30,
+                                        color: Colors.black)))),
+                        SizedBox(height: Dimens.pt38),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("提现将在15个工作日内到账，如未收到请联系",
+                                  style: TextStyle(
+                                      fontSize: Dimens.pt24,
+                                      color: Colors.white)),
+                              GestureDetector(
+                                  onTap: () => AppUtils.goToCustomServicePage(),
+                                  child: Text("在线客服",
+                                      style: TextStyle(
+                                          fontSize: Dimens.pt24,
+                                          color: AppColors.mainRed)))
+                            ])
+                      ]))));
         }));
   }
 
@@ -199,16 +252,16 @@ class WithdrawCashBankView extends GetView<WithdrawCashBankController> {
     ShareKeys shareKeys = Get.find<ShareKeys>();
     String intValueString;
     return Row(children: [
-      Obx(() => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text.rich(
-                TextSpan(text: "账户余额：", children: [
-                  TextSpan(
-                      text: "",
-                      style: const TextStyle(color: AppColors.primaryColor))
-                ]),
-                style: TextStyle(
-                    fontSize: Dimens.pt24, color: const Color(0xFF8A8785)))
-          ])),
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text.rich(
+            TextSpan(text: "账户余额：", children: [
+              TextSpan(
+                  text: shareKeys.userBalance.value,
+                  style: const TextStyle(color: AppColors.primaryColor))
+            ]),
+            style: TextStyle(
+                fontSize: Dimens.pt24, color: const Color(0xFF8A8785)))
+      ]),
       const Spacer(),
       Container(
           padding: EdgeInsets.symmetric(
@@ -234,13 +287,13 @@ class WithdrawCashBankView extends GetView<WithdrawCashBankController> {
         controller: logic.cashField,
         inputType: TextInputType.number,
         maxLength: 10,
-        hintText: "0",
+        hintText: "单笔提现金额 200-30000元（整数)",
         textStyle: TextStyle(
-            fontSize: Dimens.pt58,
+            fontSize: Dimens.pt24,
             fontWeight: FontWeight.w600,
             color: Colors.white),
         hintStyle: TextStyle(
-            fontSize: Dimens.pt58,
+            fontSize: Dimens.pt24,
             fontWeight: FontWeight.w600,
             color: const Color(0xFF8A8785)),
         onSubmitted: (String text) => {});

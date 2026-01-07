@@ -27,66 +27,82 @@ class MessageCenterPageView extends GetView<MessageCenterPageController> {
   Widget build(BuildContext context) {
     ShareKeys shareKeys = Get.find<ShareKeys>();
     ThemeManager theme = Get.find<ThemeManager>();
-    MessageCenterPageController logic = Get.find<MessageCenterPageController>();
-    return Stack(children: [
-      Scaffold(
-          backgroundColor: theme.getColor(ThemeColor.bg),
-          appBar: getCommonAppBar("消息中心"),
-          body: Padding(
-              padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
-              child: Obx(() {
-                return Column(children: [
-                  Obx(
-                    () => _buildMessageItem(
-                        title: "系统消息",
-                        icon: R.assetsImgIconMessageSystem,
-                        onTap: () {
-                          shareKeys.systemRead.value = true;
-                          Get.toNamed(Routes.SYSTEM_MESSAGE_PAGE);
-                        },
-                        desc: logic.messageList.isNotEmpty
-                            ? logic.messageList[0].title
-                            : "暂无新消息",
-                        read: shareKeys.systemRead.value),
-                  ),
-                  SizedBox(height: Dimens.pt25),
-                  getHengLine(
-                      h: Dimens.pt2, color: Colors.white.withOpacity(.1)),
-                  SizedBox(height: Dimens.pt25),
-                  _buildMessageItem(
-                      title: "在线客服",
-                      onTap: () async {
-                        logic.enterLoading.value = true;
-                        ServicesModel? model = await ApiRes.getCustomServers();
-                        String? queryString =
-                            (model?.sign!.split('?').length)! > 1
-                                ? model?.sign?.split('?')[1]
-                                : '';
-                        logic.enterLoading.value = false;
+    return GetX<MessageCenterPageController>(
+      builder: (MessageCenterPageController logic) {
+        return Stack(children: [
+          Scaffold(
+              backgroundColor: theme.getColor(ThemeColor.bg),
+              appBar: getCommonAppBar("我的消息"),
+              body: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
+                  child: _buildSystemMessage())),
+          Obx(() => logic.enterLoading.value
+              ? Container(
+                  width: screen.screenWidth,
+                  height: screen.screenHeight,
+                  color: Colors.black.withOpacity(.5),
+                  child: getLoadingWidget())
+              : const SizedBox())
+        ]);
+      }
+    );
+  }
 
-                        ShareKeys shareKeys = Get.find<ShareKeys>();
-                        Get.toNamed(Routes.ACTIVITY_WEB_PAGE, arguments: {
-                          "title": "在线客服",
-                          "uri":
-                              "${shareKeys.baseUrl}/zoudoboh-h5service/?theme=theme1&$queryString"
-                        });
-                      },
-                      icon: R.assetsImgIconMessageCustom,
-                      desc: "问题咨询及反馈",
-                      read: shareKeys.customRead.value),
-                  SizedBox(height: Dimens.pt25),
-                  getHengLine(
-                      h: Dimens.pt2, color: Colors.white.withOpacity(.1))
-                ]);
-              }))),
-      Obx(() => logic.enterLoading.value
-          ? Container(
-              width: screen.screenWidth,
-              height: screen.screenHeight,
-              color: Colors.black.withOpacity(.5),
-              child: getLoadingWidget())
-          : const SizedBox())
-    ]);
+  Widget _buildSystemMessage() {
+    ThemeManager theme = Get.find<ThemeManager>();
+    MessageCenterPageController logic = Get.find<MessageCenterPageController>();
+
+    return Center(
+        child: PullRefreshView(
+      controller: logic.refreshController,
+      onRefresh: () => logic.onRefresh(),
+      onLoading: () => logic.onLoadMore(),
+      child: ListView.separated(
+          itemBuilder: (c, index) {
+            String textFromBackend =
+                logic.messageList[index].content ?? ""; // 假设后端返回的是这种形式
+            String formattedText = textFromBackend.replaceAll('\\n', '\n');
+            return Container(
+                width: screen.screenWidth,
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimens.pt25, vertical: Dimens.pt30),
+                decoration: BoxDecoration(
+                    color: Color(0xFF24242F),
+                    borderRadius: BorderRadius.circular(Dimens.pt8)),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(children: [
+                        Image.asset(R.assetsImgIconMessageSystem,
+                            width: Dimens.pt72),
+                        SizedBox(width: Dimens.pt10),
+                        Expanded(
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                              Text(logic.messageList[index].title ?? "",
+                                  style: TextStyle(
+                                      fontSize: Dimens.pt24,
+                                      color: Colors.white)),
+                              SizedBox(height: Dimens.pt12),
+                              Text(
+                                  TimeUtil.buildYYMMDDHHNN(
+                                      logic.messageList[index].createdAt ?? ""),
+                                  style: TextStyle(
+                                      fontSize: Dimens.pt24,
+                                      color: Color(0xFFC2C4C4)))
+                            ]))
+                      ]),
+                      SizedBox(height: Dimens.pt25),
+                      Text(formattedText,
+                          softWrap: true,
+                          style: TextStyle(
+                              fontSize: Dimens.pt24, color: Colors.white))
+                    ]));
+          },
+          separatorBuilder: (c, index) => SizedBox(height: Dimens.pt25),
+          itemCount: logic.messageList.length),
+    ));
   }
 
   Widget _buildMessageItem(

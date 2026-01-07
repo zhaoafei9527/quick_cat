@@ -30,78 +30,67 @@ class WeeklyCheckInPageView extends GetView<WeeklyCheckInController> {
     ThemeManager theme = Get.find<ThemeManager>();
     return GetX<WeeklyCheckInController>(
         builder: (WeeklyCheckInController logic) {
-      logic.todayChecked.value;
-      return Scaffold(
-        backgroundColor: Color(0xFFFFF6F5),
-        body: SingleChildScrollView(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Stack(alignment: Alignment.topCenter, children: [
-            ImageLoader.withP(
-                    "aes/image/ae/61/9fa/31/dd5aee9a289277f9fa1961461fee31cf.png",
-                    width: screen.screenWidth)
-                .load(),
-            transparentAppbar("签到", titleColor: Colors.black)
-          ]),
-          SizedBox(height: Dimens.pt30),
-          // Text("活动内容",
-          //     style: TextStyle(
-          //         fontSize: Dimens.pt32,
-          //         fontWeight: FontWeight.w600,
-          //         color: Colors.white)),
-          // SizedBox(height: Dimens.pt25),
-          // Text(
-          //     "现金红包大派送！即日平台所有用户，每天首次登陆都可以获赠一份随机额度的彩金红包！快邀请您的好友一起来领取吧！",
-          //     style: TextStyle(
-          //         fontSize: Dimens.pt26,
-          //         color: const Color(0xFF8A8785))),
-          // SizedBox(height: Dimens.pt50),
-          _buildDaySingInView(),
-          SizedBox(height: Dimens.pt50),
-          _buildSingInContainer(),
-          SizedBox(height: Dimens.pt50),
-          // _buildEnvelopeTable(),
-          // SizedBox(height: Dimens.pt50),
-          // _buildEnvelopeReceive(),
-          // SizedBox(height: Dimens.pt50),
-          Padding(
-              padding: EdgeInsets.symmetric(horizontal: Dimens.pt30),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
-                Text("签到规则说明",
-                    style: TextStyle(
-                        fontSize: Dimens.pt32,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF663500))),
-                SizedBox(height: Dimens.pt25),
-                Text(
-                    "1.领取的随机红包1倍流水,即可出款！\n2.每个会员、每个IP仅限参与一次,如出现同IP多账号现象,则视为同一个人,不可再次参与！\n3.为避免文字差异,我司保留本活动的解释权！",
-                    style: TextStyle(
-                        fontSize: Dimens.pt24, color: const Color(0xFF663500)))
-              ])),
-
-          SizedBox(height: screen.bottomNavBarH)
-        ])),
-      );
+      return Stack(alignment: Alignment.topCenter, children: [
+        Container(
+            width: screen.screenWidth,
+            height: screen.screenHeight,
+            color: Color(0xFFFFF6F5)),
+        ImageLoader.withP(
+                "aes/image/ae/61/9fa/31/dd5aee9a289277f9fa1961461fee31cf.png",
+                width: screen.screenWidth)
+            .load(),
+        Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: getCommonAppBar("签到", titleColor: Colors.black),
+            body: SingleChildScrollView(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                  SizedBox(height: screen.screenHeight / 4),
+                  _buildDaySingInView(),
+                  SizedBox(height: Dimens.pt50),
+                  _buildSingInContainer(),
+                  SizedBox(height: Dimens.pt50),
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: Dimens.pt30),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("签到规则说明",
+                                style: TextStyle(
+                                    fontSize: Dimens.pt32,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xFF663500))),
+                            SizedBox(height: Dimens.pt25),
+                            Text(
+                                "1.领取的随机红包1倍流水,即可出款！\n"
+                                "2.每个会员、每个IP仅限参与一次,如出现同IP多账号现象,则视为同一个人,不可再次参与！\n"
+                                "3.为避免文字差异,我司保留本活动的解释权！",
+                                style: TextStyle(
+                                    fontSize: Dimens.pt24,
+                                    color: const Color(0xFF663500)))
+                          ])),
+                  SizedBox(height: screen.bottomNavBarH)
+                ])))
+      ]);
     });
   }
 
   Widget _buildEnvelopeReceive() {
     return GestureDetector(
-      onTap: () => Get.toNamed(Routes.VIP_CENTER_PAGE),
-      child: Container(
-        width: screen.screenWidth,
-        height: Dimens.pt84,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: const Color(0xFFFF6213),
-            borderRadius: BorderRadius.circular(Dimens.pt45)),
-        child: Text("开通会员",
-            style: TextStyle(
-                fontSize: Dimens.pt32,
-                fontWeight: FontWeight.w600,
-                color: Colors.white)),
-      ),
-    );
+        onTap: () => Get.toNamed(Routes.VIP_CENTER_PAGE),
+        child: Container(
+            width: screen.screenWidth,
+            height: Dimens.pt84,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: const Color(0xFFFF6213),
+                borderRadius: BorderRadius.circular(Dimens.pt45)),
+            child: Text("开通会员",
+                style: TextStyle(
+                    fontSize: Dimens.pt32,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white))));
   }
 
   Widget _buildEnvelopeTable() {
@@ -336,7 +325,7 @@ class WeeklyCheckInPageView extends GetView<WeeklyCheckInController> {
                                                   ],
                                                 begin: Alignment.topCenter,
                                                 end: Alignment.bottomCenter)),
-                                    child: Text((item == "今天" && logic.todayChecked.value) || (item == "昨天" && logic.yesterdayChecked.value) ? "已签到" : "未签到",
+                                    child: Text((item == "今天" && logic.todayChecked.value) || (item == "昨天" && logic.yesterdayChecked.value) ? "已签到" : item,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(fontSize: Dimens.pt22, color: Colors.white)))
                               ])),

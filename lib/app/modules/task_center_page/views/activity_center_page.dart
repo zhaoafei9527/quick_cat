@@ -21,7 +21,7 @@ class ActivityCenterPageView extends GetView<ActivityCenterController> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.bgColor,
-        appBar: getCommonAppBar("活动中心", actions: [
+        appBar: getCommonAppBar("福利活动", actions: [
           GestureDetector(
               onTap: () => Get.toNamed(Routes.MESSAGE_CENTER_PAGE),
               child:
@@ -34,7 +34,8 @@ class ActivityCenterPageView extends GetView<ActivityCenterController> {
                 child: ListView.separated(
                     padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
                     itemBuilder: (c, index) => GestureDetector(
-                          onTap: () => AppPages.jumpRouter( path: logic.activityList[index].jumpUrl),
+                          onTap: () => AppPages.jumpRouter(
+                              path: logic.activityList[index].jumpUrl),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -45,10 +46,29 @@ class ActivityCenterPageView extends GetView<ActivityCenterController> {
                                         width: screen.screenWidth)
                                     .load(),
                                 SizedBox(height: Dimens.pt10),
-                                Text(logic.activityList[index].title ?? "",
-                                    style: TextStyle(
-                                        fontSize: Dimens.pt28,
-                                        color: Colors.white))
+                                Row(
+                                  children: [
+                                    Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: Dimens.pt10,
+                                            vertical: Dimens.pt5),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                Dimens.pt6),
+                                            border: Border.all(
+                                                color: Color(0xFFFFCD82),
+                                                width: Dimens.pt1)),
+                                        child: Text("活动简介",
+                                            style: TextStyle(
+                                                fontSize: Dimens.pt20,
+                                                color: Color(0xFFFFCD82)))),
+                                    SizedBox(width: Dimens.pt10),
+                                    Text(logic.activityList[index].title ?? "",
+                                        style: TextStyle(
+                                            fontSize: Dimens.pt24,
+                                            color: Colors.white))
+                                  ],
+                                )
                               ]),
                         ),
                     separatorBuilder: (c, index) =>

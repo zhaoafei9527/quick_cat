@@ -179,7 +179,7 @@ class SplashPageView extends GetView<SplashPageController> {
                 height: Dimens.pt65,
                 decoration: BoxDecoration(
                     color: timeValue.value < 4
-                        ? theme.getColor(ThemeColor.textYellow)
+                        ?AppColors.mainRed
                         : theme.getColor(ThemeColor.textGrey),
                     borderRadius: BorderRadius.circular(Dimens.pt45)),
                 child: Center(
@@ -191,12 +191,12 @@ class SplashPageView extends GetView<SplashPageController> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: Dimens.pt28,
-                                color: theme.getColor(ThemeColor.bg))),
+                                color: Colors.white)),
                       timeValue.value > 0
                           ? Text(" ${timeValue}s",
                               style: TextStyle(
                                   fontSize: Dimens.pt28,
-                                  color: theme.getColor(ThemeColor.bg)))
+                                  color: Colors.white))
                           : const SizedBox()
                     ]))),
           );

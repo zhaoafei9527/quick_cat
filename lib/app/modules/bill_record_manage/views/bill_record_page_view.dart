@@ -47,12 +47,13 @@ class BillRecordPageView extends GetView<BillRecordController> {
                               distance: Dimens.pt2,
                               controller: logic.tabController,
                               alignment: TabAlignment.start,
-                              insets: Dimens.pt65,
+                              insets: Dimens.pt35,
+                              fontSize: Dimens.pt28,
                               tabs: logic.tabList.map((e) => Text(e)).toList()),
                         ),
                         SizedBox(width: Dimens.pt15),
                         Obx(() => _buildDropdownView(
-                            width: Dimens.pt120,
+                            width: Dimens.pt100,
                             onTap: () => logic.showDateChoose.value =
                                 !logic.showDateChoose.value,
                             value:
@@ -84,7 +85,7 @@ class BillRecordPageView extends GetView<BillRecordController> {
     return Column(children: [
       Container(
           height: Dimens.pt55,
-          color: const Color(0xFF1D1A19),
+          color: const Color(0xFF222433),
           child: Row(children: [
             _getTableRow(text: "下注金额"),
             SizedBox(width: Dimens.pt20),
@@ -171,7 +172,7 @@ class BillRecordPageView extends GetView<BillRecordController> {
       SizedBox(height: Dimens.pt25),
       Container(
           height: Dimens.pt55,
-          color: const Color(0xFF1D1A19),
+          color: const Color(0xFF222433),
           child: Row(children: [
             _getTableRow(text: "帐变金额"),
             SizedBox(width: Dimens.pt20),
@@ -247,11 +248,10 @@ class BillRecordPageView extends GetView<BillRecordController> {
         onTap: () => onTap?.call(),
         child: Container(
             width: width ?? Dimens.pt170,
-            padding: EdgeInsets.symmetric(
-                horizontal: Dimens.pt20, vertical: Dimens.pt10),
+            padding: EdgeInsets.symmetric(vertical: Dimens.pt10),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.white),
+                border: Border.all(color: Color(0xFFFFB715)),
                 borderRadius: BorderRadius.circular(Dimens.pt12)),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(value ?? "",
@@ -267,7 +267,7 @@ class BillRecordPageView extends GetView<BillRecordController> {
     return Column(children: [
       Container(
           height: Dimens.pt55,
-          color: const Color(0xFF1D1A19),
+          color: const Color(0xFF222433),
           child: Row(children: [
             _getTableRow(text: "提现金额"),
             SizedBox(width: Dimens.pt45),
@@ -364,7 +364,7 @@ class BillRecordPageView extends GetView<BillRecordController> {
     return Column(children: [
       Container(
           height: Dimens.pt55,
-          color: const Color(0xFF1D1A19),
+          color: const Color(0xFF222433),
           child: Row(children: [
             _getTableRow(text: "充值金额"),
             SizedBox(width: Dimens.pt45),
@@ -425,7 +425,7 @@ class BillRecordPageView extends GetView<BillRecordController> {
   Widget _buildTypeChooseView() {
     BillRecordController logic = Get.find<BillRecordController>();
     return Positioned(
-        top: Dimens.pt55 + Dimens.pt80,
+        top: Dimens.pt55 + Dimens.pt90,
         left: Dimens.pt140,
         child: Obx(() => AnimatedOpacity(
             duration: Durations.short4,
@@ -435,9 +435,9 @@ class BillRecordPageView extends GetView<BillRecordController> {
                 child: Container(
                     width: Dimens.pt170,
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(Dimens.pt12)),
+                        color: Color(0xFF171F20),
+                        border: Border.all(color: Color(0xFFFFB715)),
+                        borderRadius: BorderRadius.circular(Dimens.pt6)),
                     child: Column(children: [
                       ...List.generate(
                           logic.typeCodeList.length,
@@ -459,11 +459,10 @@ class BillRecordPageView extends GetView<BillRecordController> {
               border: index != (list ?? []).length - 1
                   ? Border(
                       bottom: BorderSide(
-                          color: const Color(0xFFF1F1F1), width: Dimens.pt1))
+                          color: const Color(0xFFFFB715), width: Dimens.pt2))
                   : null),
           child: Text(list?[index]["name"] ?? "",
-              style: TextStyle(
-                  fontSize: Dimens.pt24, color: const Color(0xFF141211)))),
+              style: TextStyle(fontSize: Dimens.pt24, color: Colors.white))),
     );
   }
 
@@ -480,9 +479,9 @@ class BillRecordPageView extends GetView<BillRecordController> {
                 child: Container(
                     width: Dimens.pt170,
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(Dimens.pt12)),
+                        color: Color(0xFF171F20),
+                        border: Border.all(color: Color(0xFFFFB715)),
+                        borderRadius: BorderRadius.circular(Dimens.pt6)),
                     child: Column(children: [
                       ...List.generate(
                           logic.sysTypeCodeList.length,
@@ -496,18 +495,18 @@ class BillRecordPageView extends GetView<BillRecordController> {
   Widget _buildDateChooseView() {
     BillRecordController logic = Get.find<BillRecordController>();
     return Positioned(
-        top: Dimens.pt55,
+        top: Dimens.pt65,
         child: Obx(() => AnimatedOpacity(
             duration: Durations.short4,
             opacity: logic.showDateChoose.value ? 1 : 0,
             child: IgnorePointer(
               ignoring: !logic.showDateChoose.value,
               child: Container(
-                  width: Dimens.pt120,
+                  width: Dimens.pt100,
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.circular(Dimens.pt12)),
+                      color: Color(0xFF171F20),
+                      border: Border.all(color: Color(0xFFFFB715)),
+                      borderRadius: BorderRadius.circular(Dimens.pt6)),
                   child: Column(children: [
                     ...List.generate(
                         logic.dateCodesList.length,
