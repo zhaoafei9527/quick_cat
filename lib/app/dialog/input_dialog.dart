@@ -12,6 +12,7 @@ class InputDialog {
     BuildContext? context,
     String? prefix,
     String? initText,
+
   ) async {
     return Navigator.of(context!)
         .push(InputOverlay(prefix: prefix ?? "", initText: initText ?? ""));
@@ -64,8 +65,9 @@ class InputWidget extends StatefulWidget {
   String? prifix;
   String? text;
   bool? send;
+  double? horizontal = Dimens.pt30;
 
-  InputWidget({this.text, this.send, this.prifix, super.key});
+  InputWidget({this.text, this.send, this.prifix, this.horizontal, super.key});
 
   @override
   State<InputWidget> createState() => _InputWidgetState();
@@ -86,48 +88,78 @@ class _InputWidgetState extends State<InputWidget> {
 
     return Scaffold(
         backgroundColor: Colors.black.withOpacity(.3),
-        body: Column(mainAxisSize: MainAxisSize.min, children: [
-          Expanded(
-              child: GestureDetector(
-                  onTapDown: (_) {
-                    var text = textField.text.trim() ?? "";
-                    InputWidget inputState =
-                        InputWidget(text: text, send: false);
-                    Navigator.pop(context, inputState);
-                  },
-                  child: Container(color: Colors.transparent))),
-          SafeArea(
-              child: Container(
-                  width: screen.screenWidth,
-                  height: Dimens.pt68,
-                  margin: EdgeInsets.symmetric(horizontal: Dimens.pt25),
-                  padding: EdgeInsets.symmetric(horizontal: Dimens.pt16),
-                  decoration: BoxDecoration(
-                      color: const Color(0xFF2D2C2B),
-                      borderRadius: BorderRadius.circular(Dimens.pt45)),
-                  child: Row(children: [
-                    Expanded(
-                        child: GetCommonTextField(
-                            focusNode: focusNode,
-                            controller: textField,
-                            maxLength: 20,
-                            hintText: "宝子,你给我把评论发了！",
-                            onSubmitted: (String text) {
-                              var text = textField.text.trim();
-                              InputWidget inputState =
-                                  InputWidget(text: text, send: true);
-                              Navigator.pop(context, inputState);
-                            })),
-                    GestureDetector(
-                        onTap: () {
-                          var text = textField.text.trim();
-                          InputWidget inputState =
-                              InputWidget(text: text, send: true);
-                          Navigator.pop(context, inputState);
-                        },
-                        child: Image.asset(R.assetsImgIconSend,
-                            width: Dimens.pt68))
-                  ])))
-        ]));
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: widget.horizontal ?? Dimens.pt25),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Expanded(
+                child: GestureDetector(
+                    onTapDown: (_) {
+                      var text = textField.text.trim() ?? "";
+                      InputWidget inputState =
+                          InputWidget(text: text, send: false);
+                      Navigator.pop(context, inputState);
+                    },
+                    child: Container(color: Colors.transparent))),
+            SafeArea(
+                child: Container(
+                    width: screen.screenWidth,
+                    height: Dimens.pt68,
+                    margin: EdgeInsets.only(bottom: Dimens.pt25),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Dimens.pt30, vertical: Dimens.pt10),
+                    decoration: BoxDecoration(
+                        color: const Color(0xFF262637),
+                        borderRadius: BorderRadius.circular(Dimens.pt8)),
+                    child: Row(children: [
+                      Expanded(
+                          child: Container(
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: Dimens.pt30),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: const Color(0xFF5F5F8B),
+                                      width: Dimens.pt1),
+                                  borderRadius:
+                                      BorderRadius.circular(Dimens.pt45)),
+                              child: GetCommonTextField(
+                                  focusNode: focusNode,
+                                  controller: textField,
+                                  maxLength: 20,
+                                  hintStyle: TextStyle(
+                                      fontSize: Dimens.pt22,
+                                      color: Color(0xFF787979)),
+                                  textStyle: TextStyle(
+                                      fontSize: Dimens.pt22,
+                                      color: Colors.white),
+                                  hintText: "只有VIP才可以发表评论哦!",
+                                  onSubmitted: (String text) {
+                                    var text = textField.text.trim();
+                                    InputWidget inputState =
+                                        InputWidget(text: text, send: true);
+                                    Navigator.pop(context, inputState);
+                                  }))),
+                      SizedBox(width: Dimens.pt30),
+                      GestureDetector(
+                          onTap: () {
+                            var text = textField.text.trim();
+                            InputWidget inputState =
+                                InputWidget(text: text, send: true);
+                            Navigator.pop(context, inputState);
+                          },
+                          child: Container(
+                              width: Dimens.pt80,
+                              height: Dimens.pt45,
+                              decoration: BoxDecoration(
+                                  color: Color(0xFF4A4A6D),
+                                  borderRadius:
+                                      BorderRadius.circular(Dimens.pt8)),
+                              child: Center(
+                                  child: Text("发送",
+                                      style: TextStyle(
+                                          fontSize: Dimens.pt24,
+                                          color: Colors.white)))))
+                    ])))
+          ]),
+        ));
   }
 }

@@ -9,7 +9,9 @@ import 'package:get/get.dart';
 // 🌎 Project imports:
 import 'package:quick_cat_client/app/data/share_key.dart';
 import 'package:quick_cat_client/app/model/home/bottom_bar_model_model.dart';
+import 'package:quick_cat_client/app/modules/home/home_mine_center/controllers/home_mine_center_controller.dart';
 import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/m3u8_cache_manager.dart';
 import 'package:quick_cat_client/r.dart';
 
 class HomeController extends GetxController {
@@ -32,7 +34,9 @@ class HomeController extends GetxController {
         showAccountQrDialog(Get.context!);
       }
       await ApiRes.getUpdateUserInfo();
-
+      HomeMineCenterController mine = Get.find<HomeMineCenterController>();
+      mine.cacheSize.value =
+          await M3u8CacheManager().getCacheSizeMB();
     } else if (index == 0 || index == 2 || index == 1) {
       showDialogAds();
     } else if (index == 3) {

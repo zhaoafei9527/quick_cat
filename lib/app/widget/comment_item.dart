@@ -150,6 +150,7 @@ class _CommentItemViewState extends State<CommentItemView> {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           _buildUserNameView(widget.model, isMain: true),
+          SizedBox(height: Dimens.pt20),
           _buildCommentText(widget.model?.text ?? "",
               isAds: widget.model?.isAds ?? false),
           SizedBox(height: Dimens.pt5),
@@ -180,8 +181,9 @@ class _CommentItemViewState extends State<CommentItemView> {
                         ]))
                   ]);
             }),
-            _buildLastUtils()
-          ]
+            _buildLastUtils(),
+            getHengLine(color: Color(0xFFE5E5E5).withOpacity(.3), h: Dimens.pt1)
+          ],
         ]))
       ]),
     );
@@ -238,7 +240,6 @@ class _CommentItemViewState extends State<CommentItemView> {
               await showPlayerCommonDialog(Get.context!,
                   title: "友情提示",
                   content: "评论功能仅会员用户可发送,请先获得会员！",
-                  btnList: ["获得会员"],
                   btnCall: [() => Get.toNamed(Routes.VIP_CENTER_PAGE)],
                   btnActionIndex: 0);
             },
@@ -257,10 +258,8 @@ class _CommentItemViewState extends State<CommentItemView> {
     bool isLike = model?.isLike ?? false;
     return Row(children: [
       Text(TimeUtil.showDateBefore(model?.createdAt ?? ""),
-          style: TextStyle(
-              fontSize: Dimens.pt22,
-              color: theme.getColor(ThemeColor.textGrey))),
-      SizedBox(width: Dimens.pt20),
+          style: TextStyle(fontSize: Dimens.pt24, color: Color(0xFF999999))),
+      const Spacer(),
       if (isMain ?? false)
         GestureDetector(
             onTap: () =>
@@ -269,9 +268,8 @@ class _CommentItemViewState extends State<CommentItemView> {
                 padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
                 child: Text("回复",
                     style: TextStyle(
-                        fontSize: Dimens.pt22,
-                        color: theme.getColor(ThemeColor.textYellow))))),
-      const Spacer(),
+                        fontSize: Dimens.pt24, color: Color(0xFF999999))))),
+      SizedBox(width: Dimens.pt20),
       StatefulBuilder(builder: (context, setState) {
         return GestureDetector(
             onTap: () async {
@@ -280,7 +278,7 @@ class _CommentItemViewState extends State<CommentItemView> {
                   collectType: MediaType.comment,
                   type: ActionType.Like,
                   objectId: model?.id ?? 0,
-                  flag:isLike,
+                  flag: isLike,
                   onSuccess: () {},
                   onError: (e) {});
               setState(() {
@@ -292,30 +290,25 @@ class _CommentItemViewState extends State<CommentItemView> {
                 child: Row(children: [
                   Image.asset(
                       isLike
-                          ? R.assetsImgIconVideoCollected
-                          : R.assetsImgIconVideoCollect,
-                      color: theme.getColor(
-                          isLike ? ThemeColor.textYellow : ThemeColor.textGrey),
+                          ? R.assetsImgIconComCollected
+                          : R.assetsImgIconComCollect,
                       width: Dimens.pt30),
                   SizedBox(width: Dimens.pt10),
                   Text("$likes",
                       style: TextStyle(
-                          fontSize: Dimens.pt22,
-                          color: theme.getColor(ThemeColor.textGrey)))
+                          fontSize: Dimens.pt24, color: Color(0xFF999999)))
                 ])));
       })
     ]);
   }
 
   Text _buildCommentText(String text, {bool isAds = false}) {
-    ThemeManager theme = Get.find<ThemeManager>();
     return Text(text,
         maxLines: 6,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
             fontSize: Dimens.pt26,
-            color: theme
-                .getColor(isAds ? ThemeColor.textGrey : ThemeColor.primary)));
+            color: isAds ? AppColors.primaryColor : Colors.white));
   }
 
   Row _buildUserNameView(CommentModel? model, {bool? isMain}) {
@@ -324,9 +317,7 @@ class _CommentItemViewState extends State<CommentItemView> {
       Text(model?.userName ?? "",
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              fontSize: Dimens.pt24,
-              color: theme.getColor(ThemeColor.textGrey))),
+          style: TextStyle(fontSize: Dimens.pt28, color: Colors.white)),
       if (!(model?.isAds ?? false)) ...[
         SizedBox(width: Dimens.pt10),
         // Image.asset(tipVipActiveInsert["insert$vipType"] ?? "", width: 70),
@@ -342,7 +333,7 @@ class _CommentItemViewState extends State<CommentItemView> {
                   fontSize: Dimens.pt22,
                   color: (model?.isAds ?? false)
                       ? theme.getColor(ThemeColor.primary)
-                      : theme.getColor(ThemeColor.textGrey))),
+                      : AppColors.textColorWhite)),
           SizedBox(width: Dimens.pt10),
           // Image.asset(tipVipActiveInsert["insert$widgetVipType"] ?? "",
           //     width: 70)

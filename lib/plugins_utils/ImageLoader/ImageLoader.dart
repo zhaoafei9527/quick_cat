@@ -61,6 +61,7 @@ class ImageLoader {
         String imgCdn = Address.imgCdn ?? "";
         address = path.join(imgCdn, "$address");
       }
+
       return ClipRRect(
           borderRadius: BorderRadius.circular(radius ?? 0),
           child: CachedNetworkImage(

@@ -29,7 +29,7 @@ class Pubspec {
 
   static const versionIsPreRelease = false;
 
-  static const debug = true;
+  static const debug = false;
 
   static const qiye = false;
 

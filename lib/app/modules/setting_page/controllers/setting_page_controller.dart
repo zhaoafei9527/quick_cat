@@ -131,7 +131,6 @@ class SettingPageController extends GetxController {
       var result = await showPlayerCommonDialog(Get.context!,
           title: "友情提示",
           content: "该功能仅会员用户可使用,请先获得会员！",
-          btnList: ["获得会员"],
           btnActionIndex: 0);
     }
   }

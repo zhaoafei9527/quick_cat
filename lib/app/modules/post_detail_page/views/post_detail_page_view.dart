@@ -138,11 +138,11 @@ class PostDetailPageView extends GetView<PostDetailPageController> {
       ],
       getHengLine(color: Color(0xFF3AF26E).withOpacity(0.4)),
       SizedBox(
-          height: screen.screenHeight / 2,
+          height: screen.screenHeight / 1.8,
           child: CommentRefreshView(
               postId: base?.id ?? 0,
               type: CommentType.CT_Post,
-              topInput: true,
+              topInput: false,
               comments: base?.comments))
     ]);
   }

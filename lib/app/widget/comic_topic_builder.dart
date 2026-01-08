@@ -78,11 +78,11 @@ Widget buildMediaTopicWidget(TopicList topic, MediaType type,
           : null,
       child: Column(children: [
         child,
-        ChangeMoreCoversBuilder(
-            isLoading: isLoading,
-            onMoreTap: () => onTapMediaTopic(topic, type),
-            onChangeTap: () => _changeMediaList(
-                observableTopic, topic.id ?? 0, isLoading, type))
+        // ChangeMoreCoversBuilder(
+        //     isLoading: isLoading,
+        //     onMoreTap: () => onTapMediaTopic(topic, type),
+        //     onChangeTap: () => _changeMediaList(
+        //         observableTopic, topic.id ?? 0, isLoading, type))
       ]));
 }
 

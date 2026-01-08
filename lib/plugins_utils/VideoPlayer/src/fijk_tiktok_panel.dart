@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:quick_cat_client/app/data/share_key.dart';
 import 'package:quick_cat_client/app/dialog/comment_dialog.dart';
 import 'package:quick_cat_client/app/dialog/common_dialog.dart';
 import 'package:quick_cat_client/app/modules/short_video_player/controllers/short_video_player_controller.dart';
@@ -337,22 +338,24 @@ class _FijkTiktokPanelState extends State<FijkTiktokPanel> {
 }
 
 Widget _buildVideoTitle(MediaInfo? mediaInfo) {
-  ThemeManager theme = Get.find<ThemeManager>();
+  ShareKeys shareKeys = Get.find<ShareKeys>();
   PaymentType payType = mediaInfo?.payType ?? PaymentType.freePaymentType;
+
   return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
     Row(children: [
       // buildPayTypeWidget(payType,
       //     price: mediaInfo?.price ?? 0,
       //     width: Dimens.pt73,
       //     height: Dimens.pt35),
-      Container(
-          padding: EdgeInsets.symmetric(
-              horizontal: Dimens.pt15, vertical: Dimens.pt6),
-          decoration: BoxDecoration(
-              color: AppColors.mainRed,
-              borderRadius: BorderRadius.circular(Dimens.pt8)),
-          child: Text("玩游戏 领会员 全站视频免费看",
-              style: TextStyle(color: Colors.white, fontSize: Dimens.pt24))),
+      if (payType != PaymentType.freePaymentType && !shareKeys.isVip())
+        Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: Dimens.pt15, vertical: Dimens.pt6),
+            decoration: BoxDecoration(
+                color: AppColors.mainRed,
+                borderRadius: BorderRadius.circular(Dimens.pt8)),
+            child: Text("玩游戏 领会员 全站视频免费看",
+                style: TextStyle(color: Colors.white, fontSize: Dimens.pt24))),
 
       // if (!(mediaInfo?.playable ?? false)) ...[
       //   SizedBox(width: Dimens.pt20),

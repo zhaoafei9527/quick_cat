@@ -1,8 +1,10 @@
 // 🐦 Flutter imports:
 import 'package:quick_cat_client/app/data/ads_type.dart';
+import 'package:quick_cat_client/app/data/pubspec.dart';
 import 'package:quick_cat_client/app/dialog/accont_qr_dialog.dart';
 import 'package:quick_cat_client/app/dialog/announce_dialog.dart';
 import 'package:quick_cat_client/app/dialog/common_dialog.dart';
+import 'package:quick_cat_client/app/dialog/update_dialog.dart';
 import 'package:quick_cat_client/app/model/home/user_info_model.dart';
 import 'package:quick_cat_client/app/model/home/video_play_model.dart';
 import 'package:quick_cat_client/app/themes/theme_manager.dart';
@@ -77,76 +79,58 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
                                 child: Column(children: [
                                   _buildMineUtilsBtnView(
                                       title: "设置",
-                                      color: AppColors.textYellowColor,
+                                      color: AppColors.textColorWhite,
                                       onTap: () =>
                                           Get.toNamed(Routes.SETTING_PAGE),
-                                      icon: R.assetsImgIconMinePhone),
+                                      icon: R.assetsImgIconMineSetting),
                                   _buildMineUtilsBtnView(
                                       title: "绑定手机号",
-                                      color: AppColors.textYellowColor,
+                                      color: AppColors.textColorWhite,
                                       desc: "绑定成功送3元彩金！",
                                       onTap: () => Get.toNamed(
                                           Routes.BIND_MOBILE_PAGE,
                                           arguments: {"type": "find"}),
                                       icon: R.assetsImgIconMinePhone),
                                   _buildMineUtilsBtnView(
-                                      title: "账号凭证",
-                                      desc: "涉及到您的资金安全,请务必保存！",
-                                      color: AppColors.textYellowColor,
-                                      onTap: () =>
-                                          showAccountQrDialog(Get.context!),
-                                      icon: R.assetsImgIconMineCertif),
-                                  _buildMineUtilsBtnView(
-                                      title: "充值记录",
-                                      onTap: () => Get.toNamed(
-                                          Routes.BILL_RECORD_PAGE_VIEW,
-                                          arguments: {"type": 0}),
-                                      icon: R.assetsImgIconMineRecharge),
-                                  _buildMineUtilsBtnView(
-                                      title: "提现记录",
-                                      onTap: () => Get.toNamed(
-                                          Routes.BILL_RECORD_PAGE_VIEW,
-                                          arguments: {"type": 1}),
-                                      icon: R.assetsImgIconMineWithdraw),
-                                  _buildMineUtilsBtnView(
-                                      title: "游戏记录",
-                                      onTap: () => Get.toNamed(
-                                          Routes.BILL_RECORD_PAGE_VIEW,
-                                          arguments: {"type": 3}),
-                                      icon: R.assetsImgIconMineGame),
-                                  _buildMineUtilsBtnView(
-                                      title: "收支记录",
-                                      onTap: () => Get.toNamed(
-                                          Routes.BILL_RECORD_PAGE_VIEW,
-                                          arguments: {"type": 2}),
-                                      icon: R.assetsImgIconMineRecored),
+                                      onTap: () async {
+                                        await M3u8CacheManager().clearCache();
+                                        logic.cacheSize.value = 0;
+                                        showToast(msg: "缓存已清除");
+                                      },
+                                      title: "清除缓存",
+                                      color: AppColors.textColorWhite,
+                                      desc:
+                                          "${logic.cacheSize.toStringAsFixed(2)}MB",
+                                      icon: R.assetsImgIconMineDownload),
                                   _buildMineUtilsBtnView(
                                       onTap: () => Get.toNamed(
                                           Routes.TICKET_MANAGE_PAGE,
                                           arguments: {"type": 3}),
+                                      color: AppColors.textColorWhite,
                                       title: "兑换码",
                                       icon: R.assetsImgIconMineExchange),
+                                  _buildMineUtilsBtnView(
+                                      title: "检查更新",
+                                      color: AppColors.textColorWhite,
+                                      desc: "V${Pubspec.versionFull}",
+                                      onTap: () async {
+                                        ShareKeys shareKeys =
+                                            Get.find<ShareKeys>();
+                                        VersionBean? version =
+                                            shareKeys.version;
+                                        if (version != null &&
+                                            (version.hasNewVersion ?? false)) {
+                                          await showUpdateVersionDialog(
+                                              Get.context!,
+                                              version: shareKeys.version);
+                                        } else {
+                                          showToast(msg: "当前已经是最新版本");
+                                        }
+                                      },
+                                      icon: R.assetsImgIconMineCertif),
                                 ]),
                               ),
 
-                              // FutureBuilder(
-                              //     future: M3u8CacheManager().getCacheSizeMB(),
-                              //     builder: (context, sn) {
-                              //       return _buildMineUtilsBtnView(
-                              //           onTap: () async {
-                              //             showTypeToast(msg: "功能暂未开放～");
-                              //             // Get.toNamed(Routes.MY_CACHE_PAGE);
-                              //             // M3u8CacheManager manage =
-                              //             //     M3u8CacheManager();
-                              //             // List<VideoCacheInfo> cache = await manage
-                              //             //     .getAllVideoCacheInfoPersistent();
-                              //             // print("${cache[0].cacheSizeBytes/ (1024 * 1024)}");
-                              //           },
-                              //           title: "我的缓存",
-                              //           desc:
-                              //               "${sn.data?.toStringAsFixed(2)}MB",
-                              //           icon: R.assetsImgIconMineDownload);
-                              //     }),
                               // _buildDayTimeChange(theme, logic),
                               SizedBox(
                                   height: screen.bottomNavBarH + Dimens.pt40)
@@ -561,18 +545,24 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
           width: screen.screenWidth,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            ImageLoader.withP(logic.userInfo.value.avatarUrl ?? "",
-                    width: Dimens.pt182,
-                    height: Dimens.pt182,
-                    radius: Dimens.pt182)
-                .load(),
+            GestureDetector(
+                onTap: () => Get.toNamed(Routes.SETTING_PAGE),
+                child: ImageLoader.withP(logic.userInfo.value.avatarUrl ?? "",
+                        width: Dimens.pt182,
+                        height: Dimens.pt182,
+                        radius: Dimens.pt182)
+                    .load()),
             SizedBox(height: Dimens.pt25),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(logic.userInfo.value.nickName ?? "",
-                  style: TextStyle(fontSize: Dimens.pt36, color: Colors.white)),
-              SizedBox(width: Dimens.pt10),
-              Image.asset(R.assetsImgIconMineEdit, width: Dimens.pt34)
-            ]),
+            GestureDetector(
+                onTap: () => Get.toNamed(Routes.SETTING_PAGE),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(logic.userInfo.value.nickName ?? "",
+                      style: TextStyle(
+                          fontSize: Dimens.pt36, color: Colors.white)),
+                  SizedBox(width: Dimens.pt10),
+                  Image.asset(R.assetsImgIconMineEdit, width: Dimens.pt34)
+                ])),
             SizedBox(height: Dimens.pt25),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Container(

@@ -134,7 +134,6 @@ class ComicReaderPageController extends GetxController {
     callBuyBack = await showPlayerCommonDialog(Get.context!,
         title: "友情提示",
         content: "该漫画章节仅会员用户可观看,请先获得会员！",
-        btnList: ["确认解锁", "前往充值"],
         btnCall: [
           () async {
             if (userBalance >= price) {
@@ -158,7 +157,6 @@ class ComicReaderPageController extends GetxController {
     callBuyBack = await showPlayerCommonDialog(Get.context!,
             title: "友情提示",
             content: "该漫画章节仅会员用户可观看,请先获得会员！",
-            btnList: ["获得会员", "忍着不看"],
             btnCall: [
               () => Get.toNamed(Routes.VIP_CENTER_PAGE),
               () => Get.back(result: false)

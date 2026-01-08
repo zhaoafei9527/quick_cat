@@ -73,7 +73,6 @@ class _AiOffClothesPageState extends State<AiOffClothesPage> {
       showPlayerCommonDialog(Get.context!,
           title: "友情提示",
           content: "该功能仅会员用户可使用,请先获得会员！",
-          btnList: ["获得会员", "忍住不脱"],
           btnCall: [
             () => Get.toNamed(Routes.VIP_CENTER_PAGE),
             () => Get.back()
@@ -253,7 +252,6 @@ Future<void> startGenerateImage(
   showPlayerCommonDialog(Get.context!,
       title: "友情提示",
       content: context,
-      btnList: [buttonText, "忍着不用"],
       btnCall: [onTap, () => Get.back()],
       btnActionIndex: 0);
 }

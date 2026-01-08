@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:quick_cat_client/app/data/share_key.dart';
 import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
 
@@ -55,8 +56,7 @@ class SetUserAvatarPage extends GetView<SettingPageController> {
                                       Text(groupName,
                                           style: TextStyle(
                                               fontSize: Dimens.pt32,
-                                              color: theme.getColor(ThemeColor.primary),
-                                              fontWeight: FontWeight.w600)),
+                                              color: Colors.white)),
                                       SizedBox(height: Dimens.pt25),
                                       GridView.builder(
                                           physics:
@@ -84,9 +84,10 @@ class SetUserAvatarPage extends GetView<SettingPageController> {
 
   GestureDetector _buildAvatarItem(
       SettingPageController logic, List<AvatarInfo> avatars, int index) {
+    ShareKeys shareKeys = Get.find<ShareKeys>();
     return GestureDetector(
         onTap: () async {
-          if ((logic.userInfo.value.isActiveMember ?? false)) {
+          if (shareKeys.isVip()) {
             await ApiRes.setUserInformation(
                 onSuccess: () {
                   logic.userAvatar.value = avatars[index].avatar ?? "";
@@ -101,7 +102,6 @@ class SetUserAvatarPage extends GetView<SettingPageController> {
             var result = await showPlayerCommonDialog(Get.context!,
                 title: "友情提示",
                 content: "该功能仅会员用户可使用,请先获得会员！",
-                btnList: ["获得会员"],
                 btnCall: [
                   () => logic.goVipRecharge(),
                 ],
@@ -109,7 +109,7 @@ class SetUserAvatarPage extends GetView<SettingPageController> {
           }
         },
         child: ImageLoader.withP(avatars[index].avatar,
-                width: Dimens.pt140, height: Dimens.pt140)
+                width: Dimens.pt140, height: Dimens.pt140,radius: Dimens.pt140)
             .load());
   }
 }

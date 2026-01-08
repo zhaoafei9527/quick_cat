@@ -93,6 +93,26 @@ class VideoPlayerPageView extends GetView<VideoPlayerPageController> {
                       Image.asset(R.assetsImgTipPlayer,
                           width: screen.screenWidth),
                     SizedBox(height: Dimens.pt25),
+                    SizedBox(
+                        height: Dimens.pt55,
+                        child: Row(children: [
+                          buildCommonTabBar(
+                              controller: logic.tabController,
+                              insets: Dimens.pt12,
+                              insetsWidth: 4,
+                              boxColor: Color(0xFF6954E7),
+                              isScrollable: false,
+                              fontSize: Dimens.pt28,
+                              alignment: TabAlignment.center,
+                              tabs: logic.tabList.map((e) => Text(e)).toList()),
+                          Text(getShowWatchNumberStr(logic.comments.value),
+                              style: TextStyle(
+                                  fontSize: Dimens.pt24,
+                                  color: Colors.white.withOpacity(.5)))
+                        ])),
+                    SizedBox(height: Dimens.pt5),
+                    getHengLine(color: Colors.white.withOpacity(.1)),
+                    SizedBox(height: Dimens.pt25),
                     Expanded(
                         child: Stack(alignment: Alignment.topRight, children: [
                       TabBarView(controller: logic.tabController, children: [
@@ -108,7 +128,7 @@ class VideoPlayerPageView extends GetView<VideoPlayerPageController> {
                                 EdgeInsets.symmetric(horizontal: Dimens.pt25),
                             child: CommentRefreshView(
                                 postId: logic.videoId,
-                                topInput: true,
+                                topInput: false,
                                 type: CommentType.CT_Video,
                                 comments: 10))
                       ]),
@@ -335,7 +355,6 @@ class VideoPlayerPageView extends GetView<VideoPlayerPageController> {
       ]),
     );
   }
-
 
   Widget buildRecommendVideoView(VideoPlayerPageController logic) {
     return PagePullView<MediaInfo>(

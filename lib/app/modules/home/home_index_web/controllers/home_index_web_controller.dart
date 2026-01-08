@@ -34,7 +34,7 @@ class HomeIndexWebController extends GetxController
 
 
   RxList<TopicList> topicList = <TopicList>[].obs; // 话题列表
-  List<String> cateList = ["吃瓜", "视屏", "抖音", "影院", "小说"];
+  List<String> cateList = ["吃瓜", "视屏", "动漫", "小说"];
   RxList<Advertise> gameAdList = <Advertise>[].obs;
   RxList<MediaCategory> postCategory = <MediaCategory>[].obs; // 吃瓜分类数据
   RxList<MediaCategory> videoCategory = <MediaCategory>[].obs; // 视频库分类数据
@@ -58,10 +58,8 @@ class HomeIndexWebController extends GetxController
       } else if (tabController!.index == 1) {
         currentType = MediaType.videoLong;
       } else if (tabController!.index == 2) {
-        currentType = MediaType.videoShort;
-      } else if (tabController!.index == 3) {
         currentType = MediaType.cartoon;
-      } else if (tabController!.index == 4) {
+      } else if (tabController!.index == 3) {
         currentType = MediaType.novel;
       }
     });
@@ -71,9 +69,9 @@ class HomeIndexWebController extends GetxController
     videoCategory.value = shareKeys.mediaCategory;
     videoCategoryTab = TabController(length: videoCategory.length, vsync: this);
 
-    shortCategory.value = shareKeys.dMediaCategory;
-    shortCategoryTab =
-        TabController(length: shortCategory.length, vsync: this);
+    // shortCategory.value = shareKeys.dMediaCategory;
+    // shortCategoryTab =
+    //     TabController(length: shortCategory.length, vsync: this);
 
     cartoonCategory.value = shareKeys.cartoonCategory;
     cartoonCategoryTab =

@@ -90,7 +90,6 @@ class NovelReaderPageController extends GetxController {
       var result = await showPlayerCommonDialog(Get.context!,
           title: "友情提示",
           content: "对不起，您当前还不是会员开通会员才能继续观看小说章节",
-          btnList: ["获得会员", "分享得会员"],
           btnCall: [
             () => Get.toNamed(Routes.VIP_CENTER_PAGE),
             () => showShareAccountDialog()

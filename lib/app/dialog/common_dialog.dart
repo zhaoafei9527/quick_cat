@@ -460,52 +460,53 @@ Future showPlayerCommonDialog(BuildContext context,
                   Image.asset(image!, height: imageHeight ?? 30),
                   const SizedBox(height: 15),
                 ],
-                GestureDetector(
-                    onTap: () => Get.toNamed(Routes.VIP_CENTER_PAGE),
-                    child: Container(
-                        width: 135,
-                        height: 35,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(Dimens.pt35),
-                            gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: [
-                                  Color(0xFFFAEABE),
-                                  Color(0xFFECC043)
-                                ])),
-                        child: Text("成为会员",
-                            style: TextStyle(
-                                fontSize: 15, color: Color(0xFF1D1D27))))),
-                // Wrap(
-                //     alignment: WrapAlignment.center,
-                //     spacing: 40,
-                //     children: List.generate(
-                //         btnList?.length ?? 0,
-                //         (index) => GestureDetector(
-                //               onTap: () {
-                //                 btnCall != null
-                //                     ? btnCall[index]?.call()
-                //                     : Get.back(result: index);
-                //               },
-                //               child: Container(
-                //                   constraints: const BoxConstraints(
-                //                       minWidth: 163 / 2),
-                //                   padding: const EdgeInsets.symmetric(
-                //                       horizontal: 27 / 2, vertical: 6),
-                //                   decoration: BoxDecoration(
-                //                       color: btnActionIndex == index
-                //                           ? theme.getColor(
-                //                               ThemeColor.textYellow)
-                //                           : theme.getColor(
-                //                               ThemeColor.textGrey)),
-                //                   child: Text(btnList?[index] ?? "",
-                //                       textAlign: TextAlign.center,
-                //                       style: TextStyle(
-                //                           color: Colors.white,
-                //                           fontSize: 12))),
-                //             ))),
+                if (btnList != null && btnList.isNotEmpty)
+                  Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 40,
+                      children: List.generate(
+                          btnList.length ?? 0,
+                          (index) => GestureDetector(
+                              onTap: () {
+                                btnCall != null
+                                    ? btnCall[index]?.call()
+                                    : Get.back(result: index);
+                              },
+                              child: Container(
+                                  constraints:
+                                      const BoxConstraints(minWidth: 163 / 2),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 27 / 2, vertical: 6),
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(Dimens.pt12),
+                                      color: btnActionIndex == index
+                                          ? AppColors.primaryColor
+                                          : AppColors.textGrey),
+                                  child: Text(btnList[index] ?? "",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12))))))
+                else
+                  GestureDetector(
+                      onTap: () => Get.toNamed(Routes.VIP_CENTER_PAGE),
+                      child: Container(
+                          width: 135,
+                          height: 35,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(Dimens.pt35),
+                              gradient: LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                  colors: [
+                                    Color(0xFFFAEABE),
+                                    Color(0xFFECC043)
+                                  ])),
+                          child: Text("成为会员",
+                              style: TextStyle(
+                                  fontSize: 15, color: Color(0xFF1D1D27))))),
                 const SizedBox(height: 15),
                 if (showBalance) ...[
                   Container(height: Dimens.pt2, color: Color(0xFF1F1F1F)),

@@ -15,6 +15,7 @@ import 'package:quick_cat_client/app/model/home/config_model_model.dart';
 import 'package:quick_cat_client/app/model/home/qrmodel.dart';
 import 'package:quick_cat_client/app/themes/app_colors.dart';
 import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/m3u8_cache_manager.dart';
 import '../../../../../r.dart';
 import '../../../../dialog/accont_qr_dialog.dart';
 import '../../../../model/home/gold_task_model.dart';
@@ -38,14 +39,14 @@ class HomeMineCenterController extends GetxController
   late List<LinearGradient> vipLinearGradient;
   late QrModel? qrModel;
   RxDouble getBalanceIng = .0.obs;
+  RxDouble cacheSize = .0.obs;
   String baseUrl = "";
 
   List<GoldTaskModel> logoList = [
-    GoldTaskModel(name: "default", title: "91色漫", icon: R.assetsImgIcDefault),
-    GoldTaskModel(name: "aiqiyi", title: "爱奇艺", icon: R.assetsImgIcAiqiyi),
-    GoldTaskModel(name: "bili", title: "哔哩哔哩", icon: R.assetsImgIcBili),
-    GoldTaskModel(
-        name: "deepseek", title: "DeepSeek", icon: R.assetsImgIcDeepseek)
+    GoldTaskModel(name: "default", title: "快猫APP", icon: R.assetsImgLogo),
+    GoldTaskModel(name: "doule", title: "抖乐", icon: R.assetsImgLogoDoule),
+    GoldTaskModel(name: "rona", title: "RONA", icon: R.assetsImgLogoRona),
+    GoldTaskModel(name: "xiutan", title: "嗅探", icon: R.assetsImgLogoXiutan),
   ];
 
   // eventBus.on(EventsBusKey.homeVideoPause)?.listen((event) {
@@ -57,6 +58,7 @@ class HomeMineCenterController extends GetxController
     ShareKeys shareKeys = Get.find<ShareKeys>();
     tabController = TabController(length: 2, vsync: this);
     userInfo.value = await shareKeys.getUserInfo();
+    cacheSize.value = await M3u8CacheManager().getCacheSizeMB();
     eventBus.on(EventsBusKey.subUpdateUserInfo)?.listen((event) async {
       ShareKeys shareKeys = Get.find<ShareKeys>();
       userInfo.value = shareKeys.userInfo;
@@ -150,7 +152,6 @@ class HomeMineCenterController extends GetxController
     showPlayerCommonDialog(Get.context!,
         title: "友情提示",
         content: "是否切换手机桌面图标以实现APP隐身？ ",
-        contentColor: AppColors.primaryColor,
         btnList: ["取消", "确定"],
         btnCall: [
           () => Get.back(),

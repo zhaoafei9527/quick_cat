@@ -206,7 +206,6 @@ class VideoPlayerPageController extends GetxController
     var result = await showPlayerCommonDialog(Get.context!,
         title: "友情提示",
         content: text ?? "弹幕功能仅会员用户可发送,请先获得会员！",
-        btnList: ["获得会员"],
         btnCall: [() => _goVipRecharge()],
         btnActionIndex: 0);
     return result ?? false;

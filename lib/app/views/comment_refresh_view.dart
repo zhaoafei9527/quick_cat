@@ -1,6 +1,7 @@
 // 🎯 Dart imports:
 
 // 🐦 Flutter imports:
+import 'package:quick_cat_client/app/themes/app_colors.dart';
 import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -113,7 +114,6 @@ class CommentRefreshViewState extends State<CommentRefreshView> {
               await showPlayerCommonDialog(Get.context!,
                   title: "友情提示",
                   content: "评论功能仅会员用户可发送,请先获得会员！",
-                  btnList: ["获得会员"],
                   btnCall: [() => Get.toNamed(Routes.VIP_CENTER_PAGE)],
                   btnActionIndex: 0);
             },
@@ -151,22 +151,20 @@ class CommentRefreshViewState extends State<CommentRefreshView> {
                   child = Column(children: [
                     SizedBox(height: Dimens.pt25),
                     GestureDetector(
-                      onTap: () =>
-                          AppPages.jumpRouter(path: snapshot.data?.href),
-                      child: Row(children: [
-                        Text("大家都在讨论 : ",
-                            style: TextStyle(
-                                fontSize: Dimens.pt26,
-                                color: Colors.white)),
-                        // Text(snapshot.data?.title ?? "",
-                        //     style: TextStyle(
-                        //         fontSize: Dimens.pt26,
-                        //         color: theme.getColor(ThemeColor.primary))),
-                        // Icon(Icons.search,
-                        //     size: Dimens.pt20,
-                        //     color: theme.getColor(ThemeColor.primary))
-                      ]),
-                    ),
+                        onTap: () =>
+                            AppPages.jumpRouter(path: snapshot.data?.href),
+                        child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text("大家都在讨论  ",
+                                  style: TextStyle(
+                                      fontSize: Dimens.pt26,
+                                      color: Colors.white)),
+                              Text(snapshot.data?.title ?? "",
+                                  style: TextStyle(
+                                      fontSize: Dimens.pt22,
+                                      color: AppColors.primaryColor)),
+                            ])),
                     SizedBox(height: Dimens.pt25)
                   ]);
                 }
@@ -182,7 +180,12 @@ class CommentRefreshViewState extends State<CommentRefreshView> {
                   onRefresh: refresh,
                   child: _comments())),
           SizedBox(height: Dimens.pt35),
-          if (!widget.topInput) _buildInputContainer()
+          if (!widget.topInput) ...[
+            _buildInputContainer(),
+            SizedBox(
+              height: screen.paddingBottom,
+            )
+          ],
         ]));
   }
 
@@ -194,17 +197,39 @@ class CommentRefreshViewState extends State<CommentRefreshView> {
             width: screen.screenWidth,
             height: Dimens.pt68,
             margin: EdgeInsets.only(bottom: Dimens.pt25),
-            padding: EdgeInsets.symmetric(horizontal: Dimens.pt16),
-            decoration: BoxDecoration(color: const Color(0xFF2D2C2B)),
+            padding: EdgeInsets.symmetric(horizontal: Dimens.pt30),
+            decoration: BoxDecoration(
+                color: const Color(0xFF262637),
+                borderRadius: BorderRadius.circular(Dimens.pt8)),
             child: Row(children: [
-              Text("我怀疑你想发评论,但是我没有证据",
-                  style: TextStyle(
-                      fontSize: Dimens.pt22, color: const Color(0xFF505050))),
-              const Spacer(),
-              Image.asset(R.assetsImgIconSend,
-                  width: Dimens.pt68,
-                  color:
-                      Get.find<ThemeManager>().getColor(ThemeColor.textGrey)),
+              Expanded(
+                  child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Dimens.pt30, vertical: Dimens.pt8),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: const Color(0xFF5F5F8B),
+                              width: Dimens.pt1),
+                          borderRadius: BorderRadius.circular(Dimens.pt45)),
+                      child: Text("只有VIP才可以发表评论哦!",
+                          style: TextStyle(
+                              fontSize: Dimens.pt22,
+                              color: const Color(0xFF787979))))),
+              SizedBox(width: Dimens.pt30),
+              Container(
+                  width: Dimens.pt80,
+                  height: Dimens.pt45,
+                  decoration: BoxDecoration(
+                      color: Color(0xFF4A4A6D),
+                      borderRadius: BorderRadius.circular(Dimens.pt8)),
+                  child: Center(
+                      child: Text("发送",
+                          style: TextStyle(
+                              fontSize: Dimens.pt24, color: Colors.white))))
+              // Image.asset(R.assetsImgIconSend,
+              //     width: Dimens.pt68,
+              //     color:
+              //         Get.find<ThemeManager>().getColor(ThemeColor.textGrey)),
             ])));
   }
 

@@ -356,8 +356,22 @@ class M3u8CacheManager {
   /// 清空缓存
   Future<void> clearCache() async {
     try {
-      await _initCacheManager();
-      await _cacheManager.emptyCache();
+      final dir = await getApplicationDocumentsDirectory();
+      final m3u8CacheDir = Directory(dir.path);
+      if (await m3u8CacheDir.exists()) {
+        // 删除缓存目录下的所有文件
+        await for (final entity in m3u8CacheDir.list(recursive: true)) {
+          try {
+            if (entity is File) {
+              await entity.delete();
+            } else if (entity is Directory) {
+              await entity.delete(recursive: true);
+            }
+          } catch (_) {
+            // 忽略无法删除的文件/目录
+          }
+        }
+      }
     } catch (e) {
       log.i("_cache_manager", "清空缓存失败: $e");
     }
@@ -368,15 +382,15 @@ class M3u8CacheManager {
     try {
       int totalBytes = 0;
 
-      // 遍历所有活跃的下载任务，计算已下载的字节数
-      for (final task in _urlToTask.values) {
-        totalBytes += task.downloadedBytes;
-      }
+      // // 遍历所有活跃的下载任务，计算已下载的字节数
+      // for (final task in _urlToTask.values) {
+      //   totalBytes += task.downloadedBytes;
+      // }
 
       // 如果还有缓存管理器中的文件，也计算一下
       try {
         final dir = await getApplicationDocumentsDirectory();
-        final m3u8CacheDir = Directory('${dir.path}/M3u8Segments');
+        final m3u8CacheDir = Directory(dir.path);
         if (await m3u8CacheDir.exists()) {
           await for (final entity in m3u8CacheDir.list(recursive: true)) {
             if (entity is File) {
@@ -392,6 +406,7 @@ class M3u8CacheManager {
       } catch (_) {
         // 如果无法访问缓存目录，只使用任务统计
       }
+
 
       return totalBytes / (1024 * 1024); // 转换为 MB
     } catch (e) {

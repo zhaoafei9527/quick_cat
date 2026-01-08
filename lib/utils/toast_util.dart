@@ -58,25 +58,28 @@ Future showTypeToast(
                 child: Container(
                     padding: EdgeInsets.symmetric(
                         horizontal: Dimens.pt40, vertical: Dimens.pt20),
-                    color: theme.getColor(ThemeColor.bg).withOpacity(.8),
+                    decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(.8),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(Dimens.pt16))
+                    ),
                     child: Column(mainAxisSize: MainAxisSize.min, children: [
                       Image.asset(
                           toastType == ToastType.SUCCESS
                               ? R.assetsImgIconSuccess
                               : R.assetsImgIconError,
-                          color: theme.getColor(toastType == ToastType.SUCCESS
-                              ? ThemeColor.textYellow
-                              : ThemeColor.primary),
+                          color: toastType == ToastType.SUCCESS
+                              ? AppColors.mainRed
+                              : AppColors.textColorWhite,
                           width: Dimens.pt50,
                           height: Dimens.pt50),
                       SizedBox(height: Dimens.pt15),
                       Text(msg,
                           style: TextStyle(
                               fontSize: Dimens.pt26,
-                              color: theme.getColor(
-                                  toastType == ToastType.SUCCESS
-                                      ? ThemeColor.textYellow
-                                      : ThemeColor.primary)))
+                              color:toastType ==ToastType.SUCCESS
+                                  ? Colors.white
+                                  : AppColors.textYellowColor))
                     ]))));
       });
 }

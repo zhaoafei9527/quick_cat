@@ -112,7 +112,6 @@ Future<bool> openBoomDialog() async {
         btnActionIndex: 1);
   } else {
     bool? experienced = await lightKV.getBool(AppConfig.KEY_EXPERIENCE_BOOM);
-    List<String> btnList = ["获得会员"];
     List<Function> btnCall = [
       () async {
         await Get.toNamed(Routes.VIP_CENTER_PAGE);
@@ -126,7 +125,7 @@ Future<bool> openBoomDialog() async {
         text: "非会员用户免费体验一次,会员用户终身享受！",
         style: TextStyle(color: theme.getColor(ThemeColor.textYellow)));
     if (!(experienced ?? false)) {
-      btnList.insert(0, "体验一次");
+      // btnList.insert(0, "体验一次");
       btnCall.insert(0, () {
         Get.back(result: true);
         showTypeToast(msg: "体验成功", toastType: ToastType.SUCCESS);
@@ -136,7 +135,7 @@ Future<bool> openBoomDialog() async {
         title: "友情提示",
         content: "全新互动功能——“震动模式”,在您高潮时会为您带来震动感,为您的观影体验增加带入感,",
         attachedText: [text],
-        btnList: btnList,
+        // btnList: btnList,
         btnCall: btnCall,
         btnActionIndex: (experienced ?? false) ? 0 : 1);
   }
@@ -157,7 +156,7 @@ Future<bool?> playableDialog(FijkPlayer? player, {MediaInfo? mediaInfo}) async {
   continuePlay = await showPlayerCommonDialog(Get.context!,
       title: "友情提示",
       content: content,
-      btnList: [isCoinVideo ? "金币解锁" : "获得会员", haveFree ? "使用观影券" : "获得观影券"],
+      // btnList: [isCoinVideo ? "金币解锁" : "获得会员", haveFree ? "使用观影券" : "获得观影券"],
       btnCall: [
         () async => await coinPayVideo(player,
             isCoinVideo: isCoinVideo, mediaInfo: mediaInfo),

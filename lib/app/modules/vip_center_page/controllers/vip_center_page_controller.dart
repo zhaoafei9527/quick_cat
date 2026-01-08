@@ -162,8 +162,7 @@ class VipCenterPageController extends GetxController {
               text: "赢取高额奖金，提现秒到账！如遇充值未到账，请耐心等待10-15分钟！",
               style: TextStyle(color: Color(0xFF8A8785)))
         ],
-        content: "充值的余额可用于91棋牌游戏娱乐! ",
-        contentColor: AppColors.primaryColor,
+        content: "充值的余额可用于棋牌游戏娱乐! ",
         btnList: ["知道了"],
         btnCall: [() => Get.back()],
         btnActionIndex: 0);

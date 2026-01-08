@@ -80,7 +80,6 @@ class _AiGenerateGirlPageState extends State<AiGenerateGirlPage> {
       showPlayerCommonDialog(Get.context!,
           title: "友情提示",
           content: "该功能仅会员用户可使用,请先获得会员！",
-          btnList: ["获得会员", "忍住不脱"],
           btnCall: [
             () => Get.toNamed(Routes.VIP_CENTER_PAGE),
             () => Get.back()

@@ -64,7 +64,6 @@ class ComicWishedPageController extends GetxController {
       return showPlayerCommonDialog(Get.context!,
           title: "友情提示",
           content: "该功能仅会员用户可使用,请先获得会员！",
-          btnList: ["开通会员", "忍着不用"],
           btnCall: [
             () => Get.toNamed(Routes.VIP_CENTER_PAGE),
             () => Get.back()

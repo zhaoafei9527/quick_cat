@@ -69,6 +69,10 @@ class _PostItemState extends State<PostItem> {
     ThemeManager theme = Get.find<ThemeManager>();
     bool isCollect = postBrief?.base?.isCollect ?? false;
     int collects = postBrief?.base?.collects ?? 0;
+    String image = postBrief?.base?.videoCover ?? "";
+    if(image.isEmpty){
+      image = images != null && images!.isNotEmpty ? images!.first : "";
+    }
 
     return GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -87,7 +91,7 @@ class _PostItemState extends State<PostItem> {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               // SizedBox(height: Dimens.pt15),
               Stack(alignment: Alignment.bottomCenter, children: [
-                ImageLoader.withP(images?[0] ?? "",
+                ImageLoader.withP(image,
                         width: screen.screenWidth, height: Dimens.pt276)
                     .load(),
                 Container(

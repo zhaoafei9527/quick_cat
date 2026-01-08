@@ -276,10 +276,6 @@ flutter:
     - assets/img/icon_player_dropdow.png
     - assets/img/bg_notification.png
     - assets/img/icon_home_topic.png
-    - assets/img/ic_default.png
-    - assets/img/ic_deepseek.png
-    - assets/img/ic_bili.png
-    - assets/img/ic_aiqiyi.png
     - assets/img/icon_checkin.png
     - assets/img/icon_checkined.png
     - assets/img/icon_loli.png
@@ -417,6 +413,11 @@ flutter:
     - assets/img/tip_player.png
     - assets/img/icon_search_es.png
     - assets/img/bg_text_pop.png
+    - assets/img/icon_com_collect.png
+    - assets/img/icon_com_collected.png
+    - assets/img/logo_doule.png
+    - assets/img/logo_xiutan.png
+    - assets/img/logo_rona.png
   uses-material-design: true
 
 

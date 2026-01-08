@@ -59,10 +59,10 @@ class HomeIndexWebView extends GetView<HomeIndexWebController> {
                               tabController: logic.videoCategoryTab,
                               categoryList: logic.videoCategory,
                               type: MediaType.videoLong),
-                          _buildCategoryContent(
-                              tabController: logic.shortCategoryTab,
-                              categoryList: logic.shortCategory,
-                              type: MediaType.videoShort),
+                          // _buildCategoryContent(
+                          //     tabController: logic.shortCategoryTab,
+                          //     categoryList: logic.shortCategory,
+                          //     type: MediaType.videoShort),
                           _buildCategoryContent(
                               tabController: logic.cartoonCategoryTab,
                               categoryList: logic.cartoonCategory,
