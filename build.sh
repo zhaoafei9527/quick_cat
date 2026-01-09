@@ -17,7 +17,7 @@ cd $projectPath
 ver=`grep 'version:' pubspec.yaml`
 ver=${ver##'version: '}
 curDate=$(date "+%y%m%d")
-projectName='91sm_client'
+projectName='quickCat_client'
 projectName=${projectName##'name: '}
 namePrefix=${projectName//'client'/''}
 namePrefix=${namePrefix//'_'/''}
