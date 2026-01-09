@@ -10,7 +10,9 @@ import 'package:get/get.dart';
 import 'package:quick_cat_client/app/data/share_key.dart';
 import 'package:quick_cat_client/app/model/home/bottom_bar_model_model.dart';
 import 'package:quick_cat_client/app/modules/home/home_mine_center/controllers/home_mine_center_controller.dart';
+import 'package:quick_cat_client/app/modules/home/home_post_page/controllers/home_post_page_controller.dart';
 import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/plugins_utils/VideoPlayer/fijk_player.dart';
 import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/m3u8_cache_manager.dart';
 import 'package:quick_cat_client/r.dart';
 
@@ -26,8 +28,17 @@ class HomeController extends GetxController {
     tabIndex.value = index;
     ShareKeys shareKeys = Get.find<ShareKeys>();
     shareKeys.tabIndex.value = index;
-
+    HomePostPageController tiktok = Get.find<HomePostPageController>();
     // ===========跳转进入我的页面重新更新用户信息 ==========
+    if (index == 2) {
+      FIJKPlayerManager manager = FIJKPlayerManager();
+      manager.disposePlayer();
+
+      tiktok.tiktokPlayer.togglePause(false);
+    } else {
+      tiktok.tiktokPlayer.togglePause(true);
+    }
+
     if (index == 4) {
       if(!shareKeys.showAccounted){
         shareKeys.showAccounted = true;
