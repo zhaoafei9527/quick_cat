@@ -108,6 +108,7 @@ class ShareKeys extends GetxController {
   // 系统消息是否已读
   RxBool systemRead = false.obs;
   RxBool customRead = false.obs;
+  RxBool gameNotify = false.obs;
   Heartbeat? heartbeat;
 
   @override

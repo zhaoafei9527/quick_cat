@@ -174,7 +174,7 @@ class PostDetailPageView extends GetView<PostDetailPageController> {
                     .load()),
           );
         }),
-        // _buildPostVideoView(logic)
+        _buildPostVideoView(logic)
       ]);
     }, childCount: nodes?.length ?? 0));
   }

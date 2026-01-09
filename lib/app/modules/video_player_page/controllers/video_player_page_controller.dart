@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:quick_cat_client/app/data/watch_record.dart';
+import 'package:quick_cat_client/app/dialog/game_notify_dialog.dart';
 import 'package:quick_cat_client/utils/text_util.dart';
 import 'package:flutter/material.dart';
 
@@ -75,6 +76,9 @@ class VideoPlayerPageController extends GetxController
         tabIndex.value = tabController.index;
       });
       await startInitPlayVideo(videoId);
+      if (shareKeys?.gameNotify.value == false) {
+        showGameNotifyDialog(Get.context!);
+      }
       barrageField.addListener(barrageFieldListener);
     }
   }

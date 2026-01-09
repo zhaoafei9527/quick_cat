@@ -418,6 +418,17 @@ flutter:
     - assets/img/logo_doule.png
     - assets/img/logo_xiutan.png
     - assets/img/logo_rona.png
+    - assets/img/bg_game_notify.png
+    - assets/img/text_balance3.png
+    - assets/img/text_balance1.png
+    - assets/img/text_balance4.png
+    - assets/img/text_balance5.png
+    - assets/img/text_balance7.png
+    - assets/img/text_balance6.png
+    - assets/img/text_balance0.png
+    - assets/img/text_balance8.png
+    - assets/img/text_balance9.png
+    - assets/img/text_balance2.png
   uses-material-design: true
 
 

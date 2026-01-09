@@ -2,6 +2,7 @@
 
 // 🐦 Flutter imports:
 import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/dialog/game_notify_dialog.dart';
 import 'package:quick_cat_client/app/model/game_model.dart';
 import 'package:quick_cat_client/app/model/home/config_model_model.dart';
 import 'package:quick_cat_client/app/modules/home/home_post_page/views/post_recommend_view.dart';
@@ -12,6 +13,7 @@ import 'package:quick_cat_client/app/widget/common_widget.dart';
 import 'package:quick_cat_client/app/widget/full_bg.dart';
 import 'package:quick_cat_client/conf/api_res.dart';
 import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
+import 'package:quick_cat_client/utils/app_util.dart';
 import 'package:quick_cat_client/utils/screen.dart';
 import 'package:flutter/material.dart';
 
@@ -155,7 +157,9 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
                 SizedBox(height: Dimens.pt10),
                 _buildSmallUtilButton(
                     btnTxt: "专属客服",
-                    onTap: () => Get.toNamed(Routes.MESSAGE_CENTER_PAGE))
+                    // onTap: ()=>showGameNotifyDialog(Get.context!),
+                    onTap: () => AppUtils.goToCustomServicePage()
+                )
               ])
             ]),
             SizedBox(height: Dimens.pt10)

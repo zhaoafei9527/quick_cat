@@ -1,6 +1,8 @@
 // 🐦 Flutter imports:
 import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
 import 'package:quick_cat_client/app/data/watch_record.dart';
+import 'package:quick_cat_client/app/dialog/game_notify_dialog.dart';
 import 'package:quick_cat_client/utils/text_util.dart';
 import 'package:flutter/services.dart';
 
@@ -28,6 +30,10 @@ class PostDetailPageController extends GetxController {
 
     id = TextUtil.getIntArgument("id");
     await getPostInfo();
+    ShareKeys shareKeys = Get.find<ShareKeys>();
+    if (shareKeys.gameNotify.value == false) {
+      showGameNotifyDialog(Get.context!);
+    }
     initOk.value = true;
   }
 
