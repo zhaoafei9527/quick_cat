@@ -165,6 +165,7 @@ class _FijkTiktokFeedPageState extends State<FijkTiktokFeedPage>
                   ? FeedVideoItem(
                       index: index,
                       mediaInfo: _medias[index],
+                      controller: widget.controller,
                       isActive: index == _current,
                       holder: holder)
                   : _buildAdsView(mediaInfo: _medias[index]);
@@ -223,12 +224,14 @@ class FeedVideoItem extends StatelessWidget {
   final bool isActive;
   final MediaInfo? mediaInfo;
   final PlayerHolder? holder;
+  final FijkTiktokFeedController? controller;
 
   const FeedVideoItem(
       {super.key,
       required this.index,
       required this.isActive,
       required this.holder,
+      this.controller,
       this.mediaInfo});
 
   @override
@@ -273,6 +276,7 @@ class FeedVideoItem extends StatelessWidget {
                     MediaQuery.of(context).size.height),
                 mediaInfo: mediaInfo,
                 buildContext: context,
+    controller: controller,
                 texturePos: Rect.fromLTWH(
                     0,
                     0,

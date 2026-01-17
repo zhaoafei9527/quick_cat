@@ -6,6 +6,7 @@ import 'package:quick_cat_client/app/data/share_key.dart';
 import 'package:quick_cat_client/app/model/home/config_model_model.dart';
 import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
 import 'package:quick_cat_client/app/modules/home/home_index_web/controllers/home_index_web_controller.dart';
+import 'package:quick_cat_client/app/modules/home/home_post_page/views/post_recommend_view.dart';
 import 'package:quick_cat_client/app/routes/app_pages.dart';
 import 'package:quick_cat_client/app/themes/app_colors.dart';
 import 'package:quick_cat_client/app/themes/theme_manager.dart';
@@ -233,6 +234,8 @@ class _HomeComicCateTabBarViewState extends State<HomeTabBarPullView>
             AppPages.jumpRouter(path: model.href, id: model.id);
           }),
       SizedBox(height: Dimens.pt25),
+      buildRecommendGameView(),
+      SizedBox(height: Dimens.pt50),
     ]);
   }
 

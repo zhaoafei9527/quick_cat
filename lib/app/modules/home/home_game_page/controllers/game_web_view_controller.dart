@@ -14,6 +14,8 @@ import 'package:quick_cat_client/plugins_utils/FirebaseUtils/firebse_utils.dart'
 import 'package:quick_cat_client/utils/app_util.dart';
 import 'package:quick_cat_client/utils/screen.dart';
 
+import 'home_game_page_controller.dart';
+
 class GameWebViewPageController extends GetxController {
   RxBool enterLoading = false.obs;
   RxString webViewUri = "".obs;
@@ -43,7 +45,15 @@ class GameWebViewPageController extends GetxController {
         isGameDialog: true,
         content: "确认退出游戏？",
         btnList: btnList,
-        btnCall: [() => Get.back(), () async => AppUtils.jumpToHome(index: 2)]);
+        btnCall: [
+          () => Get.back(),
+          () async {
+            AppUtils.jumpToHome(index: 3);
+            HomeGamePageController game =
+                Get.find<HomeGamePageController>();
+            game.getHistoryGameList();
+          }
+        ]);
   }
 
   initGameWebViewPage() {

@@ -2,7 +2,7 @@ name: quick_cat_client
 version: 1.0.1+10
 publish_to: none
 app_id: 999
-debug: false
+debug: true
 opt_tool: false
 description: A new Flutter project.
 environment:

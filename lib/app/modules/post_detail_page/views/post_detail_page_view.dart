@@ -33,11 +33,12 @@ class PostDetailPageView extends GetView<PostDetailPageController> {
     return GetX<PostDetailPageController>(
         builder: (PostDetailPageController logic) {
       FIJKPlayerManager manager = FIJKPlayerManager();
+      PostBase? base = logic.post.value.base;
       return Scaffold(
           backgroundColor: Color(0xFF0B0C13),
-          appBar: getCommonAppBar("今日吃瓜", onBack: () async {
+          appBar: getCommonAppBar(base?.topicName??"", onBack: () async {
             manager.disposePlayer();
-            PostBase? base = logic.post.value.base;
+
             WatchRecord.addWatchRecord(
                 PostBrief(base: base, node: logic.post.value.nodes?[0]),
                 MediaType.post);
@@ -96,6 +97,7 @@ class PostDetailPageView extends GetView<PostDetailPageController> {
               icon: isCollect
                   ? R.assetsImgIconPostCollected
                   : R.assetsImgIconPostCollect,
+              color: isCollect ? null : AppColors.textColorWhite,
               onTap: () async {
                 bool collect = !isCollect;
                 setState(() {
@@ -188,7 +190,9 @@ class PostDetailPageView extends GetView<PostDetailPageController> {
       SizedBox(height: Dimens.pt25),
 
       FIJKVideoPlayer(
-          url: videoUri, autoPlay: false, simpleModel: true, cover: videoCover),
+          url: videoUri, autoPlay: false,
+          canPlay: logic.post.value.canPlay?? false,
+          simpleModel: true, cover: videoCover),
 
       // SizedBox(height: Dimens.pt25),
       Text(base?.videoText ?? "视频文案视频文案",
@@ -224,7 +228,7 @@ class PostDetailPageView extends GetView<PostDetailPageController> {
         child: Row(children: [
           Image.asset(icon ?? R.assetsImgIconVideoCollect,
               width: width ?? Dimens.pt28, color: color),
-          SizedBox(width: Dimens.pt4),
+          SizedBox(width: Dimens.pt8),
           Text(text ?? "",
               style: TextStyle(fontSize: Dimens.pt24, color: Colors.white))
         ]));

@@ -14,14 +14,13 @@ class WatchHistoryPageController extends GetxController
   RxBool editModel = false.obs;
   RxBool allSelect = false.obs;
   RxBool refreshTag = false.obs;
-  List<String> tabList = ["漫画", "动漫", "小说", "长视频", "短视频", "帖子"];
+  List<String> tabList = ["吃瓜", "视频", "抖阴", "动漫", "小说",];
   List<MediaType> typeList = [
-    MediaType.comic,
-    MediaType.cartoon,
-    MediaType.novel,
+    MediaType.post,
     MediaType.videoLong,
     MediaType.videoShort,
-    MediaType.post
+    MediaType.cartoon,
+    MediaType.novel,
   ];
   RxMap<MediaType, List<dynamic>> currentMedias =
       <MediaType, List<dynamic>>{}.obs;

@@ -28,13 +28,13 @@ class HomeIndexWebController extends GetxController
   TabController? tabController; // 首页主分类
   late TabController postCategoryTab; // 漫画二级分类
   late TabController videoCategoryTab; // 视频库二级分类
-  late TabController shortCategoryTab; // 抖音二级分类
+  late TabController shortCategoryTab; // 抖阴二级分类
   late TabController cartoonCategoryTab; // 动漫二级分类
   late TabController novelCategoryTab; // 小说二级分类
 
 
   RxList<TopicList> topicList = <TopicList>[].obs; // 话题列表
-  List<String> cateList = ["吃瓜", "视屏", "动漫", "小说"];
+  List<String> cateList = ["吃瓜", "视频", "动漫", "小说"];
   RxList<Advertise> gameAdList = <Advertise>[].obs;
   RxList<MediaCategory> postCategory = <MediaCategory>[].obs; // 吃瓜分类数据
   RxList<MediaCategory> videoCategory = <MediaCategory>[].obs; // 视频库分类数据

@@ -18,6 +18,7 @@ import 'package:get/get.dart';
 import 'package:quick_cat_client/app/data/enum.dart';
 import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
 import 'package:quick_cat_client/app/routes/app_pages.dart';
+import 'package:quick_cat_client/utils/app_util.dart';
 
 // import 'package:quick_cat_client/app/widget/common_app_bar.dart';
 // import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/global_player_controller.dart';
@@ -90,8 +91,10 @@ class VideoPlayerPageView extends GetView<VideoPlayerPageController> {
                       _BeforePlayAds(key: ValueKey(logic.videoUrl.value)),
                     ]),
                     if (!shareKeys.isVip())
-                      Image.asset(R.assetsImgTipPlayer,
-                          width: screen.screenWidth),
+                      GestureDetector(
+                          onTap: () => AppUtils.jumpToHome(index: 3),
+                          child: Image.asset(R.assetsImgTipPlayer,
+                              width: screen.screenWidth)),
                     SizedBox(height: Dimens.pt25),
                     SizedBox(
                         height: Dimens.pt55,
@@ -360,8 +363,8 @@ class VideoPlayerPageView extends GetView<VideoPlayerPageController> {
     return PagePullView<MediaInfo>(
         dataGetter: (int pageNum, int size) async {
           MediaList? media = await logic.getRecommendMediaData(
-              pageNum: pageNum, type: MediaType.videoLong);
-          return getMediaListOfList(media, MediaType.videoLong);
+              pageNum: pageNum, type: logic.mediaType);
+          return getMediaListOfList(media, logic.mediaType);
         },
         emptyView: buildCommonEmptyView("宝贝,没有找到东西哦～"),
         widgetBuilder:
@@ -369,7 +372,7 @@ class VideoPlayerPageView extends GetView<VideoPlayerPageController> {
           return Padding(
               padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
               child: buildCommonMediaGrid(list.cast<MediaInfo>(),
-                  mediaType: MediaType.videoLong,
+                  mediaType: logic.mediaType,
                   onTap: (index) => logic.switchVideoInPage(list[index].id)));
         });
   }

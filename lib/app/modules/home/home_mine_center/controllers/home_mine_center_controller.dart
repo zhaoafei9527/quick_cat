@@ -44,9 +44,9 @@ class HomeMineCenterController extends GetxController
 
   List<GoldTaskModel> logoList = [
     GoldTaskModel(name: "default", title: "快猫APP", icon: R.assetsImgLogo),
-    GoldTaskModel(name: "doule", title: "抖乐", icon: R.assetsImgLogoDoule),
-    GoldTaskModel(name: "rona", title: "RONA", icon: R.assetsImgLogoRona),
-    GoldTaskModel(name: "xiutan", title: "嗅探", icon: R.assetsImgLogoXiutan),
+    GoldTaskModel(name: "aiqiyi", title: "抖乐", icon: R.assetsImgLogoDoule),
+    GoldTaskModel(name: "bili", title: "RONA", icon: R.assetsImgLogoRona),
+    GoldTaskModel(name: "deepseek", title: "嗅探", icon: R.assetsImgLogoXiutan),
   ];
 
   // eventBus.on(EventsBusKey.homeVideoPause)?.listen((event) {

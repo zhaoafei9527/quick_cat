@@ -83,7 +83,7 @@ class HomeController extends GetxController {
           icon: R.assetsImgHomeIndexPlayer,
           selectIcon: R.assetsImgHomeIndexPlayerSel),
       BottomBarModel(
-          title: "抖音",
+          title: "抖阴",
           icon: R.assetsImgHomeIndexCircle,
           selectIcon: R.assetsImgHomeIndexCircleSel),
       BottomBarModel(

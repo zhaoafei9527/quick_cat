@@ -1,6 +1,7 @@
 // 🐦 Flutter imports:
 import 'package:quick_cat_client/app/data/share_key.dart';
 import 'package:quick_cat_client/app/model/post_list_model.dart';
+import 'package:quick_cat_client/app/themes/app_colors.dart';
 import 'package:quick_cat_client/conf/api_res.dart';
 import 'package:quick_cat_client/r.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +97,7 @@ class _PostRecommendViewState extends State<PostRecommendView> {
                   })),
           SliverToBoxAdapter(child: SizedBox(height: Dimens.pt25)),
           SliverToBoxAdapter(child: buildRecommendGameView()),
-          SliverToBoxAdapter(child: SizedBox(height: Dimens.pt25)),
+          SliverToBoxAdapter(child: SizedBox(height: Dimens.pt50)),
           SliverList(
               delegate: SliverChildBuilderDelegate((c, index) {
             return PostItem(postBrief: postList[index], categoryId: widget.id);
@@ -126,7 +127,7 @@ Widget buildRecommendGameView({bool? showHotGame}) {
                     color: Colors.white)),
             Spacer(),
             GestureDetector(
-                onTap: () => AppUtils.jumpToHome(index:3),
+                onTap: () => AppUtils.jumpToHome(index: 3),
                 child: Row(children: [
                   Text("更多游戏",
                       style: TextStyle(
@@ -224,17 +225,41 @@ Widget buildRecommendGameView({bool? showHotGame}) {
     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       GestureDetector(
         onTap: () => Get.toNamed(Routes.VIP_CENTER_PAGE),
-        child: Container(
-            width: Dimens.pt225,
-            height: Dimens.pt55,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: Color(0xFF121212),
-                border: Border.all(color: const Color(0xFFFFDB9E)),
-                borderRadius: BorderRadius.circular(Dimens.pt12)),
-            child: Text("充值",
-                style: TextStyle(
-                    fontSize: Dimens.pt30, color: const Color(0xFFFFDB9E)))),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+                width: Dimens.pt225,
+                height: Dimens.pt55,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Color(0xFF121212),
+                    border: Border.all(color: const Color(0xFFFFDB9E)),
+                    borderRadius: BorderRadius.circular(Dimens.pt12)),
+                child: Text("充值",
+                    style: TextStyle(
+                        fontSize: Dimens.pt30,
+                        color: const Color(0xFFFFDB9E)))),
+            Positioned(
+              right: -Dimens.pt20,
+              top: -Dimens.pt15,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimens.pt15, vertical: Dimens.pt5),
+                decoration: BoxDecoration(
+                    color: AppColors.mainRed,
+                    borderRadius: BorderRadius.circular(Dimens.pt8)),
+                child: Text(
+                  "送VIP",
+                  style: TextStyle(
+                      fontSize: Dimens.pt20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
       SizedBox(width: Dimens.pt50),
       GestureDetector(

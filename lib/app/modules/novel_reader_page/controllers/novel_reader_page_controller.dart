@@ -95,6 +95,7 @@ class NovelReaderPageController extends GetxController {
             () => showShareAccountDialog()
           ],
           btnActionIndex: 0);
+      if (!(result ?? false)) Get.back();
     }
   }
 

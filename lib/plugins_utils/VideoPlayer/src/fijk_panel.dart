@@ -124,7 +124,8 @@ class _CustomFIJKPlayerState extends State<CustomFIJKPlayer> {
     });
 
     _currentPosSubs = player.onCurrentPosUpdate.listen((v) async {
-      if (v.inSeconds >= 20 && !manager.canContinuePlay) {
+      int defaultSecond = manager.simpleModel ? 0 : 20;
+      if (v.inSeconds >= defaultSecond && !manager.canContinuePlay) {
         await player.pause();
         bool? canPlay = await playableDialog(player,
             mediaInfo: manager.mediaPlayModel?.mediaInfo);

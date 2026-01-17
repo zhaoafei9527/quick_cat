@@ -158,8 +158,7 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
                 _buildSmallUtilButton(
                     btnTxt: "专属客服",
                     // onTap: ()=>showGameNotifyDialog(Get.context!),
-                    onTap: () => AppUtils.goToCustomServicePage()
-                )
+                    onTap: () => AppUtils.goToCustomServicePage())
               ])
             ]),
             SizedBox(height: Dimens.pt10)
@@ -185,42 +184,39 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
 
   Widget buildHistoryGameView() {
     int type = GameCategory.gameCategoryHT.index;
-    HomeGamePageController logic = Get.find<HomeGamePageController>();
-    List<GameInfoBean> historyGameList = logic.gameTypeList[type] ?? [];
-    if (historyGameList.isEmpty) {
-      return SizedBox();
-    }
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text("最近玩过",
-          style: TextStyle(
-              fontSize: Dimens.pt34,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textColorWhite)),
-      SizedBox(height: Dimens.pt25),
-      SizedBox(
-          height: Dimens.pt115,
-          child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                GameInfoBean? bean = logic.gameTypeList[type]?[index];
-                return Stack(alignment: Alignment.bottomCenter, children: [
-                  ImageLoader.withP(bean?.coverImg ?? "",
-                          width: Dimens.pt180, height: Dimens.pt115)
-                      .load(),
-                  Text(bean?.title ?? "",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: Dimens.pt28, color: Colors.white)),
-                  SizedBox(height: Dimens.pt10)
-                ]);
-              },
-              separatorBuilder: (context, index) =>
-                  SizedBox(width: Dimens.pt25),
-              itemCount: historyGameList.length)),
-      SizedBox(height: Dimens.pt25),
-      getHengLine(color: Color(0xFF666666)),
-    ]);
+
+    return Obx(() {
+      HomeGamePageController logic = Get.find<HomeGamePageController>();
+      List<GameInfoBean> historyGameList = logic.gameTypeList[type] ?? [];
+      if (historyGameList.isEmpty) {
+        return SizedBox();
+      }
+      return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text("最近玩过",
+            style: TextStyle(
+                fontSize: Dimens.pt34,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textColorWhite)),
+        SizedBox(height: Dimens.pt25),
+        SizedBox(
+            height: Dimens.pt245,
+            child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  GameInfoBean? bean = logic.gameTypeList[type]?[index];
+                  return ImageLoader.withP(bean?.coverImg ?? "",
+                          radius: Dimens.pt8,
+                          width: Dimens.pt214,
+                          height: Dimens.pt245)
+                      .load();
+                },
+                separatorBuilder: (context, index) =>
+                    SizedBox(width: Dimens.pt25),
+                itemCount: historyGameList.length)),
+        SizedBox(height: Dimens.pt25),
+        getHengLine(color: Color(0xFF666666)),
+      ]);
+    });
   }
 
   _buildSmallUtilButton({onTap, btnTxt}) {

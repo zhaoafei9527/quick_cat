@@ -44,9 +44,8 @@ class PostTopicInfo {
   int? count;
   String? adsPath;
 
-  PostTopicInfo({this.id,
-    this.adsId,
-    this.name, this.count, this.adsPath,this.cover});
+  PostTopicInfo(
+      {this.id, this.adsId, this.name, this.count, this.adsPath, this.cover});
 
   PostTopicInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -379,12 +378,14 @@ class PostDetailsResp extends BaseNetModel {
   List<PostNode>? nodes;
   String? pictureLink;
   String? titleLink;
+  bool? canPlay;
 
   PostDetailsResp(
       {this.base,
       this.jumpPicture,
       this.jumpTitle,
       this.nodes,
+      this.canPlay,
       this.pictureLink,
       this.titleLink});
 
@@ -398,6 +399,7 @@ class PostDetailsResp extends BaseNetModel {
         nodes?.add(PostNode.fromJson(e));
       });
     }
+    canPlay = json['canPlay'];
     jumpPicture = json['jumpPicture'];
     jumpTitle = json['jumpTitle'];
     pictureLink = json['pictureLink'];
@@ -412,6 +414,7 @@ class PostDetailsResp extends BaseNetModel {
     data['jumpTitle'] = jumpTitle;
     data['pictureLink'] = pictureLink;
     data['titleLink'] = titleLink;
+    data['canPlay'] = canPlay;
     return data;
   }
 }

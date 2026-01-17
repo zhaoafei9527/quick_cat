@@ -22,6 +22,7 @@ class FIJKVideoPlayer extends StatefulWidget {
   final String? title;
   final String? cover;
   final bool autoPlay;
+  final bool canPlay;
   final bool? simpleModel; // 是否为简单模式
   final bool? loop; // 是否循环播放
   final MediaInfo? mediaInfo; // 视频信息
@@ -35,6 +36,7 @@ class FIJKVideoPlayer extends StatefulWidget {
       this.cover,
       this.simpleModel = false,
       this.autoPlay = true,
+      this.canPlay = true,
       this.loop = true,
       this.aspectRatio = 9 / 16,
       this.mediaInfo,
@@ -82,7 +84,7 @@ class _FIJKVideoPlayerState extends State<FIJKVideoPlayer> {
 
     // 如果是简单模式，设置播放器为简单模式
     if (widget.simpleModel == true) {
-      playerManager.setSimpleModel();
+      playerManager.setSimpleModel(canPlay: widget.canPlay);
     } else {
       playerManager.barrageController = BarrageController();
     }
@@ -219,9 +221,9 @@ class FIJKPlayerManager {
     }
   }
 
-  void setSimpleModel() async {
+  void setSimpleModel({bool? canPlay}) async {
     simpleModel = true;
-    canContinuePlay = true;
+    canContinuePlay = canPlay ?? true;
     _mediaPlayModel = null;
     if (overlayEntry != null) {
       overlayEntry!.remove();

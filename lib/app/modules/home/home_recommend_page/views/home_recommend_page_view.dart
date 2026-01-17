@@ -66,7 +66,7 @@ class HomeRecommendPageView extends GetView<HomeRecommendPageController> {
                                       fontSize: Dimens.pt28,
                                       color: logic.rankModel.value == 0
                                           ? AppColors.textColorWhite
-                                          : AppColors.textGreyColor)),
+                                          : AppColors.textColorWhite.withOpacity(0.6))),
                               if (logic.rankModel.value == 0)
                                 Container(
                                     width: Dimens.pt24,
@@ -92,7 +92,7 @@ class HomeRecommendPageView extends GetView<HomeRecommendPageController> {
                                         fontSize: Dimens.pt28,
                                         color: logic.rankModel.value == 1
                                             ? AppColors.textColorWhite
-                                            : AppColors.textGreyColor)),
+                                            : AppColors.textColorWhite.withOpacity(0.6))),
                                 if (logic.rankModel.value == 1)
                                   Container(
                                       width: Dimens.pt24,

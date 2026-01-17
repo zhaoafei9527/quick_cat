@@ -15,12 +15,13 @@ class MineCollectPageController extends GetxController
   RxBool editModel = false.obs;
   RxBool allSelect = false.obs;
   RxBool refreshTag = false.obs;
-  List<String> tabList = ["动漫", "长视频", "短视频", "帖子"];
+  List<String> tabList = ["吃瓜", "视频", "抖阴","动漫", "小说"];
   List<MediaType> typeList = [
-    MediaType.cartoon,
+    MediaType.post,
     MediaType.videoLong,
     MediaType.videoShort,
-    MediaType.post
+    MediaType.cartoon,
+    MediaType.novel
   ];
   RxMap<MediaType, List<MediaInfo>> currentMedias =
       <MediaType, List<MediaInfo>>{}.obs;

@@ -45,6 +45,9 @@ Widget buildMediaTopicWidget(TopicList topic, MediaType type,
   // final CoverType coverType = CoverType.values[topic.coverType ?? 1];
 
   Widget child = Container();
+  if(topic.name =="素人无码"){
+    print("showType:${topic.showType}==${topic.contentType}==${topic.coverType}===${type}");
+  }
   // 视频才会有五宫格
   if (topic.showType == TopicShowType.fiveGrid &&
       (type == MediaType.videoLong ||
@@ -59,6 +62,9 @@ Widget buildMediaTopicWidget(TopicList topic, MediaType type,
     double aspectRatio = 226 / 405;
     if (type != MediaType.comic && type != MediaType.novel) {
       aspectRatio = 226 / 365;
+    }
+    if(topic.coverType == CoverType.coverHorizontal.index){
+      aspectRatio = 345 / 250;
     }
     child = SixVerticalGridBuilder(observableTopic,
         type: type, crossAxisCount: 2, childAspectRatio: aspectRatio);
@@ -358,8 +364,7 @@ class SixVerticalGridBuilder extends StatelessWidget {
         itemCount: mediaList.length,
         itemBuilder: (c, index) {
           return getMediaCoverItemWidget(mediaList[index], type,
-              coverType: coverType,
-              height: crossAxisCount == 2 ? Dimens.pt504 : Dimens.pt330);
+              coverType: coverType);
         }));
   }
 }
@@ -667,7 +672,7 @@ Widget videoItemCover(MediaInfo model,
                       price: model.price,
                       isAds: model.isAds ?? false))
             ]),
-            SizedBox(height: Dimens.pt5),
+            SizedBox(height: Dimens.pt10),
             Expanded(
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

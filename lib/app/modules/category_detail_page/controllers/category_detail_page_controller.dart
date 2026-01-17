@@ -9,9 +9,9 @@ class CategoryDetailPageController extends GetxController
   TabController? sortTabController;
   MediaType mediaType = MediaType.comic; // 默认漫画专题
   List<String> sortList = ["综合排序", "最新上架", "最多观看", "最多收藏"];
-  List<String> updateStatus = ["综合排序", "连载中", "完结"];
-  List<String> payStatus = ["综合排序", "金币", "免费"];
-  List<String> tabList = ["视频类型", "抖音", "动漫", "小说"];
+  List<String> updateStatus = ["更新状态", "连载中", "完结"];
+  List<String> payStatus = ["收费类型", "会员", "免费"];
+  List<String> tabList = ["视频类型","视频", "抖阴", "动漫", "小说"];
 
   // List<String> comicType = ["全部", "韩漫", "日漫", "美漫", "大陆", "其他"];
   // List<Tag> yearList = [];
@@ -36,6 +36,7 @@ class CategoryDetailPageController extends GetxController
   Rx<CategoryTagModel> categoryTagModel = CategoryTagModel().obs;
 
   List<MediaType> typeSort = [
+    MediaType.videoLong,
     MediaType.videoLong,
     MediaType.videoShort,
     MediaType.cartoon,

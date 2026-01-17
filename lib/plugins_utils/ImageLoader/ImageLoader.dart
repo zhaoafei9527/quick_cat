@@ -61,7 +61,6 @@ class ImageLoader {
         String imgCdn = Address.imgCdn ?? "";
         address = path.join(imgCdn, "$address");
       }
-
       return ClipRRect(
           borderRadius: BorderRadius.circular(radius ?? 0),
           child: CachedNetworkImage(
@@ -108,14 +107,14 @@ class ImageLoader {
                 width: width,
                 height: height,
                 alignment: Alignment.center,
-                color: const Color(0xFF171717),
+                color: const Color(0xFF222433),
                 child: Image.asset(R.assetsImgImgDef,
-                    width: height != null ? height! / 2 : Dimens.pt60),
+                    width: height != null ? height! / 1.3 : Dimens.pt80),
               ),
               if (showError)
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Icon(Icons.cloud_off_outlined,
-                      size: errorIconSize ?? Dimens.pt60,
+                      size: errorIconSize ?? Dimens.pt80,
                       color: Colors.red.withOpacity(.5)),
                   Text("加载失败",
                       style: TextStyle(

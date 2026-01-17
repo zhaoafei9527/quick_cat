@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 
 // import 'package:fvp/fvp.dart' as fvp;
@@ -107,6 +108,22 @@ Future<void> main() async {
 
     // 启动应用
     runApp(
+      // MaterialApp(home: InAppWebView(
+      //     initialOptions: InAppWebViewGroupOptions(
+      //         crossPlatform: InAppWebViewOptions(
+      //           transparentBackground: true, // 设置透明背景
+      //         )),
+      //     onLoadStart: (InAppWebViewController c, w) {
+      //       // logic.webViewLoading.value = true;
+      //       // logic.webViewController = c;
+      //     },
+      //     onLoadStop: (c, w) {
+      //       Future.delayed(Durations.medium2, () {
+      //         // logic.webViewLoading.value = false;
+      //       });
+      //     },
+      //     initialUrlRequest:
+      //     URLRequest(url: WebUri("https://www.bilijm1.com"))))
       GetMaterialApp(
         title: "91漫画",
         navigatorKey: navigatorKey,

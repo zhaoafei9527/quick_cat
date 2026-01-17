@@ -110,7 +110,7 @@ class _PostItemState extends State<PostItem> {
                         ])),
                     child: Text.rich(TextSpan(children: [
                       TextSpan(
-                          text: postBrief?.node?.text ?? "",
+                          text: postBrief?.base?.title ?? "",
                           style: TextStyle(
                               fontSize: Dimens.pt24, color: Colors.white),
                           recognizer: _tapRecognizer),

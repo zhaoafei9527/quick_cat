@@ -164,7 +164,7 @@ class UserTermsPageView extends GetView<UserTermsPageController> {
                                         logic.rights[index].homeName ?? "",
                                         style: TextStyle(
                                             fontSize: Dimens.pt20,
-                                            color: AppColors.primaryColor))))
+                                            color: AppColors.textColorWhite))))
                         ]),
                         SizedBox(height: Dimens.pt10),
                         Text(logic.rights[index].name ?? "",

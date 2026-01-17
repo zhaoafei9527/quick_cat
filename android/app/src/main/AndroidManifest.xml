@@ -64,7 +64,7 @@
             android:enabled="false"
             android:exported="true"
             android:icon="@mipmap/ic_launcher_aiqiyi"
-            android:label="爱奇艺"
+            android:label="抖乐"
             android:targetActivity=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -76,7 +76,7 @@
             android:enabled="false"
             android:exported="true"
             android:icon="@mipmap/ic_launcher_deepseek"
-            android:label="DeepSeek"
+            android:label="嗅探"
             android:targetActivity=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -88,7 +88,7 @@
             android:enabled="false"
             android:exported="true"
             android:icon="@mipmap/ic_launcher_bili"
-            android:label="哔哩哔哩"
+            android:label="RONA"
             android:targetActivity=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

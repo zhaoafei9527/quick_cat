@@ -22,6 +22,7 @@ import '../../../app/data/enum.dart';
 import '../../../app/model/home/topic_list_model.dart';
 import '../../../utils/dimens.dart';
 import '../../../utils/screen.dart';
+import '../fjik_tiktok_player.dart';
 import 'fijk_slider.dart';
 import 'head_animate_view.dart';
 import 'm3u8_cache_manager.dart';
@@ -32,11 +33,13 @@ class FijkTiktokPanel extends StatefulWidget {
   final BuildContext buildContext;
   final Rect texturePos;
   final MediaInfo? mediaInfo;
+  final FijkTiktokFeedController? controller;
 
   const FijkTiktokPanel(this.player,
       {super.key,
       required this.viewSize,
       required this.mediaInfo,
+      this.controller,
       required this.buildContext,
       required this.texturePos});
 
@@ -123,7 +126,7 @@ class _FijkTiktokPanelState extends State<FijkTiktokPanel> {
           width: screen.screenWidth,
           height: screen.screenHeight),
       _buildTiktokPlayerPause(),
-      _buildTiktokVideoInfo(widget.mediaInfo),
+      _buildTiktokVideoInfo(widget.mediaInfo, controller: widget.controller),
       _buildTiktokVideoUtils(mediaInfo: widget.mediaInfo, showHead: false),
     ]);
   }
@@ -219,7 +222,8 @@ class _FijkTiktokPanelState extends State<FijkTiktokPanel> {
             ])));
   }
 
-  Widget _buildTiktokVideoInfo(MediaInfo? mediaInfo) {
+  Widget _buildTiktokVideoInfo(MediaInfo? mediaInfo,
+      {FijkTiktokFeedController? controller}) {
     double duration = _duration.inSeconds.toDouble();
     double currentValue = _currentPos.inSeconds.toDouble();
     currentValue = min(currentValue, duration);
@@ -231,7 +235,8 @@ class _FijkTiktokPanelState extends State<FijkTiktokPanel> {
           padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            if (!_clearView) _buildVideoTitle(mediaInfo),
+            if (!_clearView)
+              _buildVideoTitle(mediaInfo, controller: controller),
             _buildTiktokPlayerSlider(currentValue, duration)
           ]),
         ));
@@ -337,7 +342,8 @@ class _FijkTiktokPanelState extends State<FijkTiktokPanel> {
   }
 }
 
-Widget _buildVideoTitle(MediaInfo? mediaInfo) {
+Widget _buildVideoTitle(MediaInfo? mediaInfo,
+    {FijkTiktokFeedController? controller}) {
   ShareKeys shareKeys = Get.find<ShareKeys>();
   PaymentType payType = mediaInfo?.payType ?? PaymentType.freePaymentType;
 
@@ -348,14 +354,17 @@ Widget _buildVideoTitle(MediaInfo? mediaInfo) {
       //     width: Dimens.pt73,
       //     height: Dimens.pt35),
       if (payType != PaymentType.freePaymentType && !shareKeys.isVip())
-        Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: Dimens.pt15, vertical: Dimens.pt6),
-            decoration: BoxDecoration(
-                color: AppColors.mainRed,
-                borderRadius: BorderRadius.circular(Dimens.pt8)),
-            child: Text("玩游戏 领会员 全站视频免费看",
-                style: TextStyle(color: Colors.white, fontSize: Dimens.pt24))),
+        GestureDetector(
+            onTap: () => Get.toNamed(Routes.VIP_CENTER_PAGE),
+            child: Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimens.pt15, vertical: Dimens.pt6),
+                decoration: BoxDecoration(
+                    color: AppColors.mainRed,
+                    borderRadius: BorderRadius.circular(Dimens.pt8)),
+                child: Text("玩游戏 领会员 全站视频免费看",
+                    style: TextStyle(
+                        color: Colors.white, fontSize: Dimens.pt24)))),
 
       // if (!(mediaInfo?.playable ?? false)) ...[
       //   SizedBox(width: Dimens.pt20),
@@ -381,9 +390,7 @@ Widget _buildVideoTitle(MediaInfo? mediaInfo) {
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) => GestureDetector(
                   onTap: () async {
-                    ShortVideoPlayerController logic =
-                        Get.find<ShortVideoPlayerController>();
-                    logic.tiktokPlayer.togglePause(true);
+                    controller?.togglePause(true);
                     dynamic result =
                         await Get.toNamed(Routes.TAG_DETAIL_PAGE, arguments: {
                       "id": "${mediaInfo?.tagList?[index].id}",
@@ -393,7 +400,7 @@ Widget _buildVideoTitle(MediaInfo? mediaInfo) {
                     });
                     if (result == null) return;
 
-                    logic.tiktokPlayer.resetMedias(result["mediaList"] ?? [],
+                    controller?.resetMedias(result["mediaList"] ?? [],
                         initIndex: result["index"] ?? 0);
                   },
                   child: Container(

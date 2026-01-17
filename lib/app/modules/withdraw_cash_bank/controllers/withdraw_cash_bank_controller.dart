@@ -88,7 +88,7 @@ class WithdrawCashBankController extends GetxController {
               bankBranch: branchesField.text ?? '',
               img: bankImg ?? '');
           bankCard.value = bankData;
-          Get.back();
+          // Get.back();
         });
   }
 

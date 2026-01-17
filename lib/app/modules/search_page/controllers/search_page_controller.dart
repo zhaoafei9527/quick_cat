@@ -21,7 +21,7 @@ class SearchPageController extends GetxController
   TextEditingController textEditingController = TextEditingController();
   RxBool isSearch = false.obs;
   RxBool initOk = false.obs;
-  List<String> tabList = ["吃瓜", "视频", "抖音", "动漫", "小说"];
+  List<String> tabList = ["吃瓜", "视频", "抖阴", "动漫", "小说"];
   List<String> tagTabList = ["漫画", "动漫", "小说", "长视频", "短视频"];
   late TabController tabController;
   late TabController tagTabController;

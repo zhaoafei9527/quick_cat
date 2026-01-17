@@ -29,7 +29,7 @@ class WatchHistoryPageView extends GetView<WatchHistoryPageController> {
         builder: (WatchHistoryPageController logic) {
       return Scaffold(
         backgroundColor: theme.getColor(ThemeColor.bg),
-        appBar: getCommonAppBar("浏览记录", actions: [
+        appBar: getCommonAppBar("历史记录", actions: [
           GestureDetector(
               onTap: () {
                 logic.editModel.value = !logic.editModel.value;

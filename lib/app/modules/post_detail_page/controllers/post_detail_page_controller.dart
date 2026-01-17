@@ -50,7 +50,7 @@ class PostDetailPageController extends GetxController {
 
   Future getPostInfo() async {
     PostDetailsResp? model = await ApiRes.getPostDetail(id: id);
-    if (model != null) {
+    if (model != null ) {
       post.value = model;
     }
   }
