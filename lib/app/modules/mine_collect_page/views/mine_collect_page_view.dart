@@ -110,6 +110,7 @@ class MineCollectPageView extends GetView<MineCollectPageController> {
           MediaList? model =
               await ApiRes.getCollectList(collectType: type, pageNum: pageNum);
           List<MediaInfo> medias = model?.mediaList ?? [];
+          if(type == MediaType.novel) medias =  model?.novelList ?? [];
           logic.currentMedias[type] = medias;
           return medias;
         },

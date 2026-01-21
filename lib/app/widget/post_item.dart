@@ -24,8 +24,9 @@ import '../routes/app_pages.dart';
 class PostItem extends StatefulWidget {
   PostBrief? postBrief;
   int? categoryId;
+  double? padding;
 
-  PostItem({super.key, this.postBrief, this.categoryId});
+  PostItem({super.key, this.postBrief, this.categoryId,this.padding});
 
   @override
   State<PostItem> createState() => _PostItemState();
@@ -70,8 +71,12 @@ class _PostItemState extends State<PostItem> {
     bool isCollect = postBrief?.base?.isCollect ?? false;
     int collects = postBrief?.base?.collects ?? 0;
     String image = postBrief?.base?.videoCover ?? "";
-    if(image.isEmpty){
+    String firstImg = images != null && images!.isNotEmpty ? images!.first : "";
+    if (image.isEmpty) {
       image = images != null && images!.isNotEmpty ? images!.first : "";
+    }
+    if (firstImg.isNotEmpty && image != firstImg) {
+      image = firstImg;
     }
 
     return GestureDetector(
@@ -86,14 +91,18 @@ class _PostItemState extends State<PostItem> {
           // }
         },
         child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: Dimens.pt30),
+            padding: EdgeInsets.symmetric(horizontal:widget.padding?? Dimens.pt30),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               // SizedBox(height: Dimens.pt15),
               Stack(alignment: Alignment.bottomCenter, children: [
-                ImageLoader.withP(image,
-                        width: screen.screenWidth, height: Dimens.pt276)
-                    .load(),
+                Stack(alignment: Alignment.topRight, children: [
+                  ImageLoader.withP(image,
+                          width: screen.screenWidth, height: Dimens.pt276)
+                      .load(),
+                  if (postBrief?.base?.isHot ?? false)
+                    Image.asset(R.assetsImgTipPostHot, width: Dimens.pt113)
+                ]),
                 Container(
                     width: screen.screenWidth,
                     height: Dimens.pt276 / 2,

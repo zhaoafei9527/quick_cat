@@ -429,6 +429,7 @@ flutter:
     - assets/img/text_balance8.png
     - assets/img/text_balance9.png
     - assets/img/text_balance2.png
+    - assets/img/tip_post_hot.png
   uses-material-design: true
 
 

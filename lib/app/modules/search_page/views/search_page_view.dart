@@ -4,6 +4,7 @@ import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:quick_cat_client/app/views/page_pull_view.dart';
 import 'package:quick_cat_client/app/widget/ad_view.dart';
 import 'package:quick_cat_client/app/widget/comic_topic_builder.dart';
+import 'package:quick_cat_client/app/widget/post_item.dart';
 import 'package:quick_cat_client/conf/api_res.dart';
 import 'package:flutter/material.dart';
 
@@ -90,19 +91,19 @@ class SearchPageView extends GetView<SearchPageController> {
             },
             body: TabBarView(controller: logic.typeTabController, children: [
               ...List.generate(logic.tagTabList.length, (index) {
-                return buildPagePullView(logic.mediaTypeList[index]);
+                return _buildRecommendPostView(index);
               })
             ])));
   }
 
   // 视频下拉列表组建 包含漫画、动漫、视频、darkWeb。
-  Widget buildPagePullView(MediaType type) {
+  Widget buildPagePullView(int index) {
     SearchPageController logic = Get.find<SearchPageController>();
     return PagePullView(
         dataGetter: (int pageNum, int size) async {
-          MediaList? medias =
-              await ApiRes.getSearchRankMediaList(type: type, pageNum: pageNum);
-          return getMediaListOfList(medias, type);
+          MediaList? medias = await ApiRes.getSearchRankMediaList(
+              sort: index, pageNum: pageNum, type: MediaType.post);
+          return getMediaListOfList(medias, MediaType.post);
         },
         emptyView: buildCommonEmptyView("宝贝,没有找到东西哦～"),
         widgetBuilder:
@@ -110,11 +111,31 @@ class SearchPageView extends GetView<SearchPageController> {
           return Padding(
               padding: EdgeInsets.zero,
               child: buildCommonMediaGrid(list.cast<MediaInfo>(),
-                  mediaType: type, dataGetter: (int pageNum) async {
+                  mediaType: MediaType.post, dataGetter: (int pageNum) async {
                 MediaList? medias = await ApiRes.getSearchRankMediaList(
-                    type: type, pageNum: pageNum);
-                return getMediaListOfList(medias, type);
+                    type: MediaType.post, pageNum: pageNum);
+                return getMediaListOfList(medias, MediaType.post);
               }));
+        });
+  }
+
+  Widget _buildRecommendPostView(sort) {
+    return PagePullView(
+        key: Key("key_post_$sort"),
+        dataGetter: (int pageNum, int size) async {
+          MediaList? medias = await ApiRes.getSearchRankMediaList(
+              sort: sort, pageNum: pageNum, type: MediaType.post);
+          return medias?.postList ?? [];
+        },
+        emptyView: buildCommonEmptyView("宝贝,没有找到东西哦～"),
+        widgetBuilder:
+            (BuildContext context, List<dynamic> list, Widget? child) {
+          return ListView.separated(
+              padding: EdgeInsets.zero,
+              itemBuilder: (c, index) =>
+                  PostItem(postBrief: list[index], padding: .0),
+              separatorBuilder: (c, index) => SizedBox(height: Dimens.pt25),
+              itemCount: list.length ?? 0);
         });
   }
 
@@ -180,7 +201,11 @@ class SearchPageView extends GetView<SearchPageController> {
             child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) => GestureDetector(
-                    onTap: () => logic.recommendIndex.value = index,
+                    onTap: () {
+                      logic.recommendIndex.value = index;
+                      logic.typeTabController
+                          .animateTo(index, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+                    },
                     child: Obx(() =>
                         Stack(alignment: Alignment.topLeft, children: [
                           SizedBox(width: Dimens.pt146, height: Dimens.pt70),
@@ -369,11 +394,11 @@ class SearchPageView extends GetView<SearchPageController> {
       SizedBox(height: Dimens.pt35),
       Expanded(
           child: TabBarView(controller: logic.tabController, children: [
-            SearchResultView(key: logic.postKey, searchType: MediaType.post),
-            SearchResultView(
-                key: logic.longVideoKey, searchType: MediaType.videoLong),
-            SearchResultView(
-                key: logic.shortVideoKey, searchType: MediaType.videoShort),
+        SearchResultView(key: logic.postKey, searchType: MediaType.post),
+        SearchResultView(
+            key: logic.longVideoKey, searchType: MediaType.videoLong),
+        SearchResultView(
+            key: logic.shortVideoKey, searchType: MediaType.videoShort),
         SearchResultView(key: logic.cartoonKey, searchType: MediaType.cartoon),
         SearchResultView(key: logic.novelKey, searchType: MediaType.novel),
 

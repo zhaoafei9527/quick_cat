@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 
+import 'package:quick_cat_client/app/themes/app_colors.dart';
 import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:quick_cat_client/app/widget/common_widget.dart';
 import 'package:quick_cat_client/r.dart';
@@ -109,16 +110,16 @@ Widget buildEditPageUtilView(bool isEdit,
                           Image.asset(R.assetsImgIconDelete,
                               width: Dimens.pt40,
                               height: Dimens.pt40,
-                              color: theme.getColor(haveSel
-                                  ? ThemeColor.textYellow
-                                  : ThemeColor.textGrey)),
+                              color: haveSel
+                                  ? AppColors.textYellowColor
+                                  : AppColors.textColorWhite.withOpacity(.6)),
                           SizedBox(width: Dimens.pt10),
                           Text("删除",
                               style: TextStyle(
                                   fontSize: Dimens.pt28,
-                                  color: theme.getColor(haveSel
-                                      ? ThemeColor.textYellow
-                                      : ThemeColor.textGrey)))
+                                  color: haveSel
+                                      ? AppColors.textYellowColor
+                                      : AppColors.textColorWhite.withOpacity(.6)))
                         ])))
           ])));
 }

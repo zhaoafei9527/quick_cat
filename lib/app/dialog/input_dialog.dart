@@ -104,7 +104,7 @@ class _InputWidgetState extends State<InputWidget> {
                 child: Container(
                     width: screen.screenWidth,
                     height: Dimens.pt68,
-                    margin: EdgeInsets.only(bottom: Dimens.pt25),
+                    // margin: EdgeInsets.only(bottom: Dimens.pt25),
                     padding: EdgeInsets.symmetric(
                         horizontal: Dimens.pt30, vertical: Dimens.pt10),
                     decoration: BoxDecoration(

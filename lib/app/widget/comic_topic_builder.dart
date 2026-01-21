@@ -45,8 +45,9 @@ Widget buildMediaTopicWidget(TopicList topic, MediaType type,
   // final CoverType coverType = CoverType.values[topic.coverType ?? 1];
 
   Widget child = Container();
-  if(topic.name =="素人无码"){
-    print("showType:${topic.showType}==${topic.contentType}==${topic.coverType}===${type}");
+  if (topic.name == "素人无码") {
+    print(
+        "showType:${topic.showType}==${topic.contentType}==${topic.coverType}===${type}");
   }
   // 视频才会有五宫格
   if (topic.showType == TopicShowType.fiveGrid &&
@@ -55,20 +56,24 @@ Widget buildMediaTopicWidget(TopicList topic, MediaType type,
           type == MediaType.darkWeb)) {
     child = FiveGridBuilder(observableTopic, type: type);
   } else if (topic.showType == TopicShowType.sixGridThree) {
+    // 小
     child = SixVerticalGridBuilder(observableTopic, type: type);
   } else if (topic.showType == TopicShowType.nineGridThree) {
+    // 小
     child = SixVerticalGridBuilder(observableTopic, type: type);
   } else if (topic.showType == TopicShowType.sixGridTwo) {
+    // 大
     double aspectRatio = 226 / 405;
     if (type != MediaType.comic && type != MediaType.novel) {
       aspectRatio = 226 / 365;
     }
-    if(topic.coverType == CoverType.coverHorizontal.index){
+    if (topic.coverType == CoverType.coverHorizontal.index) {
       aspectRatio = 345 / 250;
     }
     child = SixVerticalGridBuilder(observableTopic,
         type: type, crossAxisCount: 2, childAspectRatio: aspectRatio);
   } else if (topic.showType == TopicShowType.nineGridThree) {
+    // 小
     child = SixVerticalGridBuilder(observableTopic, type: type);
   } else if (topic.showType == TopicShowType.scrollHorizontal) {
     child = ScrollHorizontalBuilder(observableTopic, type: type);
@@ -108,6 +113,7 @@ class BigCoverListBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Column(children: [
+          SizedBox(height: Dimens.pt25),
           ...List.generate(
               mediaList.length,
               (index) => SizedBox(
@@ -339,7 +345,7 @@ class SixVerticalGridBuilder extends StatelessWidget {
   final int? crossAxisCount;
   final double? childAspectRatio;
 
-  const SixVerticalGridBuilder(this.topic,
+   SixVerticalGridBuilder(this.topic,
       {this.onItemClick,
       super.key,
       required this.type,
@@ -350,8 +356,22 @@ class SixVerticalGridBuilder extends StatelessWidget {
 
   CoverType get coverType => CoverType.values[topic.value.coverType ?? 1];
 
+  double width = Dimens.pt236;
+  double height = Dimens.pt330;
+  double aspectRatio = 226 / 425;
+
   @override
   Widget build(BuildContext context) {
+    if ((crossAxisCount ?? 3) == 2 && coverType == CoverType.coverHorizontal) {
+      aspectRatio = 335 / 281;
+      width = Dimens.pt335;
+      height = Dimens.pt197 + Dimens.pt1;
+    } else if ((crossAxisCount ?? 3) == 2 &&
+        coverType == CoverType.coverVertical) {
+      aspectRatio = 335 / 520;
+      width = Dimens.pt335;
+      height = Dimens.pt430 + Dimens.pt8;
+    }
     return Obx(() => GridView.builder(
         physics: BouncingScrollPhysics(),
         shrinkWrap: true,
@@ -360,11 +380,11 @@ class SixVerticalGridBuilder extends StatelessWidget {
             crossAxisCount: crossAxisCount ?? 3, //横向数量
             crossAxisSpacing: Dimens.pt10,
             mainAxisSpacing: Dimens.pt10,
-            childAspectRatio: childAspectRatio ?? 226 / 435),
+            childAspectRatio: aspectRatio),
         itemCount: mediaList.length,
         itemBuilder: (c, index) {
           return getMediaCoverItemWidget(mediaList[index], type,
-              coverType: coverType);
+              width: width, height: height, coverType: coverType);
         }));
   }
 }
@@ -580,10 +600,12 @@ Widget novelItemCover(MediaInfo model,
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Stack(alignment: Alignment.topRight, children: [
               ImageLoader.withP(model.coverImg,
-                      width: width, height: height ?? Dimens.pt330,radius: Dimens.pt12)
+                      width: width,
+                      height: height ?? Dimens.pt330,
+                      radius: Dimens.pt12)
                   .load(),
               Container(
-                  margin: EdgeInsets.only(right: Dimens.pt15,top: Dimens.pt15),
+                  margin: EdgeInsets.only(right: Dimens.pt15, top: Dimens.pt15),
                   child: buildPayTypeWidget(
                       model.novelPayType ?? PaymentType.freePaymentType,
                       price: model.price,
@@ -594,17 +616,19 @@ Widget novelItemCover(MediaInfo model,
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(model.title ?? "",
-                          maxLines: 1,
-                          style: TextStyle(
-                              fontSize: Dimens.pt28,
-                              color: (model.isAds ?? false)?AppColors.mainRed:Colors.white)),
-                      SizedBox(height: Dimens.pt10),
-                      if (!(model.isAds ?? false))
-                        Text("共${model.chapterCount ?? 0}章 · $type", style: TextStyle(
-                            fontSize: Dimens.pt24,
-                            color: Color(0xFFA3A3A7)))
-                    ]))
+                  Text(model.title ?? "",
+                      maxLines: 1,
+                      style: TextStyle(
+                          fontSize: Dimens.pt28,
+                          color: (model.isAds ?? false)
+                              ? AppColors.mainRed
+                              : Colors.white)),
+                  SizedBox(height: Dimens.pt10),
+                  if (!(model.isAds ?? false))
+                    Text("共${model.chapterCount ?? 0}章 · $type",
+                        style: TextStyle(
+                            fontSize: Dimens.pt24, color: Color(0xFFA3A3A7)))
+                ]))
           ])));
 }
 
@@ -624,11 +648,7 @@ Widget videoItemCover(MediaInfo model,
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Stack(alignment: Alignment.topRight, children: [
               ImageLoader.withP(model.coverImg,
-                      width: width,
-                      radius: Dimens.pt12,
-                      height: coverType == CoverType.coverVertical
-                          ? height ?? Dimens.pt330
-                          : height ?? Dimens.pt197)
+                      width: width, radius: Dimens.pt12, height: height)
                   .load(),
               if (!(model.isAds ?? false))
                 Positioned(
@@ -637,7 +657,7 @@ Widget videoItemCover(MediaInfo model,
                     bottom: 0,
                     child: Container(
                         height: Dimens.pt60,
-                        width: double.infinity,
+                        width: width,
                         alignment: Alignment.center,
                         padding: EdgeInsets.symmetric(horizontal: Dimens.pt15),
                         decoration: BoxDecoration(
@@ -665,8 +685,9 @@ Widget videoItemCover(MediaInfo model,
                               //         fontSize: Dimens.pt22,
                               //         color: theme.getColor(ThemeColor.primary)))
                             ]))),
-              Container(
-                  margin: EdgeInsets.only(right: Dimens.pt15,top: Dimens.pt15),
+              Positioned(
+                  right: Dimens.pt15,
+                  top: Dimens.pt15,
                   child: buildPayTypeWidget(
                       model.payType ?? PaymentType.vipPaymentType,
                       price: model.price,

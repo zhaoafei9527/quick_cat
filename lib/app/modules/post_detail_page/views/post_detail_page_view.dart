@@ -68,6 +68,8 @@ class PostDetailPageView extends GetView<PostDetailPageController> {
               SliverToBoxAdapter(child: _buildHeadView(logic)),
 
               _buildPostDetail(logic),
+
+              SliverToBoxAdapter(child: _buildPostVideoView(logic)),
               SliverToBoxAdapter(child: SizedBox(height: Dimens.pt25)),
               // SliverToBoxAdapter(child: buildPostEmojiView(base)),
               SliverToBoxAdapter(child: _buildPostFootView(logic)),
@@ -175,8 +177,7 @@ class PostDetailPageView extends GetView<PostDetailPageController> {
                         width: screen.screenWidth)
                     .load()),
           );
-        }),
-        _buildPostVideoView(logic)
+        })
       ]);
     }, childCount: nodes?.length ?? 0));
   }
@@ -186,19 +187,21 @@ class PostDetailPageView extends GetView<PostDetailPageController> {
     String videoUri = base?.videoUrl ?? "";
     String videoCover = base?.videoCover ?? "";
     if (videoUri.isEmpty || videoCover.isEmpty) return const SizedBox();
-    return Column(children: [
-      SizedBox(height: Dimens.pt25),
+    return SizedBox(
+      child: Column(children: [
+        SizedBox(height: Dimens.pt25),
 
-      FIJKVideoPlayer(
-          url: videoUri, autoPlay: false,
-          canPlay: logic.post.value.canPlay?? false,
-          simpleModel: true, cover: videoCover),
+        FIJKVideoPlayer(
+            url: videoUri, autoPlay: false,
+            canPlay: logic.post.value.canPlay?? false,
+            simpleModel: true, cover: videoCover),
 
-      // SizedBox(height: Dimens.pt25),
-      Text(base?.videoText ?? "视频文案视频文案",
-          style:
-              TextStyle(fontSize: Dimens.pt24, color: const Color(0xFFFDF6F2)))
-    ]);
+        // SizedBox(height: Dimens.pt25),
+        Text(base?.videoText ?? "视频文案视频文案",
+            style:
+                TextStyle(fontSize: Dimens.pt24, color: const Color(0xFFFDF6F2)))
+      ]),
+    );
   }
 
   Widget _buildHeadView(PostDetailPageController? logic) {

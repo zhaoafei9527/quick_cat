@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/data/watch_record.dart';
 import 'package:quick_cat_client/app/dialog/comment_dialog.dart';
 import 'package:quick_cat_client/app/model/home/config_model_model.dart';
 import 'package:quick_cat_client/app/model/home/video_play_model.dart';
@@ -514,7 +516,11 @@ class PlayerPoolManager {
       {required ScrollDirection dir, bool autoPlay = true}) async {
     if (newIndex < 0 || newIndex > lastIndex) return;
     currentIndex = newIndex;
-
+    // 添加浏览记录
+    if (!(medias[newIndex].isAds ?? false)) {
+      unawaited(
+          WatchRecord.addWatchRecord(medias[newIndex], MediaType.videoShort));
+    }
     // 1) 暂停上一个（只保留当前在播）
     _pauseOthers(except: newIndex);
     if (!(medias[newIndex].isAds ?? false)) {

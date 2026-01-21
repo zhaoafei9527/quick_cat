@@ -444,9 +444,9 @@ class MediaInfo extends BaseNetModel {
     if (tagList != null) {
       data['tagList'] = tagList?.map((v) => v.toJson()).toList();
     }
-    if (showTime != null) {
-      data['showTime'] = showTime?.map((v) => v.toJson()).toList();
-    }
+    // if (showTime != null) {
+    //   data['showTime'] = showTime?.map((v) => v.toJson()).toList();
+    // }
     if (comicTags != null) {
       data['tags'] = comicTags?.map((v) => v.toJson()).toList();
     }

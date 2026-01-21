@@ -137,6 +137,8 @@ class PostBase {
   int? mediaID;
   bool? isCollect;
   int? collects;
+  String? firstImg;
+  bool? isHot;
   EmojiInfoModel? realEmoji;
   EmojiInfoModel? isEmojis;
 
@@ -177,6 +179,8 @@ class PostBase {
       this.isEmojis,
       this.mediaID,
       this.isCollect,
+        this.firstImg,
+        this.isHot,
       this.minRecharge});
 
   PostBase.fromJson(Map<String, dynamic> json) {
@@ -198,6 +202,7 @@ class PostBase {
     topicName = json['topicName'];
     remark = json['remark'];
     type = json['type'];
+    isHot = json['isHot'];
     userAvatar = json['userAvatar'];
     userId = json['userId'];
     userName = json['userName'];
@@ -210,6 +215,7 @@ class PostBase {
     mediaID = json['mediaID'];
     title = json['title'];
     videoCoverHeight = json['videoCoverHeight'];
+    firstImg = json['firstImg'];
     videoCoverWidth = json['videoCoverWidth'];
     realEmoji = json['realEmoji'] != null
         ? EmojiInfoModel.fromJson(json['realEmoji'])
@@ -240,6 +246,7 @@ class PostBase {
     data['likes'] = likes;
     data['price'] = price;
     data['remark'] = remark;
+    firstImg != null ? data['firstImg'] = firstImg : null;
     data['type'] = type;
     data['userAvatar'] = userAvatar;
     data['userId'] = userId;

@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:quick_cat_client/app/themes/app_colors.dart';
 import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:quick_cat_client/app/widget/common_widget.dart';
 import 'package:quick_cat_client/conf/api_res.dart';
@@ -140,11 +141,8 @@ class ShortVideoPlayerView extends GetView<ShortVideoPlayerController> {
               child: Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.only(left: Dimens.pt0),
-                  child: Image.asset(R.assetsImgNavBack,
-                      width: Dimens.pt40,
-                      height: Dimens.pt40,
-                      color: theme.getColor(ThemeColor.primary),
-                      fit: BoxFit.fill))),
+                  child: Icon(Icons.arrow_back_ios_new,
+                      color: Colors.white, size: Dimens.pt42))),
           SizedBox(width: Dimens.pt15),
           Expanded(
               child: GestureDetector(
@@ -155,27 +153,21 @@ class ShortVideoPlayerView extends GetView<ShortVideoPlayerController> {
                     Get.toNamed(Routes.SEARCH_PAGE);
                   },
                   child: Container(
-                      height: Dimens.pt60,
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(left: Dimens.pt25),
-                      decoration: BoxDecoration(
-                          color: theme
-                              .getColor(ThemeColor.primary)
-                              .withOpacity(.2)),
-                      child: Text("搜你想看的",
+                    height: Dimens.pt64,
+                    decoration: BoxDecoration(
+                      color: AppColors.bgColor,
+                      borderRadius: BorderRadius.circular(Dimens.pt30),
+                    ),
+                    child: Row(children: [
+                      SizedBox(width: Dimens.pt32),
+                      Image.asset(R.assetsImgIconSearchEs, width: Dimens.pt35),
+                      SizedBox(width: Dimens.pt20),
+                      Text("输入关键字搜索更多内容",
                           style: TextStyle(
-                              fontSize: Dimens.pt28,
-                              color: theme.getColor(ThemeColor.primary)))))),
-          SizedBox(width: Dimens.pt15),
-          GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () {
-                logic.scaffoldKey.currentState?.openEndDrawer();
-              },
-              child: Image.asset(R.assetsImgIconHomeTopic,
-                  width: Dimens.pt50,
-                  height: Dimens.pt50,
-                  color: theme.getColor(ThemeColor.primary)))
+                              fontSize: Dimens.pt24,
+                              color: AppColors.textColorWhite.withOpacity(.6)))
+                    ]),
+                  ))),
         ]));
   }
 }

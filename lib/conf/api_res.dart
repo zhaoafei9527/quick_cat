@@ -545,7 +545,7 @@ class ApiRes {
   }
 
   /// path sharegift/list 邀请有礼活动列表
-  static Future<InvitedListModel?>  getInvitedList() async {
+  static Future<InvitedListModel?> getInvitedList() async {
     InvitedListModel? model;
     String? path = "sharegift/list";
     Map<String, dynamic> data = {};
@@ -555,12 +555,11 @@ class ApiRes {
   }
 
   /// path sharegift/receive 邀请有礼领取奖励
-  static Future  getInvitedReceive() async {
+  static Future getInvitedReceive() async {
     ActivityModel? model;
     String? path = "sharegift/receive";
     Map<String, dynamic> data = {};
-    model = await _basePostNet(
-        BaseParams(null, path: path, data: data));
+    model = await _basePostNet(BaseParams(null, path: path, data: data));
     return model;
   }
 
@@ -743,13 +742,13 @@ class ApiRes {
 
   // path hGame/list   获取HGame数据
   static Future<HGameResult?> getHGameList(
-      {int? id, Function(String)? onError,int? flagRank}) async {
+      {int? id, Function(String)? onError, int? flagRank}) async {
     HGameResult? model;
     Map<String, dynamic> data = {};
     String? path = "hGame/list";
     data["pageSize"] = pageSize;
     data["typeId"] = id ?? 0;
-    data["flagRank"] = flagRank??0;
+    data["flagRank"] = flagRank ?? 0;
     model = await _basePostNet<HGameResult>(BaseParams(HGameResult(),
         path: path, data: data ?? {}, onError: onError));
     return model;
@@ -767,7 +766,7 @@ class ApiRes {
 
   /// path user/isReceive 获取高能涩游列表
   static Future<HGameResult?> getSeGameList(
-      {int? pageNum,Function(String)? onError}) async {
+      {int? pageNum, Function(String)? onError}) async {
     HGameResult? model;
     Map<String, dynamic> data = {};
     String? path = "/seGame/list";
@@ -1368,7 +1367,6 @@ class ApiRes {
     data["type"] = type ?? MediaType.comic.index;
     data["pageSize"] = pageSize;
     data["pageNum"] = pageNum ?? 1;
-    print(data);
     model = await _basePostNet<MediaList>(
         BaseParams(MediaList(), path: path, data: data ?? {}));
     return model;
@@ -1376,13 +1374,15 @@ class ApiRes {
 
   ///path [POST] search/everydaySearch 搜索页面排行榜视频*
   static Future<MediaList?> getSearchRankMediaList(
-      {MediaType? type, int? pageNum}) async {
+      {MediaType? type, int? pageNum, int? sort}) async {
     MediaList? model;
     String? path = "search/everydaySearch";
     Map<String, dynamic> data = {};
     data["categoryType"] = type?.index ?? MediaType.videoLong.index;
+    data["sort"] = sort ?? 0;
     data["pageNum"] = pageNum ?? 1;
     data["pageSize"] = pageSize;
+    print(data);
     model = await _basePostNet<MediaList>(
         BaseParams(MediaList(), path: path, data: data ?? {}));
     return model;

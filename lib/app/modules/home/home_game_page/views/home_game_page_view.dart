@@ -213,8 +213,9 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
                 separatorBuilder: (context, index) =>
                     SizedBox(width: Dimens.pt25),
                 itemCount: historyGameList.length)),
-        SizedBox(height: Dimens.pt25),
+        SizedBox(height: Dimens.pt50),
         getHengLine(color: Color(0xFF666666)),
+        SizedBox(height: Dimens.pt50)
       ]);
     });
   }

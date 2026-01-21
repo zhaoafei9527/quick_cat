@@ -55,6 +55,10 @@ class SearchPageController extends GetxController
     tabController = TabController(length: tabList.length, vsync: this);
     tagTabController = TabController(length: tagTabList.length, vsync: this);
     typeTabController = TabController(length: tagTabList.length, vsync: this);
+    typeTabController.addListener(() {
+      if (typeTabController.indexIsChanging) return;
+      recommendIndex.value = typeTabController.index;
+    });
     searchKeyList = [
       postKey,
       longVideoKey,

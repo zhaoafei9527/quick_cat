@@ -196,7 +196,7 @@ class CommentRefreshViewState extends State<CommentRefreshView> {
         child: Container(
             width: screen.screenWidth,
             height: Dimens.pt68,
-            margin: EdgeInsets.only(bottom: Dimens.pt25),
+            // margin: EdgeInsets.only(bottom: Dimens.pt25),
             padding: EdgeInsets.symmetric(horizontal: Dimens.pt30),
             decoration: BoxDecoration(
                 color: const Color(0xFF262637),
