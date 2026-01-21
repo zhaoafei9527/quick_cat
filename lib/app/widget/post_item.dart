@@ -26,7 +26,7 @@ class PostItem extends StatefulWidget {
   int? categoryId;
   double? padding;
 
-  PostItem({super.key, this.postBrief, this.categoryId,this.padding});
+  PostItem({super.key, this.postBrief, this.categoryId, this.padding});
 
   @override
   State<PostItem> createState() => _PostItemState();
@@ -61,8 +61,8 @@ class _PostItemState extends State<PostItem> {
     int? topicId = postBrief?.base?.topicId;
     String? name = postBrief?.base?.topicName;
 
-    Get.toNamed(Routes.POST_TOPIC_PAGE,
-        arguments: {"topicId": topicId, "title": name});
+    Get.toNamed(Routes.POST_DETAILE_PAGE,
+        arguments: {"id": "${postBrief?.base?.id}"});
   }
 
   @override
@@ -82,7 +82,7 @@ class _PostItemState extends State<PostItem> {
     return GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () async {
-          await Get.toNamed(Routes.POST_DETAILE_PAGE,
+          Get.toNamed(Routes.POST_DETAILE_PAGE,
               arguments: {"id": "${postBrief?.base?.id}"});
           // if (model != null) {
           //   postBrief?.base?.isCollect = model.isCollect;
@@ -91,7 +91,8 @@ class _PostItemState extends State<PostItem> {
           // }
         },
         child: Padding(
-            padding: EdgeInsets.symmetric(horizontal:widget.padding?? Dimens.pt30),
+            padding:
+                EdgeInsets.symmetric(horizontal: widget.padding ?? Dimens.pt30),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               // SizedBox(height: Dimens.pt15),
