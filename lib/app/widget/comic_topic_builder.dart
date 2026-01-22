@@ -363,7 +363,7 @@ class SixVerticalGridBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if ((crossAxisCount ?? 3) == 2 && coverType == CoverType.coverHorizontal) {
-      aspectRatio = 335 / 281;
+      aspectRatio = 335 / 255;
       width = Dimens.pt335;
       height = Dimens.pt197 + Dimens.pt1;
     } else if ((crossAxisCount ?? 3) == 2 &&

@@ -85,7 +85,7 @@ class _CustomFIJKPlayerState extends State<CustomFIJKPlayer> {
   StreamSubscription<CacheEvent>? _cacheSub; // 缓存数据订阅
 
   Timer? _hideTimer; // 隐藏控制栏的定时器
-  bool _hideStuff = true; // 是否隐藏控制栏
+  bool _hideStuff = false; // 是否隐藏控制栏
 
   double _volume = 1.0; // 音量大小
 
@@ -115,7 +115,8 @@ class _CustomFIJKPlayerState extends State<CustomFIJKPlayer> {
       if (event.speedKBps > 0) {
         setState(() {
           _bufferPos = event.progress; // 0.0~1.0
-          log.i("_long_video_play","当前下载速度${event.speedKBps},缓冲进度：${event.progress}");
+          log.i("_long_video_play",
+              "当前下载速度${event.speedKBps},缓冲进度：${event.progress}");
           _bufferPercent = event.speedKBps; // KB/s
         });
       }
@@ -510,8 +511,7 @@ class _CustomFIJKPlayerState extends State<CustomFIJKPlayer> {
                 margin: manager.isFullScreen
                     ? EdgeInsets.all(30)
                     : EdgeInsets.all(12.5),
-                child: Image.asset(R.assetsImgIconVideoBank,
-                    width: 24))),
+                child: Image.asset(R.assetsImgIconVideoBank, width: 24))),
       Spacer(),
       if (!simpleModel)
         AnimatedOpacity(
@@ -526,7 +526,6 @@ class _CustomFIJKPlayerState extends State<CustomFIJKPlayer> {
                         setState(() => _showTimePanel = true);
                       },
                       child: Image.asset(R.assetsImgIconPlayerQuicklyPlay,
-
                           width: 20)),
                 // SizedBox(width: 15),
                 // GestureDetector(

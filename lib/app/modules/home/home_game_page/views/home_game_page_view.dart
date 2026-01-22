@@ -238,7 +238,7 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
   Widget _buildGamePageListView() {
     HomeGamePageController logic = Get.find<HomeGamePageController>();
     return SizedBox(
-      height: screen.screenHeight * 2.2,
+      height: Dimens.pt800*4.5,
       child: TabBarView(controller: logic.gameTabController, children: [
         if (logic.gameTypeList[GameCategory.gameCategoryQP.index] != null)
           _buildGameList(GameCategory.gameCategoryQP.index)
