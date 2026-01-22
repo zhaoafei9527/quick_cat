@@ -136,6 +136,7 @@ class _FIJKVideoPlayerState extends State<FIJKVideoPlayer> {
         ? FijkView(
             player: playerManager.player!,
             color: theme.getColor(ThemeColor.bg),
+            cover: ImageLoader.withP(widget.cover).loadMemory(),
             panelBuilder: (player, data, context, size, rect) =>
                 CustomFIJKPlayer(player,
                     buildContext: context, viewSize: size, texturePos: rect),

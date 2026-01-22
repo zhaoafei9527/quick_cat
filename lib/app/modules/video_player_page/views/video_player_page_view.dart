@@ -506,7 +506,7 @@ class VideoPlayerPageView extends GetView<VideoPlayerPageController> {
                   // }),
                   _buildVideoNumber(
                       icon: R.assetsImgIconVideoDownload,
-                      onTap: () => showTypeToast(msg: "功能暂未开放～"),
+                      // onTap: () => showTypeToast(msg: "功能暂未开放～"),
                       text: getShowWatchNumberStr(mediaInfo?.watchTimes ?? 0)),
                   Obx(() {
                     return _buildVideoNumber(

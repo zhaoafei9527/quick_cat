@@ -52,7 +52,7 @@ channel {
 }
 
 android {
-    namespace "com.gua.player.client"
+    namespace "com.quick.player.client"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 

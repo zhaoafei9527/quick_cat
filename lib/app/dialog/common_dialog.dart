@@ -512,16 +512,15 @@ Future showPlayerCommonDialog(BuildContext context,
                   Container(height: Dimens.pt2, color: Color(0xFF1F1F1F)),
                   const SizedBox(height: 15),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Image.asset(R.assetsImgTextHomeBalance,
-                        height: Dimens.pt40),
+                    Image.asset(R.assetsImgTextHomeBalance, height: 20),
                     SizedBox(width: Dimens.pt15),
                     Obx(() => Text("¥${shareKeys.userBalance.value}",
                         style: TextStyle(
-                            fontSize: Dimens.pt40,
+                            fontSize: 20,
                             color: Color(0xFFFFDB9E),
                             fontWeight: FontWeight.w500)))
                   ]),
-                  SizedBox(height: Dimens.pt35)
+                  SizedBox(height: 16)
                 ]
               ]))),
     ),

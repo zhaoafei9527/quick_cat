@@ -1,4 +1,4 @@
-package com.gua.player.client
+package com.quick.player.client
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
