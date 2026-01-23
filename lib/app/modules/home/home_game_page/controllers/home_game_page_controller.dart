@@ -14,6 +14,7 @@ import 'package:quick_cat_client/app/model/game_model.dart';
 import 'package:quick_cat_client/app/routes/app_pages.dart';
 import 'package:quick_cat_client/conf/api_res.dart';
 import 'package:quick_cat_client/r.dart';
+import 'package:quick_cat_client/utils/dimens.dart';
 import 'package:quick_cat_client/utils/toast_util.dart';
 import '../../../../../utils/light_model.dart';
 import '../../../../model/home/user_info_model.dart';
@@ -34,6 +35,15 @@ class HomeGamePageController extends GetxController
   List<String> cateTopList = ["娱乐中心", "高能涩游"];
   RxList<GameInfoBean> historyGame = <GameInfoBean>[].obs;
   late Rx<UserInfo> userInfo = UserInfo().obs;
+  GameCategory actionGameCategory = GameCategory.gameCategoryQP; // 当前选择的游戏分类
+  RxDouble gameViewHeight = (12 * 120).ceil().toDouble().obs;
+  List<GameCategory> sortList = [
+    GameCategory.gameCategoryQP,
+    GameCategory.gameCategoryBY,
+    GameCategory.gameCategorySX,
+    GameCategory.gameCategoryDZ,
+    GameCategory.gameCategoryTY
+  ];
 
   @override
   void onInit() async {
@@ -46,6 +56,11 @@ class HomeGamePageController extends GetxController
     });
     gameTabController?.addListener(() {
       actionIndex.value = gameTabController!.index;
+      gameViewHeight.value = Dimens.pt280 *
+          ((gameTypeList[sortList[actionIndex.value].index]?.length ?? 0) / 3)
+              .ceil()
+              .toDouble();
+
       gameTypeScrollController.animateTo(
           (gameTabController!.index * 60).toDouble(),
           duration: const Duration(milliseconds: 300),
@@ -57,14 +72,13 @@ class HomeGamePageController extends GetxController
           title: gameTypesName[i],
           coverImg: gameIconInsert["insert${i + 1}"] ?? "",
           selectedIcon: gameIconSelInsert["insert${i + 1}"] ?? ""));
-
-
     }
     ShareKeys shareKeys = Get.find<ShareKeys>();
     userInfo.value = await shareKeys.getUserInfo();
     GameListModel? model = await ApiRes.getGameList();
     gameList = model?.list ?? [];
     Map<int, List<GameInfoBean>> gameType = {};
+
     if ((model?.list ?? []).isNotEmpty) {
       for (GameInfoBean item in model?.list ?? []) {
         if (gameType[item.gameCategory] != null) {

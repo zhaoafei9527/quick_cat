@@ -237,30 +237,33 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
 
   Widget _buildGamePageListView() {
     HomeGamePageController logic = Get.find<HomeGamePageController>();
-    return SizedBox(
-      height: Dimens.pt800*4.5,
-      child: TabBarView(controller: logic.gameTabController, children: [
-        if (logic.gameTypeList[GameCategory.gameCategoryQP.index] != null)
-          _buildGameList(GameCategory.gameCategoryQP.index)
-        else
-          buildCommonEmptyView("找不到游戏～"),
-        if (logic.gameTypeList[GameCategory.gameCategoryBY.index] != null)
-          _buildGameList(GameCategory.gameCategoryBY.index)
-        else
-          buildCommonEmptyView("找不到游戏～"),
-        if (logic.gameTypeList[GameCategory.gameCategorySX.index] != null)
-          _buildGameList(GameCategory.gameCategorySX.index)
-        else
-          buildCommonEmptyView("找不到游戏～"),
-        if (logic.gameTypeList[GameCategory.gameCategoryDZ.index] != null)
-          _buildGameList(GameCategory.gameCategoryDZ.index)
-        else
-          buildCommonEmptyView("找不到游戏～"),
-        if (logic.gameTypeList[GameCategory.gameCategoryTY.index] != null)
-          _buildGameList(GameCategory.gameCategoryTY.index)
-        else
-          buildCommonEmptyView("找不到游戏～"),
-      ]),
+    return Obx(()=> SizedBox(
+        height: logic.gameViewHeight.value + screen.bottomNavBarH,
+        child: TabBarView(controller: logic.gameTabController, children: [
+
+          if (logic.gameTypeList[GameCategory.gameCategoryQP.index] != null)
+            _buildGameList(GameCategory.gameCategoryQP.index)
+          else
+            buildCommonEmptyView("找不到游戏～"),
+
+          if (logic.gameTypeList[GameCategory.gameCategoryBY.index] != null)
+            _buildGameList(GameCategory.gameCategoryBY.index)
+          else
+            buildCommonEmptyView("找不到游戏～"),
+          if (logic.gameTypeList[GameCategory.gameCategorySX.index] != null)
+            _buildGameList(GameCategory.gameCategorySX.index)
+          else
+            buildCommonEmptyView("找不到游戏～"),
+          if (logic.gameTypeList[GameCategory.gameCategoryDZ.index] != null)
+            _buildGameList(GameCategory.gameCategoryDZ.index)
+          else
+            buildCommonEmptyView("找不到游戏～"),
+          if (logic.gameTypeList[GameCategory.gameCategoryTY.index] != null)
+            _buildGameList(GameCategory.gameCategoryTY.index)
+          else
+            buildCommonEmptyView("找不到游戏～"),
+        ]),
+      ),
     );
   }
 

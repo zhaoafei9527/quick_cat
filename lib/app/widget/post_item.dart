@@ -71,7 +71,7 @@ class _PostItemState extends State<PostItem> {
     bool isCollect = postBrief?.base?.isCollect ?? false;
     int collects = postBrief?.base?.collects ?? 0;
     String image = postBrief?.base?.videoCover ?? "";
-    String firstImg = images != null && images!.isNotEmpty ? images!.first : "";
+    String firstImg = postBrief?.base?.firstImg ?? "";
     if (image.isEmpty) {
       image = images != null && images!.isNotEmpty ? images!.first : "";
     }
