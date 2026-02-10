@@ -30,7 +30,7 @@ debug=`grep 'debug:' pubspec.yaml`
 echo "> 项目环境:'$debug'"
 echo ">Are you sure? (Press any key to continue.)"
 read aChar
-#dart build_all.dart
+dart build_all.dart
 #if [[ -n $(git status --porcelain) ]]; then
 #    # 有更改，执行提交
 #    git commit -am "${ver}"

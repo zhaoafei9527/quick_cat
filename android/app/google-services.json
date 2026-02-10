@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "549887739198",
-    "project_id": "acgn-client",
-    "storage_bucket": "acgn-client.firebasestorage.app"
+    "project_number": "695772863425",
+    "project_id": "quick-cat-3c0e5",
+    "storage_bucket": "quick-cat-3c0e5.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:549887739198:android:aff012d31019fc2926586f",
+        "mobilesdk_app_id": "1:695772863425:android:56738e25bec2b1facced40",
         "android_client_info": {
           "package_name": "com.gua.player.client"
         }
@@ -15,7 +15,26 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBjC2ubmiARDFmLNYP8EnLmLl0IlOsRIjY"
+          "current_key": "AIzaSyC_GCY9Vy3dTLAES7Dq8r6qFirDtSVycTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695772863425:android:dc0422bb7adc2c17cced40",
+        "android_client_info": {
+          "package_name": "com.quick.player.client"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_GCY9Vy3dTLAES7Dq8r6qFirDtSVycTk"
         }
       ],
       "services": {

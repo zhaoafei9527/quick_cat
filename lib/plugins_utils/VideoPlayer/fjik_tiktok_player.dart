@@ -278,7 +278,7 @@ class FeedVideoItem extends StatelessWidget {
                     MediaQuery.of(context).size.height),
                 mediaInfo: mediaInfo,
                 buildContext: context,
-    controller: controller,
+                controller: controller,
                 texturePos: Rect.fromLTWH(
                     0,
                     0,
@@ -561,7 +561,8 @@ class PlayerPoolManager {
   void _pauseOthers({required int except}) {
     _holders.forEach((i, h) {
       if (i != except) {
-        if (h.player.state == FijkState.started) {
+        if (h.player.state == FijkState.started ||
+            h.player.state == FijkState.asyncPreparing) {
           unawaited(h.pause());
         }
       }

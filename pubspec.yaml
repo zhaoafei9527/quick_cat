@@ -59,6 +59,7 @@ dependencies:
   firebase_crashlytics: ^4.1.5
   wakelock_plus: ^1.2.8
   pointer_interceptor: ^0.10.1+2
+  shorebird_code_push: ^2.0.3
   fijkplayer: ^0.11.0
   flutter_cache_manager: ^3.3.1
   http: ^1.2.1
@@ -429,6 +430,7 @@ flutter:
     - assets/img/text_balance9.png
     - assets/img/text_balance2.png
     - assets/img/tip_post_hot.png
+    - shorebird.yaml
   uses-material-design: true
 
 
