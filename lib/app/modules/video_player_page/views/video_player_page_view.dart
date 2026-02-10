@@ -92,7 +92,7 @@ class VideoPlayerPageView extends GetView<VideoPlayerPageController> {
                     ]),
                     if (!shareKeys.isVip())
                       GestureDetector(
-                          onTap: () => AppUtils.jumpToHome(index: 3),
+                          onTap: () => AppUtils.jumpToHome(index: 2),
                           child: Image.asset(R.assetsImgTipPlayer,
                               width: screen.screenWidth)),
                     SizedBox(height: Dimens.pt25),

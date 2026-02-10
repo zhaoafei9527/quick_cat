@@ -218,7 +218,7 @@ class SettingPageController extends GetxController {
                 await NetWorkCreator.init(newToken: userInfo.token ?? "");
               }
               showTypeToast(msg: "绑定手机成功", toastType: ToastType.SUCCESS);
-              AppUtils.jumpToHome(index: 4);
+              AppUtils.jumpToHome(index: 3);
             },
             onError: (err) {
               showToast(msg: "绑定手机失败，错误:$err");

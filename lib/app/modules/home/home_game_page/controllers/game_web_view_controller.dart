@@ -48,7 +48,7 @@ class GameWebViewPageController extends GetxController {
         btnCall: [
           () => Get.back(),
           () async {
-            AppUtils.jumpToHome(index: 3);
+            AppUtils.jumpToHome(index: 2);
             HomeGamePageController game =
                 Get.find<HomeGamePageController>();
             game.getHistoryGameList();

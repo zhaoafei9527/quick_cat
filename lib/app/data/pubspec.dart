@@ -29,7 +29,7 @@ class Pubspec {
 
   static const versionIsPreRelease = false;
 
-  static const debug = true;
+  static const debug = false;
 
   static const qiye = false;
 
@@ -58,19 +58,19 @@ class Pubspec {
   ];
 
   static const prod_h5_lines = <dynamic>[
-    "https://keicohsh.sccw-cn.com",
-    "https://xuadiz.0913.org",
-    "https://api.sashaiw7zughe5cu.shop",
-    "https://apism.nineoneapp.com",
-    "https://d1vt6iysc7c00q.cloudfront.net",
+    "https://kmutzacn.sccw-cn.com",
+    "https://kmzxsa.0913.org",
+    "https://api.lbsone.com",
+    "https://apikm.nineoneapp.com",
+    "https://d2fztf6d01of6d.cloudfront.net",
   ];
 
   static const prod_app_lines = <dynamic>[
-    "https://keicohsh.sccw-cn.com",
-    "https://xuadiz.0913.org",
-    "https://api.sashaiw7zughe5cu.shop",
-    "https://apism.nineoneapp.com",
-    "https://d1vt6iysc7c00q.cloudfront.net",
+    "https://kmutzacn.sccw-cn.com",
+    "https://kmzxsa.0913.org",
+    "https://api.lbsone.com",
+    "https://apikm.nineoneapp.com",
+    "https://d2fztf6d01of6d.cloudfront.net",
   ];
 
   static List<String> getBackupLine() {

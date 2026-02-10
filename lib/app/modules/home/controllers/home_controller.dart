@@ -30,7 +30,7 @@ class HomeController extends GetxController {
     shareKeys.tabIndex.value = index;
     HomePostPageController tiktok = Get.find<HomePostPageController>();
     // ===========跳转进入我的页面重新更新用户信息 ==========
-    if (index == 2) {
+    if (index == 1) {
       FIJKPlayerManager manager = FIJKPlayerManager();
       manager.disposePlayer();
 
@@ -74,12 +74,12 @@ class HomeController extends GetxController {
 
   createButton() {
     bottomList.value = [
+      // BottomBarModel(
+      //     title: "首页",
+      //     icon: R.assetsImgHomeIndexIcon,
+      //     selectIcon: R.assetsImgHomeIndexIconSel),
       BottomBarModel(
           title: "首页",
-          icon: R.assetsImgHomeIndexIcon,
-          selectIcon: R.assetsImgHomeIndexIconSel),
-      BottomBarModel(
-          title: "视频",
           icon: R.assetsImgHomeIndexPlayer,
           selectIcon: R.assetsImgHomeIndexPlayerSel),
       BottomBarModel(

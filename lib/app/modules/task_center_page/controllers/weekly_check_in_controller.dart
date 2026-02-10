@@ -122,7 +122,7 @@ class WeeklyCheckInController extends GetxController {
               const TextSpan(text: "体验会员"),
             ],
             btnList: ["收下", "观看VIP影片"],
-            btnCall: [() => Get.back(), () => AppUtils.jumpToHome(index: 1)],
+            btnCall: [() => Get.back(), () => AppUtils.jumpToHome(index: 0)],
             btnActionIndex: 0);
       }
       await getWeeklyCheckInData();

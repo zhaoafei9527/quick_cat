@@ -127,7 +127,7 @@ Widget buildRecommendGameView({bool? showHotGame}) {
                     color: Colors.white)),
             Spacer(),
             GestureDetector(
-                onTap: () => AppUtils.jumpToHome(index: 3),
+                onTap: () => AppUtils.jumpToHome(index: 2),
                 child: Row(children: [
                   Text("更多游戏",
                       style: TextStyle(

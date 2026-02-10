@@ -461,7 +461,7 @@ class AppPages {
         if (router.split("?").isNotEmpty) {
           router = router.split("?")[0];
           if (router == "home_game_page") {
-            AppUtils.jumpToHome(index: 3);
+            AppUtils.jumpToHome(index: 2);
           } else if (router == "in_game_page") {
             int number = int.tryParse(args['number'] ?? '') ?? 0;
             HomeGamePageController game = Get.find<HomeGamePageController>();

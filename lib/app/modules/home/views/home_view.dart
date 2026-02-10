@@ -56,7 +56,7 @@ class HomeView extends GetView<HomeController> {
                 },
                 child: Stack(alignment: Alignment.bottomCenter, children: [
                   IndexedStack(index: ctl.tabIndex.value, children: [
-                    const HomeRecommendPageView(),
+                    // const HomeRecommendPageView(),
                     const HomeIndexWebView(), // 首页轮播图广告
                     const HomePostPageView(),
                     const HomeGamePageView(),
