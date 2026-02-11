@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:quick_cat_client/app/data/enum.dart';
+import 'package:quick_cat_client/app/data/share_key.dart';
 import 'package:quick_cat_client/app/data/watch_record.dart';
 import 'package:quick_cat_client/app/dialog/comment_dialog.dart';
 import 'package:quick_cat_client/app/model/home/config_model_model.dart';
@@ -96,13 +97,15 @@ class _FijkTiktokFeedPageState extends State<FijkTiktokFeedPage>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // 前后台切换：仅对当前 index 的播放器做处理
     final holder = _pool.holderOf(_current);
+    ShareKeys shareKeys = Get.find<ShareKeys>();
     if (holder == null) return;
     if (state == AppLifecycleState.paused ||
         state == AppLifecycleState.inactive ||
         state == AppLifecycleState.detached) {
       holder.pause();
-    } else if (state == AppLifecycleState.resumed) {
-      holder.play();
+    } else if (state == AppLifecycleState.resumed &&
+        shareKeys.tabIndex.value == 1) {
+      // holder.play();
     }
   }
 

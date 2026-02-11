@@ -81,7 +81,8 @@ android() {
 #  dart text_script.dart
 
   # flutter build apk --shrink --obfuscate --split-debug-info=./build/debuginfo
-  flutter build apk --shrink  --obfuscate  --split-debug-info=./build/debuginfo
+#  flutter build apk --shrink  --obfuscate  --split-debug-info=./build/debuginfo
+    shorebird release android --flutter-version=3.27.1 --artifact apk
 #  git reset --hard HEAD^
   # 服务器批量打包需求，请按照 “项目_日期_版本.apk来命名，日期不能包含下划线
   echo "> Coping to dist."

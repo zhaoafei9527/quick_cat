@@ -11,6 +11,7 @@ import 'package:quick_cat_client/app/data/address.dart';
 import 'package:quick_cat_client/app/data/share_key.dart';
 import 'package:quick_cat_client/app/model/home/user_info_model.dart';
 import 'package:quick_cat_client/conf/config.dart';
+import 'package:quick_cat_client/plugins_utils/FirebaseUtils/firebase_data.dart';
 import '../../utils/array_util.dart';
 import '../../utils/light_model.dart';
 import '../../utils/text_util.dart';
@@ -100,6 +101,7 @@ class LocalAdsStore {
 
     ShareKeys shareKeys = Get.find();
     bool isVip = shareKeys.isVip();
+    resultList = await FirebaseData().mergeRemoteAdsToLocal(resultList);
     bool isNewUser = shareKeys.isNewUser;
     List<Advertise> newList = resultList.where((it) {
       if (it.position != adsType.index) return false;

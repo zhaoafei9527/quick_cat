@@ -59,10 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC8jbNWasegl_AeNJTZqM9FHvr_DVtK65s',
-    appId: '1:695772863425:ios:3b37517def39547dcced40',
+    appId: '1:695772863425:ios:88bbef32021389b5cced40',
     messagingSenderId: '695772863425',
     projectId: 'quick-cat-3c0e5',
     storageBucket: 'quick-cat-3c0e5.firebasestorage.app',
-    iosBundleId: 'com.yehua.acgn.com',
+    iosBundleId: 'com.quick.player.client',
   );
+
 }
