@@ -34,6 +34,8 @@ class FirebaseData {
     }
   }
 
+
+
   /// 通用：获取字符串配置
   String getConfigValue(String key) {
     return _remoteConfig.getString(key);
@@ -46,7 +48,6 @@ class FirebaseData {
       await _remoteConfig.fetchAndActivate(); // 激活从云端获取的参数
 
       final String raw = _remoteConfig.getString("ads_overrides");
-
       final dynamic decoded = json.decode(raw);
       if (decoded is! List) return [];
 

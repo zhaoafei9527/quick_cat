@@ -4,11 +4,8 @@ import 'dart:math';
 import 'package:quick_cat_client/app/data/share_key.dart';
 import 'package:quick_cat_client/app/dialog/comment_dialog.dart';
 import 'package:quick_cat_client/app/dialog/common_dialog.dart';
-import 'package:quick_cat_client/app/modules/short_video_player/controllers/short_video_player_controller.dart';
 import 'package:quick_cat_client/app/routes/app_pages.dart';
 import 'package:quick_cat_client/app/themes/app_colors.dart';
-import 'package:quick_cat_client/app/themes/theme_manager.dart';
-import 'package:quick_cat_client/app/widget/common_widget.dart';
 import 'package:quick_cat_client/conf/api_res.dart';
 import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/player_widget.dart';
 import 'package:quick_cat_client/r.dart';
@@ -16,7 +13,6 @@ import 'package:quick_cat_client/utils/common_util.dart';
 import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/adapters.dart';
 
 import '../../../app/data/enum.dart';
 import '../../../app/model/home/topic_list_model.dart';
@@ -150,6 +146,7 @@ class _FijkTiktokPanelState extends State<FijkTiktokPanel> {
       setState(() => _bufferPercent = percent / 10.0);
     });
     _currentPosSubs = p.onCurrentPosUpdate.listen((v) async {
+      checkPlayEnv();
       if (!(widget.mediaInfo?.playable ?? false) &&
           v.inSeconds > 5 &&
           !_playChecked) {
@@ -173,6 +170,14 @@ class _FijkTiktokPanelState extends State<FijkTiktokPanel> {
       if (diff.abs() < 500) _bufferPos = _duration;
       setState(() => {});
     });
+  }
+
+  void checkPlayEnv() {
+    ShareKeys shareKeys = Get.find<ShareKeys>();
+    if (shareKeys.tabIndex.value != 2 && Get.currentRoute != Routes.HOME) {
+      player.pause();
+      return;
+    }
   }
 
   // 解绑旧 player 的所有监听

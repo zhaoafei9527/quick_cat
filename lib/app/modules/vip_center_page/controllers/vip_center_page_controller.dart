@@ -153,7 +153,7 @@ class VipCenterPageController extends GetxController {
         await AppPages.jumpRouter(path: 'launch://${model.payUrl}');
       }
     } else {
-      showTypeToast(msg: "获取支付失败！请重新点击充值");
+      showToast(msg: "获取支付失败！请重新点击充值");
     }
     showPlayerCommonDialog(Get.context!,
         title: "友情提示",

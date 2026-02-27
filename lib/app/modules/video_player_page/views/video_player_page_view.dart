@@ -403,41 +403,6 @@ class VideoPlayerPageView extends GetView<VideoPlayerPageController> {
               style: TextStyle(fontSize: Dimens.pt32, color: Colors.white)),
 
           SizedBox(height: Dimens.pt40),
-          // Row(children: [
-          //   Row(children: [
-          //     Image.asset(R.assetsImgIconVideoWatch, width: Dimens.pt31),
-          //     SizedBox(width: Dimens.pt5),
-          //     Text(getShowWatchNumberStr(mediaInfo?.watchTimes ?? 0, count: 1),
-          //         style: TextStyle(
-          //             fontSize: Dimens.pt22,
-          //             color: theme.getColor(ThemeColor.textGrey)))
-          //   ]),
-          //   SizedBox(width: Dimens.pt100),
-          //   Row(children: [
-          //     Image.asset(R.assetsImgIconVideoTime, width: Dimens.pt25),
-          //     SizedBox(width: Dimens.pt5),
-          //     Text(TimeUtil.getHHNNSS(mediaInfo?.playTime ?? 0),
-          //         style: TextStyle(
-          //             fontSize: Dimens.pt22,
-          //             color: theme.getColor(ThemeColor.textGrey)))
-          //   ]),
-          //   const Spacer(),
-          //   Text(TimeUtil.showDateBefore(mediaInfo?.createdAt ?? ""),
-          //       style: TextStyle(
-          //           fontSize: Dimens.pt22,
-          //           color: theme.getColor(ThemeColor.textGrey)))
-          // ]),
-          // SizedBox(height: Dimens.pt20),
-          // Text(
-          //     (mediaInfo?.desc ?? "").isNotEmpty
-          //         ? mediaInfo?.desc ?? ""
-          //         : (mediaInfo?.title ?? ""),
-          //     maxLines: 2,
-          //     overflow: TextOverflow.ellipsis,
-          //     style: TextStyle(
-          //         fontSize: Dimens.pt26,
-          //         color: theme.getColor(ThemeColor.textGrey))),
-          // SizedBox(height: Dimens.pt20),
           if ((mediaInfo?.tagList?.length ?? 0) > 0)
             SizedBox(
                 height: Dimens.pt52,

@@ -11,6 +11,16 @@ Map<String, String> gameIconInsert = {
   "insert6": R.assetsImgIconGameBtn6,
 };
 
+Map<String, String> gameIconSelInsert = {
+  "insert1": R.assetsImgIconGameSelBtn1,
+  "insert2": R.assetsImgIconGameSelBtn2,
+  "insert3": R.assetsImgIconGameSelBtn3,
+  "insert4": R.assetsImgIconGameSelBtn4,
+  "insert5": R.assetsImgIconGameSelBtn5,
+  "insert6": R.assetsImgIconGameSelBtn6,
+};
+
+
 Map<String, String> shareTextInsert = {
   "insert0": R.assetsImgTextShare0,
   "insert1": R.assetsImgTextShare1,
@@ -37,11 +47,3 @@ Map<String, String> balanceTextInsert = {
   "insert9": R.assetsImgTextBalance9,
 };
 
-Map<String, String> gameIconSelInsert = {
-  "insert1": R.assetsImgIconGameSelBtn1,
-  "insert2": R.assetsImgIconGameSelBtn2,
-  "insert3": R.assetsImgIconGameSelBtn3,
-  "insert4": R.assetsImgIconGameSelBtn4,
-  "insert5": R.assetsImgIconGameSelBtn5,
-  "insert6": R.assetsImgIconGameSelBtn6,
-};

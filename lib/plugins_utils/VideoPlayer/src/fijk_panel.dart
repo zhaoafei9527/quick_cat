@@ -6,6 +6,7 @@ import 'package:quick_cat_client/app/data/share_key.dart';
 import 'package:quick_cat_client/app/dialog/comment_dialog.dart';
 import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
 import 'package:quick_cat_client/app/model/home/video_play_model.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
 import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:quick_cat_client/app/widget/common_widget.dart';
 import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/m3u8_cache_manager.dart';
@@ -125,6 +126,18 @@ class _CustomFIJKPlayerState extends State<CustomFIJKPlayer> {
     });
 
     _currentPosSubs = player.onCurrentPosUpdate.listen((v) async {
+      // 如果是缩略模式或者简单模式，并且当前页面不是视频详情页或者播放器页面，则暂停播放
+      if (!manager.isShrinkModel &&
+          !manager.simpleModel &&
+          Get.currentRoute != Routes.VIDEO_PLAYER_PAGE) {
+        player.pause();
+        return;
+      } else if (manager.simpleModel &&
+          Get.currentRoute != Routes.POST_DETAILE_PAGE) {
+        player.pause();
+        return;
+      }
+
       int defaultSecond = manager.simpleModel ? 0 : 20;
       if (v.inSeconds >= defaultSecond && !manager.canContinuePlay) {
         await player.pause();
@@ -186,8 +199,10 @@ class _CustomFIJKPlayerState extends State<CustomFIJKPlayer> {
 
   void _startHideTimer() {
     _hideTimer?.cancel();
-    _hideTimer = Timer(const Duration(seconds: 30), () {
-      setState(() => _hideStuff = true);
+    _hideTimer = Timer(const Duration(seconds: 3), () {
+      if (player.state == FijkState.started) {
+        setState(() => _hideStuff = true);
+      }
     });
   }
 
@@ -222,28 +237,29 @@ class _CustomFIJKPlayerState extends State<CustomFIJKPlayer> {
   Widget build(BuildContext context) {
     return SizedBox(
         width: screen.screenWidth,
-        child: GestureDetector(
-            onTap: _cancelAndRestartTimer,
-            child: AbsorbPointer(
-                absorbing: _hideStuff,
+        child: Stack(children: [
+          GestureDetector(
+              onTap: () => _cancelAndRestartTimer(),
+              child: Container(
+                  width: widget.viewSize.width,
+                  height: widget.viewSize.height,
+                  color: Colors.transparent)),
+          Column(children: [
+            _buildFIJKPlayerHeader(),
+            Expanded(
                 child: Stack(children: [
-                  Column(children: [
-                    _buildFIJKPlayerHeader(),
-                    Expanded(
-                        child: Stack(children: [
-                      if (!_showTimePanel) ...[
-                        if (!simpleModel) _buildFIJKPlayerBarrage(),
-                        _buildFIJKPlayerHitArea()
-                      ]
-                    ])),
-                    _buildFIJKPlayerFooter()
-                  ]),
-                  _buildShowTimePanel(),
-                  // if (!simpleModel) _buildVideoCantPlayTip(),
-                  if (_exception != null) _buildVideoErrorTip(),
-                  if (_prepared && !_playing && !_showTimePanel)
-                    _buildPauseAds()
-                ]))));
+              if (!_showTimePanel) ...[
+                if (!simpleModel) _buildFIJKPlayerBarrage(),
+                _buildFIJKPlayerHitArea()
+              ]
+            ])),
+            _buildFIJKPlayerFooter()
+          ]),
+          _buildShowTimePanel(),
+          // if (!simpleModel) _buildVideoCantPlayTip(),
+          if (_exception != null) _buildVideoErrorTip(),
+          if (_prepared && !_playing && !_showTimePanel) _buildPauseAds()
+        ]));
   }
 
   Widget _buildPauseAds() {
@@ -456,7 +472,7 @@ class _CustomFIJKPlayerState extends State<CustomFIJKPlayer> {
                           min: 0.0,
                           max: duration,
                           onChanged: (v) {
-                            _startHideTimer();
+                            _cancelAndRestartTimer();
                             setState(() {
                               _seekPos = v;
                             });

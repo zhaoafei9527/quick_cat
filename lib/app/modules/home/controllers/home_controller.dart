@@ -39,7 +39,7 @@ class HomeController extends GetxController {
       tiktok.tiktokPlayer.togglePause(true);
     }
 
-    if (index == 4) {
+    if (index == 3) {
       if(!shareKeys.showAccounted){
         shareKeys.showAccounted = true;
         showAccountQrDialog(Get.context!);
