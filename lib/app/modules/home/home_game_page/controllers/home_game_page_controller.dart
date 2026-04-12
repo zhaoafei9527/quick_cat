@@ -21,13 +21,21 @@ import '../../../../model/home/user_info_model.dart';
 
 class HomeGamePageController extends GetxController
     with GetTickerProviderStateMixin {
-  RxList<GameInfoBean> btnIconList = <GameInfoBean>[].obs;
-  RxList<String> btnSelIconList = <String>[].obs;
   RxBool enterLoading = false.obs;
+  RxBool gameAreaLoading = false.obs;
   RxMap<int, List<GameInfoBean>> gameTypeList = <int, List<GameInfoBean>>{}.obs;
   final actionIndex = 0.obs;
+  int categoryKey = 0;
+  int platformKey = 0;
   RxDouble getBalanceIng = .0.obs;
-  List<GameInfoBean> gameList = [];
+  RxInt gamePlatformIndex = 0.obs;
+  RxList<GamePlatformBean> gamePlatformList =
+      <GamePlatformBean>[].obs; // 游戏平台列表
+  RxList<CategoryInfoBean> categoryList = <CategoryInfoBean>[].obs; // 游戏分类列表
+  RxList<GameInfoBean> gameList = <GameInfoBean>[].obs; // 游戏列表
+  final Map<String, List<GameInfoBean>> _gameCache =
+      <String, List<GameInfoBean>>{};
+
   TabController? tabController; // 首页主分类
   TabController? gameTabController; // 游戏分类
   ScrollController gameTypeScrollController = ScrollController();
@@ -35,69 +43,115 @@ class HomeGamePageController extends GetxController
   List<String> cateTopList = ["娱乐中心", "高能涩游"];
   RxList<GameInfoBean> historyGame = <GameInfoBean>[].obs;
   late Rx<UserInfo> userInfo = UserInfo().obs;
-  GameCategory actionGameCategory = GameCategory.gameCategoryQP; // 当前选择的游戏分类
   RxDouble gameViewHeight = (12 * 120).ceil().toDouble().obs;
-  List<GameCategory> sortList = [
-    GameCategory.gameCategoryQP,
-    GameCategory.gameCategoryBY,
-    GameCategory.gameCategorySX,
-    GameCategory.gameCategoryDZ,
-    GameCategory.gameCategoryTY
-  ];
 
   @override
   void onInit() async {
     super.onInit();
     tabController = TabController(length: cateTopList.length, vsync: this);
-    gameTabController =
-        TabController(length: GameCategory.values.length - 2, vsync: this);
     tabController?.addListener(() {
       currentTabIndex.value = tabController!.index;
     });
-    gameTabController?.addListener(() {
-      actionIndex.value = gameTabController!.index;
-      gameViewHeight.value = Dimens.pt280 *
-          ((gameTypeList[sortList[actionIndex.value].index]?.length ?? 0) / 3)
-              .ceil()
-              .toDouble();
+    _resetGameTabController();
+    ShareKeys shareKeys = Get.find<ShareKeys>();
+    userInfo.value = await shareKeys.getUserInfo();
+    await getGamePlatformData();
+    changeGamePlatform(0); // 初始化游戏列表
+  }
 
+  getGamePlatformData() async {
+    GamePlatformListModel? model = await ApiRes.getGamePlatformList();
+    if ((model?.list ?? []).isNotEmpty) {
+      gamePlatformList.value = model?.list ?? [];
+      categoryList.value =
+          gamePlatformList[gamePlatformIndex.value].categoryList ?? [];
+    } else {
+      showTypeToast(msg: "获取游戏平台列表失败");
+    }
+  }
+
+  changeGamePlatform(index) async {
+    gameAreaLoading.value = true;
+    try {
+      gamePlatformIndex.value = index;
+      actionIndex.value = 0;
+      categoryList.value = gamePlatformList[index].categoryList ?? [];
+      _resetGameTabController();
+      await _loadCurrentCategoryGames();
+      // await getGamePlatformData();
+    } finally {
+      gameAreaLoading.value = false;
+    }
+  }
+
+  void _resetGameTabController() {
+    gameTabController?.dispose();
+    gameTabController = TabController(length: categoryList.length, vsync: this);
+    gameTabController?.addListener(() async {
+      if (gameTabController == null || gameTabController!.indexIsChanging) {
+        return;
+      }
+      actionIndex.value = gameTabController!.index;
+      _updateGameViewHeight();
       gameTypeScrollController.animateTo(
           (gameTabController!.index * 60).toDouble(),
           duration: const Duration(milliseconds: 300),
           curve: Curves.linear);
+      await _loadCurrentCategoryGames();
     });
-    const gameTypesName = ["棋牌", "捕鱼", "真人视讯", "电子游戏", "体育"];
-    for (int i = 0; i < gameTypesName.length; i++) {
-      btnIconList.add(GameInfoBean(
-          title: gameTypesName[i],
-          coverImg: gameIconInsert["insert${i + 1}"] ?? "",
-          selectedIcon: gameIconSelInsert["insert${i + 1}"] ?? ""));
-    }
-    ShareKeys shareKeys = Get.find<ShareKeys>();
-    userInfo.value = await shareKeys.getUserInfo();
-    GameListModel? model = await ApiRes.getGameList();
-    gameList = model?.list ?? [];
-    Map<int, List<GameInfoBean>> gameType = {};
+    _updateGameViewHeight();
+  }
 
-    if ((model?.list ?? []).isNotEmpty) {
-      for (GameInfoBean item in model?.list ?? []) {
-        if (gameType[item.gameCategory] != null) {
-          gameType[item.gameCategory]?.add(item);
-        } else {
-          gameType[item.gameCategory ?? 0] = [item];
-        }
-      }
+  Future<void> _loadCurrentCategoryGames() async {
+    if (categoryList.isEmpty || gamePlatformList.isEmpty) {
+      gameList.value = [];
+      gameViewHeight.value = 0;
+      return;
     }
-    gameTypeList.value = gameType;
-    update();
-    await getHistoryGameList();
+    final int tabIndex = actionIndex.value.clamp(0, categoryList.length - 1);
+    final CategoryInfoBean category = categoryList[tabIndex];
+    categoryKey = category.gameCategory ?? 0;
+    platformKey = gamePlatformList[gamePlatformIndex.value].gamePlatform ?? 0;
+    final String cacheKey = _buildGameCacheKey(
+      gameCategory: categoryKey,
+      gamePlatform: platformKey,
+    );
+    final List<GameInfoBean>? cachedList = _gameCache[cacheKey];
+    final List<GameInfoBean> list;
+    if (cachedList != null) {
+      list = cachedList;
+    } else {
+      GameListModel? model = await ApiRes.getGameList(
+          gameCategory: categoryKey, gamePlatform: platformKey);
+      list = model?.list ?? [];
+      _gameCache[cacheKey] = list;
+    }
+    gameList.value = list;
+    gameTypeList[categoryKey] = list;
+    _updateGameViewHeight();
+  }
+
+  String _buildGameCacheKey(
+      {required int gameCategory, required int gamePlatform}) {
+    return "${gamePlatform}_$gameCategory";
+  }
+
+  void _updateGameViewHeight() {
+    if (categoryList.isEmpty) {
+      gameViewHeight.value = 0;
+      return;
+    }
+    final int tabIndex = actionIndex.value.clamp(0, categoryList.length - 1);
+    final int categoryKey = categoryList[tabIndex].gameCategory ?? 0;
+    gameViewHeight.value = Dimens.pt280 *
+        ((gameTypeList[categoryKey]?.length ?? 0) / 3).ceil().toDouble();
   }
 
   getHistoryGameList() async {
     List<GameInfoBean>? list = [];
     var history = await lightKV.getString(ShareKeys.gameHistoryKey) ?? "";
     if (history.isNotEmpty) {
-      List<dynamic> historyList = json.decode(history ?? "");
+      List<dynamic> historyList = json.decode(history);
       for (int i = 0; i < historyList.length; i++) {
         list.add(GameInfoBean.fromJson(historyList[i]));
       }
@@ -118,11 +172,10 @@ class HomeGamePageController extends GetxController
     }
   }
 
-  enterGame(number) async {
-    GameListModel? model = await ApiRes.enterGame(gameNumber: number);
-    if ((model?.code ?? 1) != 0 || (model?.data?.gameUrl ?? "").isEmpty) {
-      showTypeToast(msg: "进入游戏错误:${model?.msg ?? ""}");
-    }
+  enterGame(String? number) async {
+    GameListModel? model =
+        await ApiRes.enterGame(gamePlatform: platformKey, gameType: number);
+
     ApiRes.addTaskRecord(recordType: RecordType.recordTypeEnterGame.index);
     int index = gameList.indexWhere((ele) => ele.number == number);
     if (index != -1) {

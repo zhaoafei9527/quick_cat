@@ -224,10 +224,8 @@ Widget buildRecommendGameView({bool? showHotGame}) {
     SizedBox(height: Dimens.pt30),
     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       GestureDetector(
-        onTap: () => Get.toNamed(Routes.VIP_CENTER_PAGE),
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
+          onTap: () => Get.toNamed(Routes.VIP_CENTER_PAGE),
+          child: Stack(clipBehavior: Clip.none, children: [
             Container(
                 width: Dimens.pt225,
                 height: Dimens.pt55,
@@ -241,29 +239,23 @@ Widget buildRecommendGameView({bool? showHotGame}) {
                         fontSize: Dimens.pt30,
                         color: const Color(0xFFFFDB9E)))),
             Positioned(
-              right: -Dimens.pt20,
-              top: -Dimens.pt15,
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimens.pt15, vertical: Dimens.pt5),
-                decoration: BoxDecoration(
-                    color: AppColors.mainRed,
-                    borderRadius: BorderRadius.circular(Dimens.pt8)),
-                child: Text(
-                  "送VIP",
-                  style: TextStyle(
-                      fontSize: Dimens.pt20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
+                right: -Dimens.pt20,
+                top: -Dimens.pt15,
+                child: Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Dimens.pt15, vertical: Dimens.pt5),
+                    decoration: BoxDecoration(
+                        color: AppColors.mainRed,
+                        borderRadius: BorderRadius.circular(Dimens.pt8)),
+                    child: Text("送VIP",
+                        style: TextStyle(
+                            fontSize: Dimens.pt20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500))))
+          ])),
       SizedBox(width: Dimens.pt50),
       GestureDetector(
-          onTap: () => Get.toNamed(Routes.WITHDRAW_CASH_BANK),
+          onTap: () => Get.toNamed(Routes.WITHDRAW_TYPE_PAGE),
           child: Container(
               width: Dimens.pt225,
               height: Dimens.pt55,

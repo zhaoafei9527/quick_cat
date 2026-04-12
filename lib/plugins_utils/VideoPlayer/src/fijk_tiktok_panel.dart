@@ -174,7 +174,7 @@ class _FijkTiktokPanelState extends State<FijkTiktokPanel> {
 
   void checkPlayEnv() {
     ShareKeys shareKeys = Get.find<ShareKeys>();
-    if (shareKeys.tabIndex.value != 2 && Get.currentRoute != Routes.HOME) {
+    if (shareKeys.tabIndex.value != 1 && Get.currentRoute != Routes.HOME) {
       player.pause();
       return;
     }

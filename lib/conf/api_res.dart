@@ -220,6 +220,7 @@ class ApiRes {
       String? bankBranch,
       String? bankCode,
       String? bankName,
+      int? wtype,
       Function()? onSuccess,
       Function(String)? onError}) async {
     String? path = "banks/bindBank";
@@ -229,6 +230,7 @@ class ApiRes {
     data["bankBranch"] = bankBranch ?? "";
     data["bankCode"] = bankCode ?? "";
     data["bankName"] = bankName ?? "";
+    if (wtype != null) data["wtype"] = wtype;
     await _basePostNet(BaseParams(null,
         path: path,
         data: data,
@@ -341,25 +343,50 @@ class ApiRes {
     return model;
   }
 
-  /// path wlgame/enterGame 进入某个游戏
+  /// path game/enterGame 进入某个游戏
   /// [id] 分类Id
-  static Future<GameListModel?> enterGame({int? gameNumber}) async {
+  static Future<GameListModel?> enterGame(
+      {int? gamePlatform, String? gameType}) async {
     GameListModel? model;
-    String? path = "wlgame/enterGame";
+    String? path = "game/enterGame";
     Map<String, dynamic> data = {};
-    data["gameNumber"] = gameNumber ?? 0;
+
+    data["gamePlatform"] = gamePlatform ?? 0;
+    data["gameType"] = gameType ?? "2";
     model = await _basePostNet<GameListModel>(
         BaseParams(GameListModel(), path: path, data: data));
     return model;
   }
 
+  // path game/exitGame  // 退出游戏
+
+  static Future exitGame({int gamePlatform = 1}) async {
+    String? path = "game/enterGame";
+    Map<String, dynamic> data = {};
+
+    data["gamePlatform"] = gamePlatform;
+    await _basePostNet(BaseParams(null, path: path, data: data));
+  }
+
+  /// path game/getList 获取游戏平台列表
+  static Future<GamePlatformListModel?> getGamePlatformList() async {
+    GamePlatformListModel? model;
+    String? path = "game/getList";
+    Map<String, dynamic> data = {};
+    model = await _basePostNet<GamePlatformListModel>(
+        BaseParams(GamePlatformListModel(), path: path, data: data));
+    return model;
+  }
+
   /// path wlgame/getList 获取与游戏列表
   /// [id] 分类Id
-  static Future<GameListModel?> getGameList() async {
+  static Future<GameListModel?> getGameList(
+      {int? gameCategory, int? gamePlatform}) async {
     GameListModel? model;
     String? path = "wlgame/getList";
     Map<String, dynamic> data = {};
-
+    data["gamePlatform"] = gamePlatform ?? 0;
+    data["gameCategory"] = gameCategory ?? 0;
     model = await _basePostNet<GameListModel>(
         BaseParams(GameListModel(), path: path, data: data));
     return model;
@@ -442,6 +469,17 @@ class ApiRes {
     data["pageSize"] = pageSize;
     model = await _basePostNet<RechargeModel>(
         BaseParams(RechargeModel(), path: path, data: data));
+    return model;
+  }
+
+  /// path withdrawal/typeList 获取提现类型列表
+  static Future<WithdrawTypeListModel?> getWithdrawTypeList(
+      {int? pageNum, int? dayType}) async {
+    WithdrawTypeListModel? model;
+    String? path = "withdrawal/typeList";
+    Map<String, dynamic> data = {};
+    model = await _basePostNet<WithdrawTypeListModel>(
+        BaseParams(WithdrawTypeListModel(), path: path, data: data));
     return model;
   }
 

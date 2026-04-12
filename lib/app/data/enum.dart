@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:quick_cat_client/app/themes/app_colors.dart';
 
+import '../model/game_model.dart';
+
 enum TopicShowType {
   none, // 无意义
   fiveGrid, // 五宫格 showType = 1
@@ -77,13 +79,65 @@ enum ToastType {
 
 enum GameCategory {
   none, // 无意义
-  gameCategoryBY,
-  gameCategorySX,
-  gameCategoryQP,
-  gameCategoryDZ,
-  gameCategoryTY,
+  gameCategoryBY, // 捕鱼
+  gameCategorySX, // 真人视讯
+  gameCategoryQP, // 棋牌
+  gameCategoryDZ, // 电子游戏
+  gameCategoryTY, // 体育
+  gameCategoryCP, // 彩票
   gameCategoryHT, // 玩过
 }
+
+Map<GameCategory, CategoryInfoBean> gameCategoryToName = {
+  GameCategory.gameCategoryBY: CategoryInfoBean(
+      gameCategory: GameCategory.gameCategoryBY.index,
+      title: "捕鱼",
+      icon: "assets/img/icon_game_by.png",
+      sleIcon: "assets/img/icon_game_by_sel.png"),
+  GameCategory.gameCategorySX: CategoryInfoBean(
+      gameCategory: GameCategory.gameCategorySX.index,
+      title: "视讯",
+      icon: "assets/img/icon_game_ss.png",
+      sleIcon: "assets/img/icon_game_ss_sel.png"),
+  GameCategory.gameCategoryQP: CategoryInfoBean(
+      gameCategory: GameCategory.gameCategoryQP.index,
+      title: "棋牌",
+      icon: "assets/img/icon_game_qp.png",
+      sleIcon: "assets/img/icon_game_qp_sel.png"),
+  GameCategory.gameCategoryDZ: CategoryInfoBean(
+      gameCategory: GameCategory.gameCategoryDZ.index,
+      title: "电子",
+      icon: "assets/img/icon_game_dz.png",
+      sleIcon: "assets/img/icon_game_dz_sel.png"),
+  GameCategory.gameCategoryTY: CategoryInfoBean(
+      gameCategory: GameCategory.gameCategoryTY.index,
+      title: "体育",
+      icon: "assets/img/icon_game_ty.png",
+      sleIcon: "assets/img/icon_game_ty_sel.png"),
+  GameCategory.gameCategoryCP: CategoryInfoBean(
+      gameCategory: GameCategory.gameCategoryCP.index,
+      title: "彩票",
+      icon: "assets/img/icon_game_cp.png",
+      sleIcon: "assets/img/icon_game_cp_sel.png"),
+  GameCategory.gameCategoryHT: CategoryInfoBean(
+      gameCategory: GameCategory.gameCategoryHT.index,
+      title: "玩过",
+      icon: "assets/img/icon_game_wg.png",
+      sleIcon: "assets/img/icon_game_wg_sel.png"),
+};
+
+enum WithdrawType {
+  none, // 无意义
+  bank, // 银行卡
+  aliPay, // 支付宝
+  weChat, // 微信
+  usdt, // USDT
+  bobi, // 波币
+  gopay, // gopay
+  okpay, // okpay
+}
+
+
 
 enum RecordType {
   none, // 无意义
@@ -192,7 +246,6 @@ enum InviteReceiveStatus {
   invited, // 已完成
   received, // 已领取
 }
-
 
 Color getInviteReceiveStatusTextColor(InviteReceiveStatus status) {
   switch (status) {

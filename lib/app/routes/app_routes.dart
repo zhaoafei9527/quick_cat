@@ -61,6 +61,7 @@ abstract class Routes {
   static const RANK_LIST_PAGE = _Paths.RANK_LIST_PAGE;
   static const EPISODE_PREVIEW_PAGE = _Paths.EPISODE_PREVIEW_PAGE;
   static const COMIC_WISHED_PAGE = _Paths.COMIC_WISHED_PAGE;
+  static const WITHDRAW_TYPE_PAGE = _Paths.WITHDRAW_TYPE_PAGE;
   static const WISHED_ACTIVE_PAGE = _Paths.WISHED_ACTIVE_PAGE;
   static const WISHING_PAGE = _Paths.WISHING_PAGE;
   static const BOOK_SHELF_PAGE = _Paths.BOOK_SHELF_PAGE;
@@ -145,4 +146,5 @@ abstract class _Paths {
   static const MY_CACHE_PAAGE = '/my-cache-paage';
   static const MY_CACHE_PAGE = '/my-cache-page';
   static const AI_RECOMMEND_PAGE = '/ai-recommend-page';
+  static const WITHDRAW_TYPE_PAGE = '/withdraw-type-page';
 }

@@ -2,7 +2,7 @@ name: quick_cat_client
 version: 1.0.1+10
 publish_to: none
 app_id: 999
-debug: false
+debug: true
 opt_tool: false
 description: A new Flutter project.
 environment:
@@ -339,18 +339,6 @@ flutter:
     - assets/img/icon_game_active.png
     - assets/img/icon_game_recharge.png
     - assets/img/icon_game_withdraw.png
-    - assets/img/icon_game_sel_btn4.png
-    - assets/img/icon_game_sel_btn6.png
-    - assets/img/icon_game_sel_btn3.png
-    - assets/img/icon_game_sel_btn2.png
-    - assets/img/icon_game_sel_btn1.png
-    - assets/img/icon_game_btn3.png
-    - assets/img/icon_game_btn2.png
-    - assets/img/icon_game_btn1.png
-    - assets/img/icon_game_btn5.png
-    - assets/img/icon_game_btn4.png
-    - assets/img/icon_game_btn6.png
-    - assets/img/icon_game_sel_btn5.png
     - assets/img/icon_game_back.png
     - assets/img/icon_game_refresh.png
     - assets/img/icon_game_money.png
@@ -432,6 +420,21 @@ flutter:
     - assets/img/text_balance2.png
     - assets/img/tip_post_hot.png
     - shorebird.yaml
+    - assets/img/icon_game_qp.png
+    - assets/img/icon_game_ty_sel.png
+    - assets/img/icon_game_ty.png
+    - assets/img/icon_game_wg.png
+    - assets/img/icon_game_dz_sel.png
+    - assets/img/icon_game_by_sel.png
+    - assets/img/icon_game_by.png
+    - assets/img/icon_game_ss.png
+    - assets/img/icon_game_dz.png
+    - assets/img/icon_game_wg_sel.png
+    - assets/img/icon_game_qp_sel.png
+    - assets/img/icon_game_ss_sel.png
+    - assets/img/logo_withdraw_wallet.png
+    - assets/img/logo_withdaw_card.png
+    - assets/img/logo_withdraw_bo.png
   uses-material-design: true
 
 

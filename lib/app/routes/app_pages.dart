@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import 'package:get/get.dart';
+import 'package:quick_cat_client/app/modules/withdraw_cash_bank/views/withdraw_type_view.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -424,6 +425,10 @@ class AppPages {
       page: () => const AiRecommendPageView(),
       binding: AiRecommendPageBinding(),
     ),
+    GetPage(
+      name: _Paths.WITHDRAW_TYPE_PAGE,
+      page: () => const WithdrawTypeView(),
+    ),
   ];
 
   static jumpRouter({String? path, String? id}) async {
@@ -466,7 +471,7 @@ class AppPages {
             int number = int.tryParse(args['number'] ?? '') ?? 0;
             HomeGamePageController game = Get.find<HomeGamePageController>();
 
-            await game.enterGame(number);
+            // await game.enterGame(number);
           }
         }
       } else if (route.startsWith("webView://")) {

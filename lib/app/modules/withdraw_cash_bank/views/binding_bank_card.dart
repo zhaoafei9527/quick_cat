@@ -16,18 +16,33 @@ import '../../../../plugins_utils/ImageLoader/ImageLoader.dart';
 import '../../../../r.dart';
 import '../controllers/withdraw_cash_bank_controller.dart';
 
-class BindingBankCardPageView extends GetView<WithdrawCashBankController> {
+class BindingBankCardPageView extends StatefulWidget {
   const BindingBankCardPageView({Key? key}) : super(key: key);
 
   @override
+  State<BindingBankCardPageView> createState() =>
+      _BindingBankCardPageViewState();
+}
+
+class _BindingBankCardPageViewState extends State<BindingBankCardPageView> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      Get.find<WithdrawCashBankController>().applyRouteParams();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: getCommonAppBar("绑定银行卡"),
-        backgroundColor: AppColors.bgColor,
-        body: GetX<WithdrawCashBankController>(
-            builder: (WithdrawCashBankController logic) {
-          logic.count.value;
-          return GestureDetector(
+    return GetX<WithdrawCashBankController>(
+        builder: (WithdrawCashBankController logic) {
+      logic.count.value;
+      return Scaffold(
+          appBar: getCommonAppBar(logic.bindPageTitle),
+          backgroundColor: AppColors.bgColor,
+          body: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () => FocusScope.of(Get.context!).unfocus(),
               child: Padding(
@@ -35,32 +50,55 @@ class BindingBankCardPageView extends GetView<WithdrawCashBankController> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildBankCardBindingItem(
-                            label: "开户姓名",
-                            hintText: "请输入开户人姓名",
-                            focusNode: logic.nameFocusNode,
-                            textController: logic.nameField,
-                            inputType: TextInputType.text),
-                        _buildBankCardBindingItem(
-                            label: "银行卡号",
-                            hintText: "请输入银行卡号",
-                            focusNode: logic.cardNumberFocusNode,
-                            textController: logic.cardNumberField,
-                            inputType: TextInputType.text),
-                        _buildBankCardBindingItem(
-                            onTap: () => {popUpsBottom(Get.context!)},
-                            enabled: true,
-                            label: "开户银行",
-                            hintText: "请输入开户银行",
-                            focusNode: logic.bankNameFocusNode,
-                            textController: logic.bankNameField,
-                            inputType: TextInputType.text),
-                        _buildBankCardBindingItem(
-                            label: "开户支行",
-                            hintText: "请输入开户支行",
-                            focusNode: logic.branchesFocusNode,
-                            textController: logic.branchesField,
-                            inputType: TextInputType.text),
+                        if (logic.isBankWithdraw) ...[
+                          _buildBankCardBindingItem(
+                              label: "开户姓名",
+                              hintText: "请输入开户人姓名",
+                              focusNode: logic.nameFocusNode,
+                              textController: logic.nameField,
+                              inputType: TextInputType.text),
+                          _buildBankCardBindingItem(
+                              label: "银行卡号",
+                              hintText: "请输入银行卡号",
+                              focusNode: logic.cardNumberFocusNode,
+                              textController: logic.cardNumberField,
+                              inputType: TextInputType.text),
+                          _buildBankCardBindingItem(
+                              onTap: () => {popUpsBottom(Get.context!)},
+                              enabled: true,
+                              label: "开户银行",
+                              hintText: "请输入开户银行",
+                              focusNode: logic.bankNameFocusNode,
+                              textController: logic.bankNameField,
+                              inputType: TextInputType.text),
+                          _buildBankCardBindingItem(
+                              label: "开户支行",
+                              hintText: "请输入开户支行",
+                              focusNode: logic.branchesFocusNode,
+                              textController: logic.branchesField,
+                              inputType: TextInputType.text),
+                        ] else ...[
+                          _buildBankCardBindingItem(
+                              label: "姓名",
+                              hintText: "请输入姓名",
+                              focusNode: logic.nameFocusNode,
+                              textController: logic.nameField,
+                              inputType: TextInputType.text),
+                          _buildBankCardBindingItem(
+                              label: "钱包地址",
+                              hintText: "请输入钱包地址",
+                              focusNode: logic.cardNumberFocusNode,
+                              textController: logic.cardNumberField,
+                              inputType: TextInputType.text),
+                          _buildBankCardBindingItem(
+                              onTap: () => {popUpsBottom(Get.context!)},
+                              enabled: true,
+                              label: "钱包名称",
+                              hintText: "请选择钱包名称",
+                              focusNode: logic.bankNameFocusNode,
+                              textController: logic.bankNameField,
+                              inputType: TextInputType.text),
+                        ],
                         SizedBox(height: Dimens.pt30),
                         getHengLine(h: Dimens.pt1, color: Color(0xFF606060)),
                         SizedBox(height: Dimens.pt30),
@@ -68,13 +106,16 @@ class BindingBankCardPageView extends GetView<WithdrawCashBankController> {
                             style: TextStyle(
                                 fontSize: Dimens.pt28, color: Colors.white)),
                         SizedBox(height: Dimens.pt25),
-                        Text("请保证银行卡信息准确有效，否则后果自负",
+                        Text(
+                            logic.isBankWithdraw
+                                ? "请保证银行卡信息准确有效，否则后果自负"
+                                : "请保证姓名、钱包地址与所选钱包名称准确有效，否则后果自负",
                             style: TextStyle(
                                 fontSize: Dimens.pt24,
                                 color: const Color(0xFF83827E))),
                         SizedBox(height: Dimens.pt80),
                         GestureDetector(
-                            onTap: () => logic.bindBankCard(),
+                            onTap: () => logic.submitBinding(),
                             child: Container(
                                 width: screen.screenWidth,
                                 height: Dimens.pt76,
@@ -108,10 +149,10 @@ class BindingBankCardPageView extends GetView<WithdrawCashBankController> {
                                   child: Text("在线客服",
                                       style: TextStyle(
                                           fontSize: Dimens.pt24,
-                                          color: AppColors.mainRed)))
+                                          color: AppColors.mainRed))),
                             ])
-                      ])));
-        }));
+                      ]))));
+    });
   }
 
   Widget _buildBankCardBindingItem({
@@ -148,7 +189,7 @@ class BindingBankCardPageView extends GetView<WithdrawCashBankController> {
                           color: Color(0xFF1F1E22),
                           borderRadius: BorderRadius.circular(Dimens.pt8)),
                       child: AbsorbPointer(
-                          absorbing: isInputEnabled, // 禁止用户与子组件交互
+                          absorbing: isInputEnabled,
                           child: Row(children: [
                             SizedBox(width: Dimens.pt15),
                             Expanded(
@@ -165,7 +206,6 @@ class BindingBankCardPageView extends GetView<WithdrawCashBankController> {
 
   Future popUpsBottom(BuildContext context) {
     WithdrawCashBankController logic = Get.find<WithdrawCashBankController>();
-    bool isFullScreen = false;
     return showModalBottomSheet(
         context: context,
         isDismissible: true,
@@ -185,14 +225,6 @@ class BindingBankCardPageView extends GetView<WithdrawCashBankController> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // GestureDetector(
-                        //     onTap: () =>
-                        //         setState(() => isFullScreen = !isFullScreen),
-                        //     child: Image.asset(
-                        //         isFullScreen
-                        //             ? R.assetsImgIconZoomSmall
-                        //             : R.assetsImgIconZoomBig,
-                        //         width: Dimens.pt30)),
                         Spacer(),
                         GestureDetector(
                             onTap: () => Get.back(),
@@ -200,47 +232,49 @@ class BindingBankCardPageView extends GetView<WithdrawCashBankController> {
                                 width: Dimens.pt40))
                       ]),
                   SizedBox(height: Dimens.pt25),
-                  Expanded(child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: logic.bankList.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                            onTap: () => {
-                              Get.back(),
-                              logic.bankChooseClick(logic.bankList[index])
-                            },
-                            child: SizedBox(
-                                height: Dimens.pt120,
-                                child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                          children: [
-                                            ImageLoader.withP(
-                                                logic.bankList[index]
-                                                    .img ??
-                                                    "",
-                                                width: Dimens.pt45)
-                                                .load(),
-                                            SizedBox(width: Dimens.pt25),
-                                            Text(
-                                                logic.bankList[index].name ??
-                                                    "",
-                                                style: TextStyle(
-                                                  fontSize: Dimens.pt28,
-                                                  color: Colors.white,
-                                                ))
-                                          ]),
-                                      SizedBox(height: Dimens.pt16),
-                                      Divider(
-                                          color:
-                                          Colors.white.withOpacity(0.1)),
-                                      // 添加下划线
-                                    ])));
-                      })),
+                  Expanded(
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: logic.bankList.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                                onTap: () => {
+                                      Get.back(),
+                                      logic.bankChooseClick(
+                                          logic.bankList[index])
+                                    },
+                                child: SizedBox(
+                                    height: Dimens.pt120,
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                ImageLoader.withP(
+                                                        logic.bankList[index]
+                                                                .img ??
+                                                            "",
+                                                        width: Dimens.pt45)
+                                                    .load(),
+                                                SizedBox(width: Dimens.pt25),
+                                                Text(
+                                                    logic.bankList[index]
+                                                            .name ??
+                                                        "",
+                                                    style: TextStyle(
+                                                      fontSize: Dimens.pt28,
+                                                      color: Colors.white,
+                                                    ))
+                                              ]),
+                                          SizedBox(height: Dimens.pt16),
+                                          Divider(
+                                              color: Colors.white
+                                                  .withOpacity(0.1)),
+                                        ])));
+                          })),
                   SizedBox(height: Dimens.pt25),
                 ]))));
   }

@@ -631,8 +631,4 @@ class CachedImageProvider extends ImageProvider<NetworkImage>
   @override
   String toString() =>
       '${objectRuntimeType(this, 'NetworkImage')}("$url", scale: $scale)';
-
-  @override
-  // TODO: implement webHtmlElementStrategy
-  WebHtmlElementStrategy get webHtmlElementStrategy => throw UnimplementedError();
 }

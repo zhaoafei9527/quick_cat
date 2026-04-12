@@ -14,6 +14,54 @@ import '../../../model/home/bank_by_list_model.dart';
 import '../../../model/home/banks_list_model.dart';
 
 class WithdrawCashBankController extends GetxController {
+  /// 提现渠道类型，与 [WithdrawType] / 服务端 wtype 对齐
+  int withdrawWtype = WithdrawType.bank.index;
+  String paramName = '';
+  String paramIcon = '';
+
+  bool get isBankWithdraw => withdrawWtype == WithdrawType.bank.index;
+
+  String get pageAppBarTitle =>
+      paramName.isNotEmpty ? paramName : '提现';
+
+  String get arrivalLabelText {
+    if (isBankWithdraw) return '到账银行卡';
+    if (paramName.isNotEmpty) return '到账$paramName';
+    return '到账账户';
+  }
+
+  String get bindPageTitle {
+    if (isBankWithdraw) return '绑定银行卡';
+    if (paramName.isNotEmpty) return '绑定$paramName';
+    return '绑定钱包';
+  }
+
+  String bindButtonLabel() {
+    final hasCard = bankCard.value.bankName != null &&
+        bankCard.value.bankName != '';
+    if (isBankWithdraw) {
+      return hasCard ? '更换绑定银行卡' : '立即绑定银行卡';
+    }
+    if (paramName.isNotEmpty) {
+      return hasCard ? '更换绑定$paramName' : '立即绑定$paramName';
+    }
+    return hasCard ? '更换绑定账户' : '立即绑定账户';
+  }
+
+  void _readRouteParams() {
+    applyRouteParams();
+  }
+
+  /// 提现页、绑定页路由上携带的 wtype / name / icon
+  void applyRouteParams([Map<String, String?>? override]) {
+    final p = override ?? Get.parameters;
+    withdrawWtype =
+        int.tryParse(p['wtype'] ?? '') ?? WithdrawType.bank.index;
+    paramName = p['name'] ?? '';
+    paramIcon = p['icon'] ?? '';
+    count.value++;
+  }
+
   FocusNode nameFocusNode = FocusNode();
   TextEditingController nameField = TextEditingController();
   FocusNode cardNumberFocusNode = FocusNode();
@@ -34,6 +82,7 @@ class WithdrawCashBankController extends GetxController {
 
   @override
   Future<void> onInit() async {
+    _readRouteParams();
     ShareKeys shareKeys = Get.find<ShareKeys>();
     userInfo.value = shareKeys.userInfo;
     super.onInit();
@@ -65,30 +114,76 @@ class WithdrawCashBankController extends GetxController {
     bankNameField.text = bankList.name ?? '';
   }
 
-  Future bindBankCard() async {
-    //绑定
-    String accountName = nameField.text; //账户持有人
-    String accountNo = cardNumberField.text; //银行卡号
-    String bankCode = bankCodes; //银行编码
-    String bankName = bankNameField.text; //开户银行名称
-    String bankBranch = branchesField.text; //银行支行
+  /// 绑定页提交：银行卡与电子钱包字段与接口语义不同
+  Future submitBinding() async {
+    if (isBankWithdraw) {
+      await _submitBankBinding();
+    } else {
+      await _submitWalletBinding();
+    }
+  }
+
+  Future _submitBankBinding() async {
+    String accountName = nameField.text;
+    String accountNo = cardNumberField.text;
+    String bankCode = bankCodes;
+    String bankName = bankNameField.text;
+    String bankBranch = branchesField.text;
+    if (accountName.isEmpty ||
+        accountNo.isEmpty ||
+        bankCode.isEmpty ||
+        bankName.isEmpty ||
+        bankBranch.isEmpty) {
+      showTypeToast(msg: "请填写完整银行卡信息");
+      return;
+    }
     await ApiRes.submitBindBankCard(
         accountName: accountName,
         accountNo: accountNo,
         bankBranch: bankBranch,
         bankCode: bankCode,
         bankName: bankName,
+        wtype: withdrawWtype,
         onSuccess: () {
           showTypeToast(msg: "绑定银行卡成功", toastType: ToastType.SUCCESS);
-          BankByList bankData = BankByList(
-              accountName: nameField.text ?? '',
-              accountNo: cardNumberField.text ?? '',
-              bankCode: '',
-              bankName: bankNameField.text ?? '',
-              bankBranch: branchesField.text ?? '',
-              img: bankImg ?? '');
-          bankCard.value = bankData;
-          // Get.back();
+          bankCard.value = BankByList(
+              accountName: nameField.text,
+              accountNo: cardNumberField.text,
+              bankCode: bankCodes,
+              bankName: bankNameField.text,
+              bankBranch: branchesField.text,
+              img: bankImg);
+        });
+  }
+
+  Future _submitWalletBinding() async {
+    String accountName = nameField.text;
+    String walletAddress = cardNumberField.text;
+    String walletName = bankNameField.text;
+    String walletCode = bankCodes;
+    if (accountName.isEmpty ||
+        walletAddress.isEmpty ||
+        walletName.isEmpty ||
+        walletCode.isEmpty) {
+      showTypeToast(msg: "请填写姓名、钱包地址并选择钱包名称");
+      return;
+    }
+    await ApiRes.submitBindBankCard(
+        accountName: accountName,
+        accountNo: walletAddress,
+        bankBranch: '',
+        bankCode: walletCode,
+        bankName: walletName,
+        wtype: withdrawWtype,
+        onSuccess: () {
+          showTypeToast(msg: "绑定成功", toastType: ToastType.SUCCESS);
+          bankCard.value = BankByList(
+              accountName: nameField.text,
+              accountNo: cardNumberField.text,
+              bankCode: bankCodes,
+              bankName: bankNameField.text,
+              bankBranch: '',
+              img: bankImg);
         });
   }
 
@@ -108,7 +203,14 @@ class WithdrawCashBankController extends GetxController {
         accountNo.isEmpty ||
         bankCode.isEmpty ||
         bankName.isEmpty) {
-      showTypeToast(msg: "请绑定银行卡后重试！");
+      showTypeToast(
+          msg: isBankWithdraw ? "请绑定银行卡后重试！" : "请先完成钱包绑定后再试");
+      return;
+    }
+    if (isBankWithdraw &&
+        (bankCard.value.bankBranch == null ||
+            bankCard.value.bankBranch!.isEmpty)) {
+      showTypeToast(msg: "请绑定完整银行卡信息（含开户支行）");
       return;
     }
     if (doubleAmount > maxAmount) {
@@ -123,6 +225,7 @@ class WithdrawCashBankController extends GetxController {
           bankCode: bankCode,
           bankName: bankName,
           money: money,
+          orderType: withdrawWtype,
           onSuccess: () {
             cashField.text = '';
             ShareKeys shareKeys = Get.find<ShareKeys>();

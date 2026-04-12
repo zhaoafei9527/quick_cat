@@ -1,4 +1,5 @@
 // 🌎 Project imports:
+import 'package:quick_cat_client/app/routes/app_pages.dart';
 import 'package:quick_cat_client/plugins_utils/HttpRequester/http_requester.dart';
 
 class RechargeModel extends BaseNetModel {
@@ -145,5 +146,57 @@ class RedeemInfo {
     data['createdAt'] = createdAt;
     data['payMode'] = payMode;
     return data;
+  }
+}
+
+
+class WithdrawTypeBean {
+  String? name;
+  String? icon;
+  int? wtype;
+  /// 客户端路由；未下发时统一走 [Routes.WITHDRAW_CASH_BANK]，由 query 参数区分渠道
+  String? path;
+
+  WithdrawTypeBean({this.name, this.icon, this.wtype, this.path});
+
+  WithdrawTypeBean.fromJson(Map<String, dynamic> json) {
+    name = json['name']?.toString();
+    icon = json['icon']?.toString();
+    final t = json['wtype'];
+    if (t is int) {
+      wtype = t;
+    } else if (t != null) {
+      wtype = int.tryParse(t.toString());
+    }
+    final String? fromServer = json['path']?.toString();
+    if (fromServer != null && fromServer.isNotEmpty) {
+      path = fromServer;
+    } else {
+      path = Routes.WITHDRAW_CASH_BANK;
+    }
+    path ??= json['jumpPath']?.toString();
+    path ??= json['route']?.toString();
+  }
+}
+
+class WithdrawTypeListModel extends BaseNetModel {
+  @override
+  WithdrawTypeListModel fromJson(Map<String, dynamic> json) {
+    return WithdrawTypeListModel.fromJson(json);
+  }
+
+  List<WithdrawTypeBean>? list;
+
+  WithdrawTypeListModel({this.list});
+
+  WithdrawTypeListModel.fromJson(Map<String, dynamic> json) {
+    if (json['list'] != null) {
+      list = <WithdrawTypeBean>[];
+      for (final v in (json['list'] as List)) {
+        if (v is Map<String, dynamic>) {
+          list?.add(WithdrawTypeBean.fromJson(v));
+        }
+      }
+    }
   }
 }

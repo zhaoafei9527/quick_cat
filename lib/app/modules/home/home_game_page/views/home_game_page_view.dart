@@ -171,15 +171,49 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
               delegate: SliverChildListDelegate([
             SizedBox(height: Dimens.pt25),
             getHengLine(color: Color(0xFF666666)),
-            SizedBox(height: Dimens.pt50),
-            buildHistoryGameView(),
-            // SizedBox(height: Dimens.pt40),
+            SizedBox(height: Dimens.pt20),
+            buildGamePlatformList(),
+            // buildHistoryGameView(),
+            SizedBox(height: Dimens.pt25),
             _buildGameTypesView(),
             SizedBox(height: Dimens.pt25),
             _buildGamePageListView(),
-            // SizedBox(height: screen.bottomNavBarH + Dimens.pt25)
+            SizedBox(height: screen.bottomNavBarH + Dimens.pt25)
           ]))
         ]));
+  }
+
+  Widget buildGamePlatformList() {
+    HomeGamePageController logic = Get.find<HomeGamePageController>();
+    return SizedBox(
+        height: Dimens.pt85,
+        child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (c, index) => GestureDetector(
+                onTap: () => logic.changeGamePlatform(index),
+                child: Obx(
+                  () => Container(
+                      width: Dimens.pt148,
+                      decoration: BoxDecoration(
+                          color: logic.gamePlatformIndex.value == index
+                              ? Color(0xFFFFB715)
+                              : Color(0xFF858589),
+                          borderRadius: BorderRadius.circular(Dimens.pt12)),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ImageLoader.withP(
+                                    logic.gamePlatformList[index].icon ?? "",
+                                    height: Dimens.pt35)
+                                .load(),
+                            SizedBox(height: Dimens.pt2),
+                            Text(logic.gamePlatformList[index].title ?? "",
+                                style: TextStyle(
+                                    fontSize: Dimens.pt22, color: Colors.white))
+                          ])),
+                )),
+            separatorBuilder: (c, index) => SizedBox(width: Dimens.pt20),
+            itemCount: logic.gamePlatformList.length));
   }
 
   Widget buildHistoryGameView() {
@@ -192,27 +226,27 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
         return SizedBox();
       }
       return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text("最近玩过",
-            style: TextStyle(
-                fontSize: Dimens.pt34,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textColorWhite)),
-        SizedBox(height: Dimens.pt25),
-        SizedBox(
-            height: Dimens.pt245,
-            child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  GameInfoBean? bean = logic.gameTypeList[type]?[index];
-                  return ImageLoader.withP(bean?.coverImg ?? "",
-                          radius: Dimens.pt8,
-                          width: Dimens.pt214,
-                          height: Dimens.pt245)
-                      .load();
-                },
-                separatorBuilder: (context, index) =>
-                    SizedBox(width: Dimens.pt25),
-                itemCount: historyGameList.length)),
+        // Text("最近玩过",
+        //     style: TextStyle(
+        //         fontSize: Dimens.pt34,
+        //         fontWeight: FontWeight.w600,
+        //         color: AppColors.textColorWhite)),
+        // SizedBox(height: Dimens.pt25),
+        // SizedBox(
+        //     height: Dimens.pt245,
+        //     child: ListView.separated(
+        //         scrollDirection: Axis.horizontal,
+        //         itemBuilder: (context, index) {
+        //           GameInfoBean? bean = logic.gameTypeList[type]?[index];
+        //           return ImageLoader.withP(bean?.coverImg ?? "",
+        //                   radius: Dimens.pt8,
+        //                   width: Dimens.pt214,
+        //                   height: Dimens.pt245)
+        //               .load();
+        //         },
+        //         separatorBuilder: (context, index) =>
+        //             SizedBox(width: Dimens.pt25),
+        //         itemCount: historyGameList.length)),
         SizedBox(height: Dimens.pt50),
         getHengLine(color: Color(0xFF666666)),
         SizedBox(height: Dimens.pt50)
@@ -237,33 +271,22 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
 
   Widget _buildGamePageListView() {
     HomeGamePageController logic = Get.find<HomeGamePageController>();
-    return Obx(()=> SizedBox(
-        height: logic.gameViewHeight.value + screen.bottomNavBarH,
-        child: TabBarView(controller: logic.gameTabController, children: [
-
-          if (logic.gameTypeList[GameCategory.gameCategoryQP.index] != null)
-            _buildGameList(GameCategory.gameCategoryQP.index)
-          else
-            buildCommonEmptyView("找不到游戏～"),
-
-          if (logic.gameTypeList[GameCategory.gameCategoryBY.index] != null)
-            _buildGameList(GameCategory.gameCategoryBY.index)
-          else
-            buildCommonEmptyView("找不到游戏～"),
-          if (logic.gameTypeList[GameCategory.gameCategorySX.index] != null)
-            _buildGameList(GameCategory.gameCategorySX.index)
-          else
-            buildCommonEmptyView("找不到游戏～"),
-          if (logic.gameTypeList[GameCategory.gameCategoryDZ.index] != null)
-            _buildGameList(GameCategory.gameCategoryDZ.index)
-          else
-            buildCommonEmptyView("找不到游戏～"),
-          if (logic.gameTypeList[GameCategory.gameCategoryTY.index] != null)
-            _buildGameList(GameCategory.gameCategoryTY.index)
-          else
-            buildCommonEmptyView("找不到游戏～"),
-        ]),
-      ),
+    return Obx(
+      () => SizedBox(
+          height: logic.gameViewHeight.value + screen.bottomNavBarH,
+          child: logic.gameAreaLoading.value
+              ? Center(child: getLoadingWidget())
+              : logic.categoryList.isEmpty
+                  ? buildCommonEmptyView("找不到游戏～")
+                  : TabBarView(
+                      controller: logic.gameTabController,
+                      children: logic.categoryList.map((category) {
+                        final int type = category.gameCategory ?? 0;
+                        if (logic.gameTypeList[type] != null) {
+                          return _buildGameList(type);
+                        }
+                        return buildCommonEmptyView("找不到游戏～");
+                      }).toList())),
     );
   }
 
@@ -286,7 +309,7 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
                   behavior: HitTestBehavior.opaque,
                   onTap: () async {
                     logic.enterLoading.value = true;
-                    await logic.enterGame(bean?.number);
+                    await logic.enterGame(bean?.gameType);
                     logic.enterLoading.value = false;
                   },
                   child: Column(children: [
@@ -325,14 +348,14 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
                   child: Row(children: [
                     Image.asset(
                         logic.actionIndex.value == index
-                            ? logic.btnIconList[index].selectedIcon ?? ""
-                            : logic.btnIconList[index].coverImg ?? "",
+                            ? logic.categoryList[index].sleIcon ?? ""
+                            : logic.categoryList[index].icon ?? "",
                         width: Dimens.pt35,
                         height: Dimens.pt35),
                     SizedBox(width: Dimens.pt15),
-                    Text(logic.btnIconList[index].title ?? "",
+                    Text(logic.categoryList[index].title ?? "",
                         style: TextStyle(
-                            fontSize: Dimens.pt34,
+                            fontSize: Dimens.pt30,
                             fontWeight: logic.actionIndex.value == index
                                 ? FontWeight.w600
                                 : FontWeight.w400,
@@ -341,7 +364,7 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
                                 : Color(0xFF858589)))
                   ])))),
           separatorBuilder: (c, index) => SizedBox(width: Dimens.pt20),
-          itemCount: logic.btnIconList.length),
+          itemCount: logic.categoryList.length),
     );
   }
 

@@ -291,7 +291,7 @@ class ShareKeys extends GetxController {
             _formatBalanceString(model.data?.balance?.toString());
         userTransferable.value = model.data?.transferable ?? "0.0";
       } else {
-        showTypeToast(msg: "操作过于频繁，稍后再试");
+        // showTypeToast(msg: "操作过于频繁，稍后再试");
       }
     } catch (e) {
       log.e("getUserBalance", "获取用户余额异常：$e");
