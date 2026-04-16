@@ -55,11 +55,13 @@ class _BindingBankCardPageViewState extends State<BindingBankCardPageView> {
                               label: "开户姓名",
                               hintText: "请输入开户人姓名",
                               focusNode: logic.nameFocusNode,
+                              maxLength: 20,
                               textController: logic.nameField,
                               inputType: TextInputType.text),
                           _buildBankCardBindingItem(
                               label: "银行卡号",
                               hintText: "请输入银行卡号",
+                              maxLength: 16,
                               focusNode: logic.cardNumberFocusNode,
                               textController: logic.cardNumberField,
                               inputType: TextInputType.text),
@@ -81,23 +83,25 @@ class _BindingBankCardPageViewState extends State<BindingBankCardPageView> {
                           _buildBankCardBindingItem(
                               label: "姓名",
                               hintText: "请输入姓名",
+                              maxLength: 20,
                               focusNode: logic.nameFocusNode,
                               textController: logic.nameField,
                               inputType: TextInputType.text),
                           _buildBankCardBindingItem(
                               label: "钱包地址",
                               hintText: "请输入钱包地址",
+                              maxLength: 60,
                               focusNode: logic.cardNumberFocusNode,
                               textController: logic.cardNumberField,
                               inputType: TextInputType.text),
-                          _buildBankCardBindingItem(
-                              onTap: () => {popUpsBottom(Get.context!)},
-                              enabled: true,
-                              label: "钱包名称",
-                              hintText: "请选择钱包名称",
-                              focusNode: logic.bankNameFocusNode,
-                              textController: logic.bankNameField,
-                              inputType: TextInputType.text),
+                          // _buildBankCardBindingItem(
+                          //     onTap: () => {popUpsBottom(Get.context!)},
+                          //     enabled: true,
+                          //     label: "钱包名称",
+                          //     hintText: "请选择钱包名称",
+                          //     focusNode: logic.bankNameFocusNode,
+                          //     textController: logic.bankNameField,
+                          //     inputType: TextInputType.text),
                         ],
                         SizedBox(height: Dimens.pt30),
                         getHengLine(h: Dimens.pt1, color: Color(0xFF606060)),
@@ -163,6 +167,7 @@ class _BindingBankCardPageViewState extends State<BindingBankCardPageView> {
     TextInputType? inputType,
     VoidCallback? onTap,
     bool? enabled,
+    int? maxLength,
   }) {
     bool isInputEnabled = enabled ?? false;
     return SizedBox(
@@ -197,6 +202,7 @@ class _BindingBankCardPageViewState extends State<BindingBankCardPageView> {
                               focusNode: focusNode,
                               controller: textController,
                               inputType: inputType,
+                              maxLength: maxLength,
                               hintText: hintText ?? "",
                               onSubmitted: (String text) => {},
                             ))

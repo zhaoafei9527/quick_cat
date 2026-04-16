@@ -309,7 +309,7 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
                   behavior: HitTestBehavior.opaque,
                   onTap: () async {
                     logic.enterLoading.value = true;
-                    await logic.enterGame(bean?.gameType);
+                    await logic.enterGame(gameNumber: bean?.gameType);
                     logic.enterLoading.value = false;
                   },
                   child: Column(children: [

@@ -18,7 +18,6 @@ import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import '../../r.dart';
 import '../../utils/dimens.dart';
 import '../../utils/text_util.dart';
-import '../model/home/config_model_model.dart';
 import '../views/round_under_line_tab_indicator.dart';
 
 /// 获取加载中的widget
@@ -209,10 +208,10 @@ class LoadingView extends StatelessWidget {
 Widget getLoadingView(
     {double size = 12, Color? color, bool showLoading = true}) {
   return Center(
-      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
     CupertinoActivityIndicator(
         radius: size, color: color ?? AppColors.primaryRaised),
-    SizedBox(width: Dimens.pt10),
+    SizedBox(height: Dimens.pt10),
     if (showLoading)
       Text("loading···",
           style: TextStyle(fontSize: Dimens.pt24, color: Colors.white))
@@ -508,7 +507,7 @@ Widget centerButtonModel(String image, String title,
                   fit: BoxFit.fill),
             const Spacer(),
             Text(
-              title ?? '',
+              title,
               style: TextStyle(
                   fontSize: Dimens.pt10,
                   fontWeight: FontWeight.w500,
@@ -568,7 +567,7 @@ Widget getHengLine(
     width: w,
     decoration: BoxDecoration(
         color: color ?? AppColors.divideColor,
-        borderRadius: BorderRadius.circular(radius ?? 0)),
+        borderRadius: BorderRadius.circular(radius)),
   );
 }
 
@@ -670,5 +669,174 @@ class _TimerPeriodicWidgetState extends State<TimerPeriodicWidget> {
   @override
   Widget build(BuildContext context) {
     return widget.builder(context, defaultTimeOut);
+  }
+}
+
+class CommonDropdownSelector extends StatefulWidget {
+  final List<Map<String, dynamic>> listData;
+  final int selectedIndex;
+  final ValueChanged<int>? onItemTap;
+  final double? width;
+  final double? triggerHeight;
+  final double? itemHeight;
+  final Color? borderColor;
+  final Color? backgroundColor;
+  final Color? textColor;
+  final Color? iconColor;
+  final double? dropDownSpacing;
+  final double? triggerRadius;
+  final double? menuRadius;
+
+  const CommonDropdownSelector({
+    super.key,
+    required this.listData,
+    required this.selectedIndex,
+    this.onItemTap,
+    this.width,
+    this.triggerHeight,
+    this.itemHeight,
+    this.borderColor,
+    this.backgroundColor,
+    this.textColor,
+    this.iconColor,
+    this.dropDownSpacing,
+    this.triggerRadius,
+    this.menuRadius,
+  });
+
+  @override
+  State<CommonDropdownSelector> createState() => _CommonDropdownSelectorState();
+}
+
+class _CommonDropdownSelectorState extends State<CommonDropdownSelector> {
+  final LayerLink _layerLink = LayerLink();
+  OverlayEntry? _overlayEntry;
+  bool _isExpanded = false;
+
+  @override
+  void dispose() {
+    _removeOverlay();
+    super.dispose();
+  }
+
+  void _toggleOverlay() {
+    if (_isExpanded) {
+      _removeOverlay();
+    } else {
+      _showOverlay();
+    }
+  }
+
+  void _showOverlay() {
+    if (widget.listData.isEmpty) return;
+    _overlayEntry = _buildOverlayEntry();
+    Overlay.of(context).insert(_overlayEntry!);
+    setState(() => _isExpanded = true);
+  }
+
+  void _removeOverlay() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
+    if (mounted && _isExpanded) {
+      setState(() => _isExpanded = false);
+    }
+  }
+
+  OverlayEntry _buildOverlayEntry() {
+    final double menuTopOffset =
+        (widget.triggerHeight ?? Dimens.pt46) +
+            (widget.dropDownSpacing ?? Dimens.pt10);
+    final double menuWidth = widget.width ?? Dimens.pt170;
+    return OverlayEntry(
+        builder: (context) => Stack(children: [
+              Positioned.fill(
+                  child: GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: _removeOverlay,
+                      child: const SizedBox.shrink())),
+              CompositedTransformFollower(
+                  link: _layerLink,
+                  showWhenUnlinked: false,
+                  offset: Offset(0, menuTopOffset),
+                  child: Material(
+                      color: Colors.transparent,
+                      child: Container(
+                          width: menuWidth,
+                          decoration: BoxDecoration(
+                              color: widget.backgroundColor ??
+                                  const Color(0xFF171F20),
+                              border: Border.all(
+                                  color:
+                                      widget.borderColor ?? const Color(0xFFFFB715)),
+                              borderRadius: BorderRadius.circular(
+                                  widget.menuRadius ?? Dimens.pt6)),
+
+                          child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: List.generate(
+                                  widget.listData.length,
+                                  (index) => GestureDetector(
+                                      onTap: () {
+                                        widget.onItemTap?.call(index);
+                                        _removeOverlay();
+                                      },
+                                      child: Container(
+                                          height:
+                                              widget.itemHeight ?? Dimens.pt70,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              border: index !=
+                                                      widget.listData.length - 1
+                                                  ? Border(
+                                                      bottom: BorderSide(
+                                                          color:
+                                                              widget.borderColor ??
+                                                                  const Color(
+                                                                      0xFFFFB715),
+                                                          width: Dimens.pt2))
+                                                  : null),
+                                          child: Text(
+                                              widget.listData[index]["name"] ??
+                                                  "",
+                                              style: TextStyle(
+                                                  fontSize: Dimens.pt24,
+                                                  color: widget.textColor ??
+                                                      Colors.white)))))))))
+            ]));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.listData.isEmpty) return const SizedBox.shrink();
+    final int safeIndex =
+        widget.selectedIndex.clamp(0, widget.listData.length - 1).toInt();
+    final double triggerHeight = widget.triggerHeight ?? Dimens.pt46;
+    final double width = widget.width ?? Dimens.pt170;
+    return CompositedTransformTarget(
+        link: _layerLink,
+        child: GestureDetector(
+            onTap: _toggleOverlay,
+            child: Container(
+                width: width,
+                height: triggerHeight,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: widget.backgroundColor ?? Colors.transparent,
+                    border:
+                        Border.all(color: widget.borderColor ?? const Color(0xFFFFB715)),
+                    borderRadius: BorderRadius.circular(
+                        widget.triggerRadius ?? Dimens.pt12)),
+                child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(widget.listData[safeIndex]["name"] ?? "",
+                      style: TextStyle(
+                          fontSize: Dimens.pt24,
+                          color: widget.textColor ?? Colors.white)),
+                  SizedBox(width: Dimens.pt10),
+                  Transform.rotate(
+                      angle: _isExpanded ? 3.1415926 : 0,
+                      child: Image.asset(R.assetsImgIconDropDown,
+                          width: Dimens.pt13,
+                          color: widget.iconColor ?? AppColors.textYellowColor))
+                ]))));
   }
 }

@@ -159,7 +159,6 @@ Future<Uint8List> decryptImage(Map<String, dynamic> params) async {
       needEncrypt = true;
     }
   }
-  print("needEncrypt===>${needEncrypt}");
   if (needEncrypt) {
     List<int> fileNameList = utf8.encode(path);
 

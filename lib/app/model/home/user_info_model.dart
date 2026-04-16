@@ -1,4 +1,6 @@
 // 🌎 Project imports:
+import 'package:quick_cat_client/app/data/enum.dart';
+
 import '../../../plugins_utils/HttpRequester/src/base_net_model.dart';
 
 class UserInfo extends BaseNetModel {
@@ -47,6 +49,7 @@ class UserInfo extends BaseNetModel {
   int? totalDownloadTimes;
   bool? newMsg;
   List<UserInterestsInfo>? rights;
+  List<WalletInfo>? wallets;
   String? vipImage;
   String? avatarFrame;
   int? cardAllNum;
@@ -124,6 +127,7 @@ class UserInfo extends BaseNetModel {
       this.newUserDesc,
       this.currentWatchNum,
       this.isNewUser,
+      this.wallets,
       this.vipExpireDay});
 
   UserInfo.fromJson(Map<String, dynamic> json) {
@@ -170,6 +174,13 @@ class UserInfo extends BaseNetModel {
       rights = <UserInterestsInfo>[];
       json['rights'].forEach((v) {
         rights?.add(UserInterestsInfo.fromJson(v));
+      });
+    }
+
+    if (json['payAddrs'] != null) {
+      wallets = <WalletInfo>[];
+      json['payAddrs'].forEach((v) {
+        wallets?.add(WalletInfo.fromJson(v));
       });
     }
     vipImage = json['vipImage'];
@@ -236,6 +247,10 @@ class UserInfo extends BaseNetModel {
     if (rights != null) {
       data['rights'] = rights?.map((v) => v.toJson()).toList();
     }
+    if (wallets != null) {
+      data['payAddrs'] = wallets?.map((v) => v.toJson()).toList();
+    }
+
     data['vipImage'] = vipImage;
     data['avatarFrame'] = avatarFrame;
     data['cardAllNum'] = cardAllNum;
@@ -248,6 +263,48 @@ class UserInfo extends BaseNetModel {
     data['giftGold'] = giftGold;
     data['vipExpireDay'] = vipExpireDay;
     data['newUserDesc'] = newUserDesc;
+    return data;
+  }
+}
+
+class WalletInfo {
+  String? walletName;
+  String? walletAddr;
+  WithdrawType? walletType;
+
+  WalletInfo({this.walletName, this.walletAddr, this.walletType});
+
+  WalletInfo.fromJson(Map<String, dynamic> json) {
+    walletName = json['payName'];
+    walletAddr = json['payAddr'];
+    final dynamic wt = json['oderType'] ?? json['orderType'];
+    walletType = WithdrawType.none;
+    if (wt is int) {
+      walletType = WithdrawType.values.firstWhere(
+        (e) => e.index == wt,
+        orElse: () => WithdrawType.none,
+      );
+    } else if (wt is String) {
+      final int? parsed = int.tryParse(wt);
+      if (parsed != null) {
+        walletType = WithdrawType.values.firstWhere(
+          (e) => e.index == parsed,
+          orElse: () => WithdrawType.none,
+        );
+      } else {
+        walletType = WithdrawType.values.firstWhere(
+          (e) => e.toString() == wt || e.name == wt,
+          orElse: () => WithdrawType.none,
+        );
+      }
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['payName'] = walletName;
+    data['payAddr'] = walletAddr;
+    data['oderType'] = walletType?.index ?? WithdrawType.none.index;
     return data;
   }
 }

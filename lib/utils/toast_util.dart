@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // 🐦 Flutter imports:
-import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -34,37 +33,30 @@ Future<bool?> showToast(
 
 Future showTypeToast(
     {required String msg, ToastType toastType = ToastType.Error}) {
-  ThemeManager theme = Get.find<ThemeManager>();
-  Timer? timer;
-  int showTimer = 3;
-  const oneSec = Duration(seconds: 1);
-  if (showTimer >= 3) {
-    timer = Timer.periodic(oneSec, (time) {
-      showTimer -= 1;
-      if (showTimer <= 1) {
-        timer?.cancel();
-        Get.back();
-      }
-    });
-  }
-  return showDialog(
-      context: Get.context!,
-      barrierDismissible: false,
-      barrierColor: Colors.transparent,
-      builder: (context) {
-        return IntrinsicWidth(
-            child: Align(
-                alignment: Alignment.center,
-                child: Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: Dimens.pt40, vertical: Dimens.pt20),
-                    decoration: BoxDecoration(
+  final context = Get.overlayContext ?? Get.context;
+  if (context == null) return Future.value();
+
+  _typeToastTimer?.cancel();
+  _typeToastEntry?.remove();
+
+  final completer = Completer<void>();
+  final overlay = Overlay.of(context, rootOverlay: true);
+
+  final entry = OverlayEntry(
+      builder: (_) => IgnorePointer(
+          child: Material(
+              type: MaterialType.transparency,
+              child: Center(
+                  child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Dimens.pt40, vertical: Dimens.pt20),
+                      decoration: BoxDecoration(
                         color: Colors.black.withOpacity(.8),
                         borderRadius:
-                            BorderRadius.all(Radius.circular(Dimens.pt16))
-                    ),
-                    child: Column(mainAxisSize: MainAxisSize.min, children: [
-                      Image.asset(
+                            BorderRadius.all(Radius.circular(Dimens.pt16)),
+                      ),
+                      child: Column(mainAxisSize: MainAxisSize.min, children: [
+                        Image.asset(
                           toastType == ToastType.SUCCESS
                               ? R.assetsImgIconSuccess
                               : R.assetsImgIconError,
@@ -72,14 +64,31 @@ Future showTypeToast(
                               ? AppColors.mainRed
                               : AppColors.textColorWhite,
                           width: Dimens.pt50,
-                          height: Dimens.pt50),
-                      SizedBox(height: Dimens.pt15),
-                      Text(msg,
-                          style: TextStyle(
+                          height: Dimens.pt50,
+                        ),
+                        SizedBox(height: Dimens.pt15),
+                        Text(msg,
+                            style: TextStyle(
                               fontSize: Dimens.pt26,
-                              color:toastType ==ToastType.SUCCESS
+                              color: toastType == ToastType.SUCCESS
                                   ? Colors.white
-                                  : AppColors.textYellowColor))
-                    ]))));
-      });
+                                  : AppColors.textYellowColor,
+                            ))
+                      ]))))));
+
+  _typeToastEntry = entry;
+  overlay.insert(entry);
+  _typeToastTimer = Timer(const Duration(seconds: 2), () {
+    _typeToastEntry?.remove();
+    _typeToastEntry = null;
+    _typeToastTimer = null;
+    if (!completer.isCompleted) {
+      completer.complete();
+    }
+  });
+
+  return completer.future;
 }
+
+OverlayEntry? _typeToastEntry;
+Timer? _typeToastTimer;

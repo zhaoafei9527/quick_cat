@@ -172,18 +172,18 @@ class HomeGamePageController extends GetxController
     }
   }
 
-  enterGame(String? number) async {
-    GameListModel? model =
-        await ApiRes.enterGame(gamePlatform: platformKey, gameType: number);
+  enterGame({String? gameNumber, int? platform}) async {
+    GameListModel? model = await ApiRes.enterGame(
+        gamePlatform: platform ?? platformKey, gameType: gameNumber);
 
     ApiRes.addTaskRecord(recordType: RecordType.recordTypeEnterGame.index);
-    int index = gameList.indexWhere((ele) => ele.number == number);
-    if (index != -1) {
-      setHistoryGameList(gameList[index]);
-    }
+    // int index = gameList.indexWhere((ele) => ele.number == number);
+    // if (index != -1) {
+    //   setHistoryGameList(gameList[index]);
+    // }
     // Get.toNamed(Routes.ENTER_GAME_WEB_VIEW, arguments: {"uri": ""});
     Get.toNamed(Routes.ENTER_GAME_WEB_VIEW,
-        arguments: {"uri": model?.data?.gameUrl ?? ""});
+        arguments: {"uri": model?.data?.gameUrl ?? "", "gamePlatform": platform ?? platformKey});
   }
 
   void goWithdrawCash() {

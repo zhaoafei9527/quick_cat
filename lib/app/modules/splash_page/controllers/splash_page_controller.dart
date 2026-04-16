@@ -190,6 +190,7 @@ class SplashPageController extends GetxController {
       shareKey.token = model.token ?? "";
       await NetWorkCreator.setToken(model.token ?? "");
       await shareKey.initLogin(deviceId.value, model);
+
       // 上传用户信息到 Firebase Analytics
       await FirebaseUtils.analytics.setUserId(id: "${model.id}");
       log.i("splash_user_login", "登录成功：${model.nickName}:${model.id}");

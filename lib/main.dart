@@ -11,8 +11,8 @@ import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
 
 // import 'package:fvp/fvp.dart' as fvp;
 import 'package:universal_html/html.dart' as html;
@@ -20,17 +20,79 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 
 // 🌎 Project imports:
 import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/plugins_utils/VideoPlayer/fijk_player.dart';
+import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/m3u8_cache_manager.dart';
 import 'package:quick_cat_client/utils/isolate_manager.dart';
 import 'package:quick_cat_client/utils/logger_utils.dart';
 import 'package:quick_cat_client/utils/light_model.dart';
 import 'app/data/common_binding.dart';
 import 'app/data/pubspec.dart';
+import 'app/modules/home/home_game_page/controllers/game_web_view_controller.dart';
 import 'app/routes/app_pages.dart';
 import 'app/themes/theme.dart';
 import 'firebase_options.dart';
 import 'generated/locales.g.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+class AppLifecycleHandler extends StatefulWidget {
+  final Widget child;
+
+  const AppLifecycleHandler({super.key, required this.child});
+
+  @override
+  State<AppLifecycleHandler> createState() => _AppLifecycleHandlerState();
+}
+
+class _AppLifecycleHandlerState extends State<AppLifecycleHandler>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final playerManager = FIJKPlayerManager();
+    final cacheManager = M3u8CacheManager();
+    switch (state) {
+      case AppLifecycleState.resumed:
+        // 重新获取用户信息
+        unawaited(ApiRes.getUpdateUserInfo());
+        break;
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.hidden:
+      case AppLifecycleState.paused:
+        unawaited(playerManager.pauseForAppLifecycle());
+        cacheManager.pauseAll();
+        // 后台时、重新调用退出游戏接口，确保游戏状态正确
+        if (Get.isRegistered<GameWebViewPageController>()) {
+          final game = Get.find<GameWebViewPageController>();
+          unawaited(game.exitGame());
+        }
+        break;
+      case AppLifecycleState.detached:
+        unawaited(playerManager.disposeForAppExit());
+        cacheManager.stopAll();
+        unawaited(cacheManager.stopProxy());
+        if (Get.isRegistered<GameWebViewPageController>()) {
+          final game = Get.find<GameWebViewPageController>();
+          unawaited(game.exitGame());
+        }
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
+}
 
 Future<void> main() async {
   // 确保 Flutter 环境初始化完成
@@ -108,36 +170,21 @@ Future<void> main() async {
 
     // 启动应用
     runApp(
-      // MaterialApp(home: InAppWebView(
-      //     initialOptions: InAppWebViewGroupOptions(
-      //         crossPlatform: InAppWebViewOptions(
-      //           transparentBackground: true, // 设置透明背景
-      //         )),
-      //     onLoadStart: (InAppWebViewController c, w) {
-      //       // logic.webViewLoading.value = true;
-      //       // logic.webViewController = c;
-      //     },
-      //     onLoadStop: (c, w) {
-      //       Future.delayed(Durations.medium2, () {
-      //         // logic.webViewLoading.value = false;
-      //       });
-      //     },
-      //     initialUrlRequest:
-      //     URLRequest(url: WebUri("https://www.bilijm1.com"))))
-      GetMaterialApp(
-        title: "91漫画",
-        navigatorKey: navigatorKey,
-        initialRoute: AppPages.INITIAL,
-        initialBinding: CommonBinding(),
-        getPages: AppPages.routes,
-        theme: AppTheme.dark,
-        builder: EasyLoading.init(),
-        showPerformanceOverlay: false,
-        debugShowCheckedModeBanner: Pubspec.debug,
-        defaultTransition: Transition.cupertino,
-        translationsKeys: AppTranslation.translations,
-        locale: const Locale('zh', 'CN'),
-        fallbackLocale: const Locale('zh', 'TW'),
+      AppLifecycleHandler(
+        child: GetMaterialApp(
+          navigatorKey: navigatorKey,
+          initialRoute: AppPages.INITIAL,
+          initialBinding: CommonBinding(),
+          getPages: AppPages.routes,
+          theme: AppTheme.dark,
+          builder: EasyLoading.init(),
+          showPerformanceOverlay: false,
+          debugShowCheckedModeBanner: Pubspec.debug,
+          defaultTransition: Transition.cupertino,
+          translationsKeys: AppTranslation.translations,
+          locale: const Locale('zh', 'CN'),
+          fallbackLocale: const Locale('zh', 'TW'),
+        ),
       ),
     );
   }, (error, stack) {

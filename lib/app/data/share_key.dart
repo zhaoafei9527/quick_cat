@@ -224,6 +224,7 @@ class ShareKeys extends GetxController {
   /// 初始化登录信息（游客登录成功后调用）
   Future<void> initLogin(String deviceId, UserInfo model) async {
     userInfo = model;
+    rxUserInfo.value = model;
     await lightKV.setString(keyForUuid, deviceId);
     await lightKV.setString(keyForToken, model.token ?? "");
     await lightKV.setString(keyForUserInfo, json.encode(model.toJson()));
@@ -285,11 +286,13 @@ class ShareKeys extends GetxController {
   /// 获取并更新用户余额数据
   Future<void> getUserBalance() async {
     try {
+      userBalance.value = _formatBalanceString(userInfo.balance.toString());
       UserBalanceModel? model = await ApiRes.getUserBalance();
       if (model != null && model.code == 0) {
         userBalance.value =
             _formatBalanceString(model.data?.balance?.toString());
         userTransferable.value = model.data?.transferable ?? "0.0";
+
       } else {
         // showTypeToast(msg: "操作过于频繁，稍后再试");
       }
@@ -357,7 +360,7 @@ class ShareKeys extends GetxController {
 
   /// 统一格式化余额字符串，保证显示两位小数
   String _formatBalanceString(String? value) {
-    final parsed = double.tryParse(value ?? "") ?? 0.0;
+    final parsed = (double.tryParse(value ?? "") ?? 0.0) / 100;
     return parsed.toStringAsFixed(2);
   }
 }

@@ -33,45 +33,52 @@ class GameDetail extends BaseNetModel {
 }
 
 class DetailList {
-  int? game;
-  String? gameName;
-  num? profit;
+  int? gamePlatform; // 游戏平台
+  String? icon; // 游戏图标
+  String? title; // 游戏标题
+  num? totalProfit; // 总盈亏
+  double? totalValidBet; // 总有效投注额
+  int? count; // 下单注
+
   String? recordId;
   int? time;
   int? id;
+
   String? gameTime;
-  String? validBet;
 
   DetailList(
-      {this.game,
-      this.gameName,
-      this.profit,
+      {this.gamePlatform,
+      this.title,
+      this.totalProfit,
       this.recordId,
       this.time,
       this.id,
+      this.count,
       this.gameTime,
-      this.validBet});
+      this.totalValidBet});
 
   DetailList.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    game = json['game'];
-    gameName = json['gameName'];
-    profit = json['profit'];
+    gamePlatform = json['gamePlatform'];
+    title = json['title'];
+    totalProfit = json['totalProfit'];
     recordId = json['recordId'];
     time = json['time'];
+    count = json['count'];
     gameTime = json['gameTime'];
-    validBet = json['validBet'];
+    totalValidBet = json['totalValidBet'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['game'] = game;
-    data['gameName'] = gameName;
-    data['profit'] = profit;
+    data['gamePlatform'] = gamePlatform;
+    data['title'] = title;
+    data['count'] = count;
+    data['totalProfit'] = totalProfit;
     data['recordId'] = recordId;
     data['time'] = time;
     data['gameTime'] = gameTime;
-    data['validBet'] = validBet;
+    data['totalValidBet'] = totalValidBet;
     return data;
   }
 }

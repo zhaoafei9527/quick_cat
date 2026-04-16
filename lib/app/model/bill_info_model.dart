@@ -230,3 +230,95 @@ class WlGameData {
     return data;
   }
 }
+
+// {
+// "count": 0,
+// "list": [
+// {
+// "game": 0,
+// "gameName": "string",
+// "gameTime": "string",
+// "id": 0,
+// "profit": 0,
+// "recordId": "string",
+// "time": 0,
+// "validBet": "string"
+// }
+// ]
+// }
+
+class gameRecordsBean {
+  int? game;
+  String? gameName;
+  String? gameTime;
+  int? id;
+  num? profit;
+  String? recordId;
+  int? time;
+  String? validBet;
+
+  gameRecordsBean(
+      {this.game,
+      this.gameName,
+      this.gameTime,
+      this.id,
+      this.profit,
+      this.recordId,
+      this.time,
+      this.validBet});
+
+  gameRecordsBean.fromJson(Map<String, dynamic> json) {
+    game = json['game'];
+    gameName = json['gameName'];
+    gameTime = json['gameTime'];
+    id = json['id'];
+    profit = json['profit'];
+    recordId = json['recordId'];
+    time = json['time'];
+    validBet = json['validBet'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['game'] = game;
+    data['gameName'] = gameName;
+    data['gameTime'] = gameTime;
+    data['id'] = id;
+    data['profit'] = profit;
+    data['recordId'] = recordId;
+    data['time'] = time;
+    data['validBet'] = validBet;
+    return data;
+  }
+}
+
+class gameRecordsList extends BaseNetModel {
+  @override
+  gameRecordsList fromJson(Map<String, dynamic> json) {
+    return gameRecordsList.fromJson(json);
+  }
+
+  int? count;
+  List<gameRecordsBean>? list;
+
+  gameRecordsList({this.count, this.list});
+
+  gameRecordsList.fromJson(Map<String, dynamic> json) {
+    count = json['count'];
+    if (json['list'] != null) {
+      list = <gameRecordsBean>[];
+      json['list'].forEach((v) {
+        list?.add(gameRecordsBean.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['count'] = count;
+    if (list != null) {
+      data['list'] = list?.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}

@@ -18,6 +18,7 @@ class NovelDetailPageController extends GetxController
   final novelName = "".obs;
   RxBool initOk = false.obs;
   RxBool isCollect = false.obs;
+  RxBool isReverseOrder = false.obs; // 章节列表是否倒序
   RxInt readChapterId = 0.obs; // 当前小说章节的位置
   RxInt readNum = 0.obs; // 阅读的图片下标位置
   RxInt readChapterNum = 0.obs; // 当前小说章节的位置
@@ -28,6 +29,7 @@ class NovelDetailPageController extends GetxController
   RxList<MediaInfo> recommendList = <MediaInfo>[].obs;
   List<String> tabList = ["推荐", "评论"];
   PullRefreshController pullRefreshController = PullRefreshController();
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void onInit() async {
@@ -65,6 +67,11 @@ class NovelDetailPageController extends GetxController
           .length;
     }
     initOk.value = true;
+  }
+
+  void reverseChapterOrder() {
+    isReverseOrder.value = !isReverseOrder.value;
+    chapterList.value = chapterList.reversed.toList();
   }
 
   Future<void> startReadComicAndRecord({int? startChapterId}) async {

@@ -212,6 +212,27 @@ class ApiRes {
     return model;
   }
 
+  /// path /withdrawal/upwbt 钱包绑定
+  /// [id] 分类Id
+  static Future submitBindWallet(
+      {String? accountName,
+      String? accountNo,
+      Function()? onSuccess,
+      int? wtype,
+      Function(String)? onError}) async {
+    String? path = "withdrawal/upwbt";
+    Map<String, dynamic> data = {};
+    data["name"] = accountName ?? "";
+    data["addr"] = accountNo ?? "";
+    data["orderType"] = wtype ?? "";
+
+    await _basePostNet(BaseParams(null,
+        path: path,
+        data: data,
+        onSuccess: (model) => onSuccess?.call(),
+        onError: onError));
+  }
+
   /// path /banks/bindBank 银行卡绑定
   /// [id] 分类Id
   static Future submitBindBankCard(
@@ -220,7 +241,6 @@ class ApiRes {
       String? bankBranch,
       String? bankCode,
       String? bankName,
-      int? wtype,
       Function()? onSuccess,
       Function(String)? onError}) async {
     String? path = "banks/bindBank";
@@ -230,7 +250,6 @@ class ApiRes {
     data["bankBranch"] = bankBranch ?? "";
     data["bankCode"] = bankCode ?? "";
     data["bankName"] = bankName ?? "";
-    if (wtype != null) data["wtype"] = wtype;
     await _basePostNet(BaseParams(null,
         path: path,
         data: data,
@@ -330,6 +349,21 @@ class ApiRes {
     return model;
   }
 
+  /// path /user/getGameDetail 获取某个游戏账单详情
+  static Future<gameRecordsList?> getGameBillDetails(
+      {int? dayType, int? gamePlatform, int? pageNum}) async {
+    gameRecordsList? model;
+    String? path = "/user/getGameDetail";
+    Map<String, dynamic> data = {};
+    data["dayType"] = dayType ?? 0;
+    data["gamePlatform"] = gamePlatform ?? 1;
+    data["pageNum"] = pageNum ?? 1;
+    data["pageSize"] = pageSize;
+    model = await _basePostNet<gameRecordsList>(
+        BaseParams(gameRecordsList(), path: path, data: data));
+    return model;
+  }
+
   /// path wlgame/enterGame 获取某个账单详情
   /// [id] 分类Id
   static Future<BillDetailsInfo?> getBillInfo({int? id, int? billType}) async {
@@ -352,16 +386,15 @@ class ApiRes {
     Map<String, dynamic> data = {};
 
     data["gamePlatform"] = gamePlatform ?? 0;
-    data["gameType"] = gameType ?? "2";
+    data["gameType"] = gameType ?? "1";
     model = await _basePostNet<GameListModel>(
         BaseParams(GameListModel(), path: path, data: data));
     return model;
   }
 
   // path game/exitGame  // 退出游戏
-
   static Future exitGame({int gamePlatform = 1}) async {
-    String? path = "game/enterGame";
+    String? path = "game/exitGame";
     Map<String, dynamic> data = {};
 
     data["gamePlatform"] = gamePlatform;
@@ -414,7 +447,7 @@ class ApiRes {
     data["topicId"] = topicId;
 
     model = await _basePostNet<PostBriefResp>(
-        BaseParams(PostBriefResp(), path: path, data: data ?? {}));
+        BaseParams(PostBriefResp(), path: path, data: data));
     return model;
   }
 
@@ -446,11 +479,11 @@ class ApiRes {
         onSuccess: (rep) => onSuccess?.call()));
   }
 
-  /// path /user/getGameDetail 获取游戏记录
+  /// path user/getstatdata 获取游戏记录
   static Future<GameDetail?> getGameDetailList(
       {int? pageNum, int? dayType}) async {
     GameDetail? model;
-    String? path = "user/getGameDetail";
+    String? path = "user/getstatdata";
     Map<String, dynamic> data = {};
     data["dayType"] = dayType ?? 0;
     data["pageNum"] = pageNum ?? 1;

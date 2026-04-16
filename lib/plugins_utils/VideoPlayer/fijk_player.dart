@@ -27,7 +27,7 @@ class FIJKVideoPlayer extends StatefulWidget {
   final bool? loop; // 是否循环播放
   final MediaInfo? mediaInfo; // 视频信息
   final double? aspectRatio;
-  Function? onCompleted; // 完成播放会调
+  final Function? onCompleted; // 完成播放会调
 
   FIJKVideoPlayer(
       {super.key,
@@ -260,7 +260,7 @@ class FIJKPlayerManager {
   }
 
   // 销毁播放器实例
-  void disposePlayer() async {
+  Future<void> disposePlayer() async {
     final cacheManager = M3u8CacheManager();
     FIJKPlayerManager playerManager = FIJKPlayerManager();
     if (_player != null) {
@@ -283,6 +283,24 @@ class FIJKPlayerManager {
       overlayEntry = null;
       barrageController = null;
     }
+  }
+
+  Future<void> pauseForAppLifecycle() async {
+    try {
+      if (_player == null) return;
+      if (_player!.state == FijkState.started ||
+          _player!.state == FijkState.asyncPreparing ||
+          _player!.state == FijkState.prepared) {
+        await _player!.pause();
+        playingController.add(false);
+      }
+    } catch (e) {
+      log.i("_fijk_player_log", 'Error pausing player for lifecycle: $e');
+    }
+  }
+
+  Future<void> disposeForAppExit() async {
+    await disposePlayer();
   }
 
   // 检查是否存在有效播放器实例

@@ -54,6 +54,8 @@ class NovelDetailPageView extends GetView<NovelDetailPageController> {
                             : R.assetsImgIconNovalCollect,
                         width: Dimens.pt40)))
           ]),
+          key: logic.scaffoldKey,
+          drawer: _buildChapterEndDrawer(logic),
           body: LoadingView(
             loading: !logic.initOk.value,
             child:
@@ -176,22 +178,24 @@ class NovelDetailPageView extends GetView<NovelDetailPageController> {
               if (logic.chapterList.isNotEmpty)
                 Row(children: [
                   Expanded(
-                      child: Container(
-                          height: Dimens.pt96,
-                          alignment: Alignment.center,
-                          color: Color(0xFF0D1F3A),
-                          child: Text(
-                              logic
-                                      .chapterList[
-                                          logic.readChapterIndex.value]
-                                      ?.title ??
-                                  '',
-                              textAlign: TextAlign.center,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: Dimens.pt30)))),
+                      child: GestureDetector(
+                    onTap: () {
+                      logic.scaffoldKey.currentState?.openDrawer();
+                    },
+                    child: Container(
+                        height: Dimens.pt96,
+                        alignment: Alignment.center,
+                        color: Color(0xFF0D1F3A),
+                        child: Text(
+                            logic.chapterList[logic.readChapterIndex.value]
+                                    ?.title ??
+                                '',
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: Colors.white, fontSize: Dimens.pt30))),
+                  )),
                   GestureDetector(
                     onTap: () => logic.startReadComicAndRecord(),
                     child: Container(
@@ -282,6 +286,77 @@ class NovelDetailPageView extends GetView<NovelDetailPageController> {
       //                     ])))
       //         : getLoadingWidget());
     });
+  }
+
+  Widget _buildChapterEndDrawer(NovelDetailPageController logic) {
+    return Container(
+        width: Dimens.pt600 + Dimens.pt40,
+        // padding: EdgeInsets.symmetric(horizontal: Dimens.pt30),
+        color: Colors.white,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          SizedBox(height: Dimens.pt30 + screen.paddingTop),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: Dimens.pt30),
+            child: Text(logic.novelName.value,
+                style:
+                    TextStyle(fontSize: Dimens.pt40, color: Color(0xFF333332))),
+          ),
+          SizedBox(height: Dimens.pt20),
+          Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: Dimens.pt30, vertical: Dimens.pt8),
+              margin: EdgeInsets.only(right: Dimens.pt60),
+              color: Color(0xFFF3F3F3),
+              child: Row(children: [
+                Text("共${logic.chapterList.length}章",
+                    style: TextStyle(
+                        fontSize: Dimens.pt30, color: Color(0xFF666666))),
+                Spacer(),
+                GestureDetector(
+                    onTap: () => logic.reverseChapterOrder(),
+                    child: Row(children: [
+                      Text("正序",
+                          style: TextStyle(
+                              fontSize: Dimens.pt30,
+                              color: !logic.isReverseOrder.value
+                                  ? AppColors.mainRed
+                                  : Color(0xFF666666))),
+                      SizedBox(width: Dimens.pt20),
+                      getHengLine(
+                          h: Dimens.pt26,
+                          w: Dimens.pt2,
+                          color: Color(0xFF666666).withOpacity(.5)),
+                      SizedBox(width: Dimens.pt20),
+                      Text("倒序",
+                          style: TextStyle(
+                              fontSize: Dimens.pt30,
+                              color: logic.isReverseOrder.value
+                                  ? AppColors.mainRed
+                                  : Color(0xFF666666)))
+                    ]))
+              ])),
+          SizedBox(height: Dimens.pt40),
+          Expanded(
+              child: ListView.separated(
+                  scrollDirection: Axis.vertical,
+                  padding: EdgeInsets.symmetric(horizontal: Dimens.pt30),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                        onTap: () {
+                          logic.startReadComicAndRecord(
+                              startChapterId: logic.chapterList[index]?.id);
+                        },
+                        child: Text(logic.chapterList[index]?.title ?? "",
+                            style: TextStyle(
+                                fontSize: Dimens.pt26,
+                                color: logic.readChapterIndex.value == index
+                                    ? AppColors.mainRed
+                                    : Color(0xFF666666).withOpacity(.9))));
+                  },
+                  separatorBuilder: (context, index) =>
+                      SizedBox(height: Dimens.pt30),
+                  itemCount: logic.chapterList.length))
+        ]));
   }
 
   Widget buildNovelChapterView(NovelDetailPageController logic) {

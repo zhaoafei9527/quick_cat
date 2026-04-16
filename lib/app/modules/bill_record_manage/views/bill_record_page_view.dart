@@ -7,6 +7,7 @@ import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:quick_cat_client/app/views/page_pull_view.dart';
 import 'package:quick_cat_client/app/widget/common_app_bar.dart';
 import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import 'package:quick_cat_client/r.dart';
 import 'package:quick_cat_client/utils/screen.dart';
 import 'package:flutter/material.dart';
@@ -83,20 +84,6 @@ class BillRecordPageView extends GetView<BillRecordController> {
   Widget _buildGameRecordsList() {
     BillRecordController logic = Get.find<BillRecordController>();
     return Column(children: [
-      Container(
-          height: Dimens.pt55,
-          color: const Color(0xFF222433),
-          child: Row(children: [
-            _getTableRow(text: "下注金额"),
-            SizedBox(width: Dimens.pt20),
-            _getTableRow(text: "中奖金额"),
-            SizedBox(width: Dimens.pt20),
-            _getTableRow(text: "时间", width: Dimens.pt160),
-            SizedBox(width: Dimens.pt20),
-            _getTableRow(text: "游戏名称", width: Dimens.pt110),
-            const Spacer(),
-            _getTableRow(text: "操作", width: Dimens.pt80),
-          ])),
       Expanded(
           child: PagePullView(
               key: logic.gameKey,
@@ -112,39 +99,90 @@ class BillRecordPageView extends GetView<BillRecordController> {
                   (BuildContext context, List<dynamic> list, Widget? child) {
                 return ListView.separated(
                     itemBuilder: (c, index) => Container(
-                          height: Dimens.pt110,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      color: Colors.white.withOpacity(.1)))),
-                          child: Row(children: [
-                            _getTableRow(text: list[index].validBet),
-                            SizedBox(width: Dimens.pt20),
-                            _getTableRow(text: list[index].profit.toString()),
-                            SizedBox(width: Dimens.pt20),
-                            _getTableRow(
-                                text: TimeUtil.buildChineseYYMMDD(
-                                    list[index].gameTime ?? ''),
-                                width: Dimens.pt160),
-                            SizedBox(width: Dimens.pt20),
-                            _getTableRow(
-                                text: list[index].gameName,
-                                width: Dimens.pt110),
-                            const Spacer(),
-                            _getTableRow(
-                                text: "详情",
-                                onTap: () => Get.toNamed(
-                                        Routes.GAME_DETAILS_PAGE,
-                                        arguments: {
-                                          "id": "${list[index].id}",
-                                          "billType":
-                                              "${BillInfoType.billTypeGame.index}"
-                                        }),
-                                color: AppColors.textYellowColor,
-                                width: Dimens.pt80),
-                          ]),
-                        ),
+                        height: Dimens.pt195,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
+                        decoration: BoxDecoration(color: Color(0xFF222433)),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(children: [
+                                ImageLoader.withP(list[index].icon,
+                                        height: Dimens.pt31)
+                                    .load(),
+                                SizedBox(width: Dimens.pt10),
+                                Text(list[index].title ?? "",
+                                    style: TextStyle(
+                                        fontSize: Dimens.pt24,
+                                        color: Colors.white)),
+                                Spacer(),
+                                GestureDetector(
+                                  onTap: () => Get.toNamed(
+                                      Routes.GAME_DETAILS_PAGE,
+                                      arguments: {
+                                        "gamePlatform":
+                                            "${list[index].gamePlatform}",
+                                        "gameName":
+                                            "${list[index].title ?? ''}",
+                                        "icon": "${list[index].icon ?? ''}",
+                                        "billType":
+                                            "${BillInfoType.billTypeGame.index}"
+                                      }),
+                                  child: Row(children: [
+                                    Text("详情",
+                                        style: TextStyle(
+                                            fontSize: Dimens.pt22,
+                                            color: Colors.white)),
+                                    Icon(Icons.arrow_forward_ios,
+                                        size: Dimens.pt24)
+                                  ]),
+                                )
+                              ]),
+                              SizedBox(height: Dimens.pt40),
+                              Row(children: [
+                                Column(children: [
+                                  Text("下注注量",
+                                      style: TextStyle(
+                                          fontSize: Dimens.pt22,
+                                          color: Color(0xFFA3A3A7))),
+                                  SizedBox(height: Dimens.pt10),
+                                  Text("${list[index].count ?? 0}",
+                                      style: TextStyle(
+                                          fontSize: Dimens.pt22,
+                                          color: Colors.white))
+                                ]),
+                                Spacer(),
+                                Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text("下注金额",
+                                          style: TextStyle(
+                                              fontSize: Dimens.pt24,
+                                              color: Color(0xFFA3A3A7))),
+                                      SizedBox(height: Dimens.pt10),
+                                      Text("¥${list[index].totalValidBet ?? 0}",
+                                          style: TextStyle(
+                                              fontSize: Dimens.pt24,
+                                              color: Color(0xFFFFB715)))
+                                    ]),
+                                Spacer(),
+                                Column(children: [
+                                  Text("结算金额",
+                                      style: TextStyle(
+                                          fontSize: Dimens.pt22,
+                                          color: Color(0xFFA3A3A7))),
+                                  SizedBox(height: Dimens.pt10),
+                                  Text("${list[index].totalProfit ?? 0}",
+                                      style: TextStyle(
+                                          fontSize: Dimens.pt22,
+                                          color:
+                                              (list[index].totalProfit ?? 0) < 0
+                                                  ? Color(0xFF1CCD21)
+                                                  : Color(0xFFF52C56)))
+                                ])
+                              ])
+                            ])),
                     separatorBuilder: (c, index) => SizedBox(
                           height: Dimens.pt10,
                         ),

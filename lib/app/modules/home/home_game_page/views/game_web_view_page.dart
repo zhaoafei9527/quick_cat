@@ -61,12 +61,12 @@ class GameWebViewPage extends GetView<GameWebViewPageController> {
     double dx = logic.floatingPosition.value.dy;
     double mid = screen.screenHeight / 2;
     return Transform.rotate(
-      angle: pi / 2,
-      child: PointerInterceptor(
-        child: Stack(
-            alignment: Alignment.center,
-            clipBehavior: Clip.none,
-            children: [
+        angle: pi / 2,
+        child: PointerInterceptor(
+            child: Stack(
+                alignment: Alignment.center,
+                clipBehavior: Clip.none,
+                children: [
               SizedBox(width: Dimens.pt280, height: Dimens.pt330),
               Positioned(
                   right: dx > mid ? 0 : null,
@@ -112,7 +112,7 @@ class GameWebViewPage extends GetView<GameWebViewPageController> {
                           width: Dimens.pt108,
                           height: Dimens.pt108,
                           decoration: BoxDecoration(
-                              color: AppColors.primaryColor,
+                              color: AppColors.textYellowColor,
                               borderRadius:
                                   BorderRadius.circular(Dimens.pt108)),
                           child: Column(
@@ -128,9 +128,7 @@ class GameWebViewPage extends GetView<GameWebViewPageController> {
                                         fontSize: Dimens.pt22,
                                         color: Colors.black))
                               ]))))
-            ]),
-      ),
-    );
+            ])));
   }
 
   Positioned _buildExitBtn(GameWebViewPageController logic) {
@@ -150,7 +148,7 @@ class GameWebViewPage extends GetView<GameWebViewPageController> {
             width: Dimens.pt80,
             height: Dimens.pt80,
             decoration: BoxDecoration(
-                color: AppColors.primaryColor,
+                color: AppColors.textYellowColor,
                 borderRadius: BorderRadius.circular(Dimens.pt45)),
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [

@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:quick_cat_client/conf/api_res.dart';
 import 'package:quick_cat_client/plugins_utils/VideoPlayer/fijk_player.dart';
 import 'package:flutter/services.dart';
 
@@ -13,6 +14,7 @@ import 'package:quick_cat_client/app/routes/app_pages.dart';
 import 'package:quick_cat_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
 import 'package:quick_cat_client/utils/app_util.dart';
 import 'package:quick_cat_client/utils/screen.dart';
+import 'package:quick_cat_client/utils/text_util.dart';
 
 import 'home_game_page_controller.dart';
 
@@ -21,6 +23,7 @@ class GameWebViewPageController extends GetxController {
   RxString webViewUri = "".obs;
   RxBool openGameUtils = false.obs;
   RxBool webViewLoading = true.obs;
+  int? platform; // 游戏平台
   RxInt balance = 0.obs;
   InAppWebViewController? webViewController;
   Rx<Offset> floatingPosition = Offset((screen.screenWidth / 2), 100).obs;
@@ -49,11 +52,13 @@ class GameWebViewPageController extends GetxController {
           () => Get.back(),
           () async {
             AppUtils.jumpToHome(index: 2);
-            HomeGamePageController game =
-                Get.find<HomeGamePageController>();
-            game.getHistoryGameList();
+            ApiRes.exitGame(gamePlatform: platform ?? 0);
           }
         ]);
+  }
+
+  exitGame() async {
+    ApiRes.exitGame(gamePlatform: platform ?? 0);
   }
 
   initGameWebViewPage() {
@@ -62,6 +67,7 @@ class GameWebViewPageController extends GetxController {
     openGameUtils.value = false;
     webViewLoading.value = true;
     webViewUri.value = Get.arguments?['uri'] ?? "";
+    platform = TextUtil.getIntArgument('gamePlatform');
   }
 
   @override

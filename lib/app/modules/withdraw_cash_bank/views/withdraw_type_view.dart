@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:quick_cat_client/app/model/recharge_model.dart';
 import 'package:quick_cat_client/app/themes/app_colors.dart';
 import 'package:quick_cat_client/app/widget/common_app_bar.dart';
+import 'package:quick_cat_client/app/widget/common_widget.dart';
 import 'package:quick_cat_client/conf/api_res.dart';
 import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import 'package:quick_cat_client/r.dart';
@@ -39,8 +40,7 @@ class _WithdrawTypeViewState extends State<WithdrawTypeView> {
             future: _future,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                    child: CircularProgressIndicator(color: Colors.white70));
+                return Center(child: getLoadingView());
               }
               if (snapshot.hasError) {
                 return Center(

@@ -327,6 +327,20 @@ class M3u8CacheManager {
     task?.resume();
   }
 
+  /// 暂停全部任务
+  void pauseAll() {
+    for (final task in _urlToTask.values) {
+      task.pause();
+    }
+  }
+
+  /// 恢复全部任务
+  void resumeAll() {
+    for (final task in _urlToTask.values) {
+      task.resume();
+    }
+  }
+
   /// 停止并清理该URL任务（不清空已下载缓存文件）
   void stop(String urlOrProxy) {
     final task = _getTaskForUrlOrProxy(urlOrProxy);
@@ -350,6 +364,14 @@ class M3u8CacheManager {
         unawaited(_addToIndex(mediaId));
       }
       task.dispose();
+    }
+  }
+
+  /// 停止并清理全部任务（不清空已下载缓存文件）
+  void stopAll() {
+    final urls = _urlToTask.keys.toList();
+    for (final url in urls) {
+      stop(url);
     }
   }
 
