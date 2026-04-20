@@ -448,7 +448,7 @@ class AppPages {
       // 小说详情 insert://novel-detail-page?novelId=10001&title=斗罗大陆
 
       // 所有内部网页 webView://web_view?title=大转盘&uri=http://192.168.16:8090
-      // 某个游戏跳转 game://in_game_page?gameNumber=0000&gamePlatform=1
+      // 某个游戏跳转 game://in_game_page?gameType=0000&gamePlatform=1
       // 所有外部网页 launch://http://192.168.16:8090
       // 首页跳转 insert://home?index=0
       String route = path ?? "";
@@ -470,11 +470,11 @@ class AppPages {
           if (router == "home_game_page") {
             AppUtils.jumpToHome(index: 2);
           } else if (router == "in_game_page") {
-            String gameNumber = args['gameNumber'] ?? '';
+            String gameType = args['gameType'] ?? '';
             int gamePlatform = int.tryParse(args['gamePlatform'] ?? '') ?? 0;
             HomeGamePageController game = Get.find<HomeGamePageController>();
             await game.enterGame(
-                gameNumber: gameNumber, platform: gamePlatform);
+                gameType: gameType, platform: gamePlatform);
           }
         }
       } else if (route.startsWith("webView://")) {

@@ -24,7 +24,7 @@ class GameWebViewPage extends GetView<GameWebViewPageController> {
   @override
   Widget build(BuildContext context) {
     GameWebViewPageController logic = Get.find<GameWebViewPageController>();
-    return Obx(() => logic.webViewUri.value.isNotEmpty
+    return Obx(() => logic.hasValidContent
         ? Stack(children: [
             InAppWebView(
                 initialOptions: InAppWebViewGroupOptions(
@@ -40,8 +40,17 @@ class GameWebViewPage extends GetView<GameWebViewPageController> {
                     logic.webViewLoading.value = false;
                   });
                 },
-                initialUrlRequest:
-                    URLRequest(url: WebUri(logic.webViewUri.value))),
+                initialUrlRequest: logic.isHtmlMode
+                    ? null
+                    : URLRequest(url: WebUri(logic.webViewUri.value)),
+                initialData: logic.isHtmlMode
+                    ? InAppWebViewInitialData(
+                        data: logic.webViewHtml.value,
+                        mimeType: 'text/html',
+                        encoding: 'utf-8',
+                        baseUrl: WebUri('about:blank'),
+                      )
+                    : null),
             Obx(() => Positioned(
                 left: logic.floatingPosition.value.dx,
                 top: logic.floatingPosition.value.dy,

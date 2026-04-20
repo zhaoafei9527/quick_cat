@@ -61,7 +61,7 @@ Future showTypeToast(
                               ? R.assetsImgIconSuccess
                               : R.assetsImgIconError,
                           color: toastType == ToastType.SUCCESS
-                              ? AppColors.mainRed
+                              ? AppColors.textYellowColor
                               : AppColors.textColorWhite,
                           width: Dimens.pt50,
                           height: Dimens.pt50,
@@ -71,8 +71,8 @@ Future showTypeToast(
                             style: TextStyle(
                               fontSize: Dimens.pt26,
                               color: toastType == ToastType.SUCCESS
-                                  ? Colors.white
-                                  : AppColors.textYellowColor,
+                                  ? AppColors.textYellowColor
+                                  : Colors.white,
                             ))
                       ]))))));
 

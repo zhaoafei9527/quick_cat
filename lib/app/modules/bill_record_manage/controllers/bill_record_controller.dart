@@ -59,13 +59,26 @@ class BillRecordController extends GetxController
           initialIndex: Get.arguments?['type'] ?? 0,
           vsync: this);
       tabController?.addListener(() {
-        if(tabController?.index==0){
+        if (tabController?.index == 3) {
+          dateCodesList.value = [
+            {"name": "今日", "value": 1},
+            {"name": "昨日", "value": 2},
+          ];
+        } else {
+          dateCodesList.value = [
+            {"name": "今日", "value": 1},
+            {"name": "本周", "value": 2},
+            {"name": "本月", "value": 3},
+            {"name": "全部", "value": 0}
+          ];
+        }
+        if (tabController?.index == 0) {
           rechargeKey.currentState?.refresh();
-        }else if(tabController?.index==1){
+        } else if (tabController?.index == 1) {
           withdrawalKey.currentState?.refresh();
-        }else if(tabController?.index==2){
+        } else if (tabController?.index == 2) {
           recordKey.currentState?.refresh();
-        }else if(tabController?.index==3){
+        } else if (tabController?.index == 3) {
           gameKey.currentState?.refresh();
         }
       });
@@ -76,18 +89,18 @@ class BillRecordController extends GetxController
   chooseDate(index) {
     selectDateValue.value = index;
     showDateChoose.value = false;
-    if(tabController?.index==0){
+    if (tabController?.index == 0) {
       rechargeKey.currentState?.refresh();
-    }else if(tabController?.index==1){
+    } else if (tabController?.index == 1) {
       withdrawalKey.currentState?.refresh();
-    }else if(tabController?.index==2){
+    } else if (tabController?.index == 2) {
       recordKey.currentState?.refresh();
-    }else if(tabController?.index==3){
+    } else if (tabController?.index == 3) {
       gameKey.currentState?.refresh();
     }
   }
 
-  chooseType(index) {
+  chooseBillType(index) {
     selectTypeValue.value = index;
     showTypeChoose.value = false;
     recordKey.currentState?.refresh();
@@ -104,8 +117,6 @@ class BillRecordController extends GetxController
     showTypeChoose.value = false;
     showSysTypeChoose.value = false;
   }
-
-
 
   void increment() => count.value++;
 }

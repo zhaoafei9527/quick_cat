@@ -680,6 +680,7 @@ class CommonDropdownSelector extends StatefulWidget {
   final double? triggerHeight;
   final double? itemHeight;
   final Color? borderColor;
+  final Color? itemBackground;
   final Color? backgroundColor;
   final Color? textColor;
   final Color? iconColor;
@@ -699,6 +700,7 @@ class CommonDropdownSelector extends StatefulWidget {
     this.backgroundColor,
     this.textColor,
     this.iconColor,
+    this.itemBackground,
     this.dropDownSpacing,
     this.triggerRadius,
     this.menuRadius,
@@ -743,9 +745,8 @@ class _CommonDropdownSelectorState extends State<CommonDropdownSelector> {
   }
 
   OverlayEntry _buildOverlayEntry() {
-    final double menuTopOffset =
-        (widget.triggerHeight ?? Dimens.pt46) +
-            (widget.dropDownSpacing ?? Dimens.pt10);
+    final double menuTopOffset = (widget.triggerHeight ?? Dimens.pt46) +
+        (widget.dropDownSpacing ?? Dimens.pt10);
     final double menuWidth = widget.width ?? Dimens.pt170;
     return OverlayEntry(
         builder: (context) => Stack(children: [
@@ -763,14 +764,13 @@ class _CommonDropdownSelectorState extends State<CommonDropdownSelector> {
                       child: Container(
                           width: menuWidth,
                           decoration: BoxDecoration(
-                              color: widget.backgroundColor ??
+                              color: widget.itemBackground ??
                                   const Color(0xFF171F20),
                               border: Border.all(
-                                  color:
-                                      widget.borderColor ?? const Color(0xFFFFB715)),
+                                  color: widget.borderColor ??
+                                      const Color(0xFFFFB715)),
                               borderRadius: BorderRadius.circular(
                                   widget.menuRadius ?? Dimens.pt6)),
-
                           child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: List.generate(
@@ -785,8 +785,7 @@ class _CommonDropdownSelectorState extends State<CommonDropdownSelector> {
                                               widget.itemHeight ?? Dimens.pt70,
                                           alignment: Alignment.center,
                                           decoration: BoxDecoration(
-                                              border: index !=
-                                                      widget.listData.length - 1
+                                              border: index != widget.listData.length - 1
                                                   ? Border(
                                                       bottom: BorderSide(
                                                           color:
@@ -795,13 +794,10 @@ class _CommonDropdownSelectorState extends State<CommonDropdownSelector> {
                                                                       0xFFFFB715),
                                                           width: Dimens.pt2))
                                                   : null),
-                                          child: Text(
-                                              widget.listData[index]["name"] ??
-                                                  "",
+                                          child: Text(widget.listData[index]["name"] ?? "",
                                               style: TextStyle(
                                                   fontSize: Dimens.pt24,
-                                                  color: widget.textColor ??
-                                                      Colors.white)))))))))
+                                                  color: widget.textColor ?? Colors.white)))))))))
             ]));
   }
 
@@ -822,11 +818,12 @@ class _CommonDropdownSelectorState extends State<CommonDropdownSelector> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     color: widget.backgroundColor ?? Colors.transparent,
-                    border:
-                        Border.all(color: widget.borderColor ?? const Color(0xFFFFB715)),
+                    border: Border.all(
+                        color: widget.borderColor ?? const Color(0xFFFFB715)),
                     borderRadius: BorderRadius.circular(
                         widget.triggerRadius ?? Dimens.pt12)),
-                child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text(widget.listData[safeIndex]["name"] ?? "",
                       style: TextStyle(
                           fontSize: Dimens.pt24,

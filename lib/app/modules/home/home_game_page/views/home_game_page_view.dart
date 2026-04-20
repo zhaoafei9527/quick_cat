@@ -296,10 +296,10 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
         child: GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
+                crossAxisCount: 4,
                 crossAxisSpacing: Dimens.pt24,
                 mainAxisSpacing: Dimens.pt30,
-                childAspectRatio: 214 / 248),
+                childAspectRatio: 162 / 200),
             itemCount: logic.gameTypeList[type]?.length ?? 0,
             shrinkWrap: true,
             padding: EdgeInsets.zero,
@@ -309,14 +309,15 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
                   behavior: HitTestBehavior.opaque,
                   onTap: () async {
                     logic.enterLoading.value = true;
-                    await logic.enterGame(gameNumber: bean?.gameType);
+                    await logic.enterGame(
+                        gameType: bean?.gameType,
+                        platform: bean?.gamePlatform);
                     logic.enterLoading.value = false;
                   },
                   child: Column(children: [
                     ImageLoader.withP(bean?.coverImg ?? "",
-                            radius: Dimens.pt8,
-                            width: Dimens.pt214,
-                            height: Dimens.pt245)
+                            width: Dimens.pt160,
+                            height: Dimens.pt190)
                         .load()
                   ]));
             })));

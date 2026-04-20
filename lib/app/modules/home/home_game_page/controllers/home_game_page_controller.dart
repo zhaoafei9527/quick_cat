@@ -2,7 +2,6 @@
 import 'dart:convert';
 
 // 📦 Package imports:
-import 'package:quick_cat_client/r_insert.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,11 +12,11 @@ import 'package:quick_cat_client/app/dialog/common_dialog.dart';
 import 'package:quick_cat_client/app/model/game_model.dart';
 import 'package:quick_cat_client/app/routes/app_pages.dart';
 import 'package:quick_cat_client/conf/api_res.dart';
-import 'package:quick_cat_client/r.dart';
 import 'package:quick_cat_client/utils/dimens.dart';
 import 'package:quick_cat_client/utils/toast_util.dart';
 import '../../../../../utils/light_model.dart';
 import '../../../../model/home/user_info_model.dart';
+import 'game_web_view_controller.dart';
 
 class HomeGamePageController extends GetxController
     with GetTickerProviderStateMixin {
@@ -172,18 +171,20 @@ class HomeGamePageController extends GetxController
     }
   }
 
-  enterGame({String? gameNumber, int? platform}) async {
-    GameListModel? model = await ApiRes.enterGame(
-        gamePlatform: platform ?? platformKey, gameType: gameNumber);
+  enterGame({String? gameType, int? platform}) async {
+    GameListModel? model =
+        await ApiRes.enterGame(gamePlatform: platform, gameType: gameType);
 
-    ApiRes.addTaskRecord(recordType: RecordType.recordTypeEnterGame.index);
+    // ApiRes.addTaskRecord(recordType: RecordType.recordTypeEnterGame.index);
     // int index = gameList.indexWhere((ele) => ele.number == number);
     // if (index != -1) {
     //   setHistoryGameList(gameList[index]);
     // }
     // Get.toNamed(Routes.ENTER_GAME_WEB_VIEW, arguments: {"uri": ""});
-    Get.toNamed(Routes.ENTER_GAME_WEB_VIEW,
-        arguments: {"uri": model?.data?.gameUrl ?? "", "gamePlatform": platform ?? platformKey});
+    await GameWebViewPageController.openGameWebView(
+      uri: model?.data?.gameUrl ?? "",
+      gamePlatform: platform,
+    );
   }
 
   void goWithdrawCash() {
@@ -208,6 +209,14 @@ class HomeGamePageController extends GetxController
   void changeTabIndex(int index) {
     currentTabIndex.value = index;
     tabController?.animateTo(index);
+  }
+
+  void oneClickScore() async {
+    await ApiRes.oneClickScore(onSuccess: () {
+      print("下分成功");
+    }, onError: (msg) {
+      print("下分失败：$msg");
+    });
   }
 
   void increment() {

@@ -244,30 +244,42 @@ Future<Result<K?>> _execute<T, K>(
       return await compute(converter, response);
     } else {
       if (response.statusCode == 200 || response.statusCode == 304) {
-        if (response.data['code'] == 200) {
-          if (response.data['data'] != null) {
-            var decode = await compute(
-                _mapCompute<T, K>,
-                _MapBean<T>(response, decodeType,
-                    httpDecode ?? NetOptions.instance.httpDecoder));
-            return Result.success(decode);
-          } else {
-            return Result.success(response.data['data']);
+        final dynamic body = response.data;
+        // 兼容后端直接返回基础类型（String/int/double/bool 等）
+        if (body is! Map) {
+          return Result.success(body as K?);
+        }
+
+        if (body['code'] == 200) {
+          final dynamic dataField = body['data'];
+          if (dataField == null) {
+            return Result.success(dataField as K?);
           }
+
+          // data 为基础类型时无需进入 isolate 解码
+          if (dataField is String || dataField is num || dataField is bool) {
+            return Result.success(dataField as K?);
+          }
+
+          var decode = await compute(
+              _mapCompute<T, K>,
+              _MapBean<T>(response, decodeType,
+                  httpDecode ?? NetOptions.instance.httpDecoder));
+          return Result.success(decode);
         } else {
           String resultMsg = "业务错误，请重试";
-          if ((response.data?['msg'] ?? "").isNotEmpty) {
-            resultMsg = response.data['msg'];
+          if ((body['msg'] ?? "").isNotEmpty) {
+            resultMsg = body['msg'];
           }
-          if ((response.data?['tip'] ?? "").isNotEmpty) {
-            resultMsg = response.data['tip'];
+          if ((body['tip'] ?? "").isNotEmpty) {
+            resultMsg = body['tip'];
           }
-          if ((response.data?['tips'] ?? "").isNotEmpty) {
-            resultMsg = response.data['tips'];
+          if ((body['tips'] ?? "").isNotEmpty) {
+            resultMsg = body['tips'];
           }
           return Result.failure(
             msg: resultMsg, // 错误消息
-            code: response.data['code'] ?? -1, // 错误码
+            code: body['code'] ?? -1, // 错误码
           );
         }
       } else {

@@ -78,7 +78,7 @@ class WithdrawCashBankController extends GetxController {
       return '立即绑定银行卡';
     }
     if (paramName.isNotEmpty) {
-      return hasArrivalAccount?'更换钱包地址':'立即绑定钱包地址';
+      return hasArrivalAccount ? '更换钱包地址' : '立即绑定钱包地址';
     }
     return hasCard ? '更换绑定账户' : '立即绑定账户';
   }
@@ -237,17 +237,30 @@ class WithdrawCashBankController extends GetxController {
     String bankBranch = bankCard.value.bankBranch ?? ''; //银行支行
     String bankCode = bankCard.value.bankCode ?? ''; //银行编码
     String bankName = bankCard.value.bankName ?? ''; //开户银行名称
+    if (!isBankWithdraw) {
+      accountName = currentWalletInfo?.walletName ?? '';
+      accountNo = currentWalletInfo?.walletAddr ?? '';
+    }
 
-    double maxAmount = double.tryParse(shareKeys.userTransferable.value) ?? 0.0;
+    double maxAmount = double.tryParse(shareKeys.userBalance.value) ?? 0.0;
     double doubleAmount = double.tryParse(cashField.text) ?? 0.0;
     int money = (doubleAmount * 100).toInt();
-    if (accountName.isEmpty ||
-        accountNo.isEmpty ||
-        bankCode.isEmpty ||
-        bankName.isEmpty) {
-      showTypeToast(msg: isBankWithdraw ? "请绑定银行卡后重试！" : "请先完成钱包绑定后再试");
-      return;
+    if (isBankWithdraw) {
+      if (accountName.isEmpty ||
+          accountNo.isEmpty ||
+          bankCode.isEmpty ||
+          bankBranch.isEmpty ||
+          bankName.isEmpty) {
+        showTypeToast(msg: "请完善银行卡信息后再试（含开户支行）");
+        return;
+      }
+    } else {
+      if (accountName.isEmpty || accountNo.isEmpty) {
+        showTypeToast(msg: "请绑定完整账户信息后再试");
+        return;
+      }
     }
+
     if (isBankWithdraw &&
         (bankCard.value.bankBranch == null ||
             bankCard.value.bankBranch!.isEmpty)) {
@@ -267,9 +280,11 @@ class WithdrawCashBankController extends GetxController {
           bankName: bankName,
           money: money,
           orderType: withdrawWtype,
+          onError: (msg) {
+            showTypeToast(msg: "提现失败:$msg");
+          },
           onSuccess: () {
             cashField.text = '';
-            ShareKeys shareKeys = Get.find<ShareKeys>();
             shareKeys.getUserBalance();
             showTypeToast(msg: "提现提交成功", toastType: ToastType.SUCCESS);
           });

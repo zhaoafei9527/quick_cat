@@ -45,6 +45,12 @@ class NovelDetailPageView extends GetView<NovelDetailPageController> {
           backgroundColor: Colors.transparent,
           appBar: getCommonAppBar("", actions: [
             GestureDetector(
+                onTap: () => logic.scaffoldKey.currentState?.openDrawer(),
+                child: Padding(
+                    padding: EdgeInsets.only(right: Dimens.pt25),
+                    child: Image.asset(R.assetsImgIconReaderChapter,
+                        width: Dimens.pt34))),
+            GestureDetector(
                 onTap: () => logic.addCollectComic(logic.novelData.value),
                 child: Padding(
                     padding: EdgeInsets.only(right: Dimens.pt25),
@@ -179,9 +185,6 @@ class NovelDetailPageView extends GetView<NovelDetailPageController> {
                 Row(children: [
                   Expanded(
                       child: GestureDetector(
-                    onTap: () {
-                      logic.scaffoldKey.currentState?.openDrawer();
-                    },
                     child: Container(
                         height: Dimens.pt96,
                         alignment: Alignment.center,

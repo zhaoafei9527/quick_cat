@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:quick_cat_client/app/data/ads_type.dart';
+import 'package:quick_cat_client/app/data/enum.dart';
 import 'package:quick_cat_client/app/data/pubspec.dart';
 import 'package:quick_cat_client/app/dialog/accont_qr_dialog.dart';
 import 'package:quick_cat_client/app/dialog/announce_dialog.dart';
@@ -9,6 +10,7 @@ import 'package:quick_cat_client/app/model/home/user_info_model.dart';
 import 'package:quick_cat_client/app/model/home/video_play_model.dart';
 import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:quick_cat_client/app/widget/cover_banner.dart';
+import 'package:quick_cat_client/conf/api_res.dart';
 import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/m3u8_cache_manager.dart';
 import 'package:quick_cat_client/utils/app_util.dart';
 import 'package:quick_cat_client/utils/time_util.dart';
@@ -63,7 +65,7 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
                             child: Column(children: [
                               CoverBanner(
                                   //广告minSwiperAds
-                                  aspectRatio: 700 / 148,
+                                  aspectRatio: 700 / 336,
                                   radius: Dimens.pt20,
                                   adsType: AdsType.minSwiperAds,
                                   onItemClick: (Advertise model) {
@@ -396,11 +398,11 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image.asset(R.assetsImgTextHomeBalance,
-                              height: Dimens.pt40),
+                              height: Dimens.pt46),
                           SizedBox(width: Dimens.pt15),
                           Obx(() => Text("¥${shareKeys.userBalance.value}",
                               style: TextStyle(
-                                  fontSize: Dimens.pt40,
+                                  fontSize: Dimens.pt38,
                                   color: Color(0xFFFFDB9E),
                                   fontWeight: FontWeight.w600))),
                           SizedBox(width: Dimens.pt15),
@@ -413,9 +415,43 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
                               )),
                           Spacer(),
                           GestureDetector(
-                              onTap: () => Get.toNamed(Routes.VIP_CENTER_PAGE),
+                              onTap: () async {
+                                await ApiRes.oneClickScore(onSuccess: () {
+                                  showTypeToast(
+                                      msg: "下分成功",
+                                      toastType: ToastType.SUCCESS);
+                                }, onError: (msg) {
+                                  showTypeToast(
+                                      msg: "下分失败：$msg",
+                                      toastType: ToastType.Error);
+                                });
+                                await shareKeys.getUserBalance();
+                              },
                               child: Container(
                                   width: Dimens.pt146,
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: Dimens.pt8),
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [
+                                            Color(0xFFE1FDDB),
+                                            Color(0xFFD0FBFC)
+                                          ]),
+                                      borderRadius:
+                                          BorderRadius.circular(Dimens.pt46)),
+                                  child: Text("一键取回",
+                                      style: TextStyle(
+                                          fontSize: Dimens.pt24,
+                                          color: const Color(0xFF333333),
+                                          fontWeight: FontWeight.w500)))),
+                          SizedBox(width: Dimens.pt10),
+                          GestureDetector(
+                              onTap: () => Get.toNamed(Routes.VIP_CENTER_PAGE),
+                              child: Container(
+                                  width: Dimens.pt98,
                                   height: Dimens.pt52,
                                   decoration: BoxDecoration(
                                       borderRadius:
@@ -428,7 +464,7 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
                                             Color(0xFFD0FBFC)
                                           ])),
                                   alignment: Alignment.center,
-                                  child: Text("立即充值",
+                                  child: Text("充值",
                                       style: TextStyle(
                                           fontSize: Dimens.pt24,
                                           color: Color(0xFF333333)))))

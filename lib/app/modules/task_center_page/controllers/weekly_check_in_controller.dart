@@ -86,6 +86,13 @@ class WeeklyCheckInController extends GetxController {
   }
 
   Future checkInAndReceive() async {
+    UserInfo userInfo = Get.find<ShareKeys>().userInfo;
+    if(userInfo.mobile == null || userInfo.mobile?.isEmpty == true) {
+      showTypeToast(msg: "请先绑定手机号在进行签到");
+      return;
+    }
+
+
     if (!todayChecked.value) {
       showLoading.value = true;
       CheckInModel? model = await ApiRes.checkInWeeklyV3();

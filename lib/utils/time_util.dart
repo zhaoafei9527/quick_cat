@@ -254,8 +254,8 @@ class TimeUtil {
   }
 
   /// 金额 分转元 11000 = 110.00
-  static String amountConversion(double amount) {
-    var minutes = (amount / 100).toStringAsFixed(2);
+  static String amountConversion(double? amount) {
+    var minutes = ((amount ?? .0)  / 100).toStringAsFixed(2);
     return minutes;
   }
 

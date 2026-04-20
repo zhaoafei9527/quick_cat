@@ -1,5 +1,8 @@
 // 🐦 Flutter imports:
+import 'package:quick_cat_client/app/data/enum.dart';
 import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/dialog/common_dialog.dart';
+import 'package:quick_cat_client/app/model/home/user_info_model.dart';
 import 'package:quick_cat_client/app/model/post_list_model.dart';
 import 'package:quick_cat_client/app/themes/app_colors.dart';
 import 'package:quick_cat_client/conf/api_res.dart';
@@ -16,6 +19,7 @@ import 'package:quick_cat_client/app/widget/post_item.dart';
 import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import 'package:quick_cat_client/utils/app_util.dart';
 import 'package:quick_cat_client/utils/screen.dart';
+import 'package:quick_cat_client/utils/toast_util.dart';
 import '../../../../../utils/dimens.dart';
 import '../../../../data/ads_type.dart';
 import '../../../../model/home/config_model_model.dart';
@@ -202,14 +206,14 @@ Widget buildRecommendGameView({bool? showHotGame}) {
         margin: EdgeInsets.symmetric(
             horizontal: (showHotGame ?? true) ? Dimens.pt30 : 0),
         child: Row(children: [
-          Image.asset(R.assetsImgTextHomeBalance, height: Dimens.pt40),
+          Image.asset(R.assetsImgTextHomeBalance, height: Dimens.pt46),
           SizedBox(width: Dimens.pt15),
           Obx(() => Text("¥${shareKeys.userBalance.value}",
               style: TextStyle(
-                  fontSize: Dimens.pt40,
+                  fontSize: Dimens.pt38,
                   color: Color(0xFFFFDB9E),
                   fontWeight: FontWeight.w500))),
-          SizedBox(width: Dimens.pt15),
+          SizedBox(width: Dimens.pt10),
           GestureDetector(
               onTap: () async {
                 shareKeys.balanceRefreshTurns.value += 1;
@@ -219,7 +223,29 @@ Widget buildRecommendGameView({bool? showHotGame}) {
                   turns: shareKeys.balanceRefreshTurns.value,
                   duration: const Duration(milliseconds: 300),
                   child: Icon(Icons.refresh,
-                      size: Dimens.pt35, color: const Color(0xFFADB5BD)))))
+                      size: Dimens.pt35, color: const Color(0xFFADB5BD))))),
+          Spacer(),
+          GestureDetector(
+            onTap: () async {
+              await ApiRes.oneClickScore(onSuccess: () {
+                showTypeToast(msg: "下分成功", toastType: ToastType.SUCCESS);
+              }, onError: (msg) {
+                showTypeToast(msg: "下分失败：$msg", toastType: ToastType.Error);
+              });
+              await shareKeys.getUserBalance();
+            },
+            child: Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimens.pt20, vertical: Dimens.pt8),
+                decoration: BoxDecoration(
+                    border: Border.all(color: const Color(0xFFFFDB9E)),
+                    borderRadius: BorderRadius.circular(Dimens.pt12)),
+                child: Text("一键取回",
+                    style: TextStyle(
+                        fontSize: Dimens.pt26,
+                        color: const Color(0xFFFFDB9E),
+                        fontWeight: FontWeight.w500))),
+          )
         ])),
     SizedBox(height: Dimens.pt30),
     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -255,7 +281,25 @@ Widget buildRecommendGameView({bool? showHotGame}) {
           ])),
       SizedBox(width: Dimens.pt50),
       GestureDetector(
-          onTap: () => Get.toNamed(Routes.WITHDRAW_TYPE_PAGE),
+          onTap: () {
+            UserInfo userInfo = Get.find<ShareKeys>().userInfo;
+            if (userInfo.mobile == null || userInfo.mobile?.isEmpty == true) {
+              showPlayerCommonDialog(Get.context!,
+                  title: "温情提示",
+                  content:
+                      "当前为游客账号,为避免账号丢失,请绑定手\n机号码升级成正式账号！\n正式账号特权：\n1.立即获得3元现金\n2.可提现APP余额\n3.可通过手机登陆",
+                  btnList: ["立即绑定"],
+                  btnCall: [
+                    () {
+                      Get.back();
+                      Get.toNamed(Routes.BIND_MOBILE_PAGE);
+                    }
+                  ],
+                  btnActionIndex: 0);
+            } else {
+              Get.toNamed(Routes.WITHDRAW_TYPE_PAGE);
+            }
+          },
           child: Container(
               width: Dimens.pt225,
               height: Dimens.pt55,

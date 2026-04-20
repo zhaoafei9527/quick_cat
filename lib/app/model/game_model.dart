@@ -168,6 +168,7 @@ class GameInfoBean extends BaseNetModel {
   int? id;
   int? number;
   int? gameCategory;
+  int? gamePlatform;
   String? introduce; // 简介
   String? title;
   String? coverImg;
@@ -184,6 +185,7 @@ class GameInfoBean extends BaseNetModel {
       this.gameReason,
       this.gameUrl,
       this.gameType,
+        this.gamePlatform,
       this.gameCategory,
       this.coverImg,
       this.selectedIcon});
@@ -192,6 +194,7 @@ class GameInfoBean extends BaseNetModel {
     id = json['id'];
     title = json['title'];
     number = json['number'];
+    gamePlatform = json['gamePlatform'];
     gameReason = json['gameReason'];
     gameUrl = json['gameUrl'];
     gameType = json['gameType'];
@@ -205,6 +208,7 @@ class GameInfoBean extends BaseNetModel {
     data['id'] = id;
     data['title'] = title;
     data["number"] = number;
+    data['gamePlatform'] = gamePlatform;
     data['gameReason'] = gameReason;
     data['gameUrl'] = gameUrl;
     data['gameType'] = gameType;

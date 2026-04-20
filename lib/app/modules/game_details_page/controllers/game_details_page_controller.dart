@@ -33,9 +33,7 @@ class GameDetailsPageController extends GetxController {
       gamePlatform = TextUtil.getIntArgument('gamePlatform');
       dateCodesList.value = [
         {"name": "今日", "value": 1},
-        {"name": "本周", "value": 2},
-        {"name": "本月", "value": 3},
-        {"name": "全部", "value": 0}
+        {"name": "昨日", "value": 2},
       ];
     }
   }

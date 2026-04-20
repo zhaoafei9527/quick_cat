@@ -258,7 +258,6 @@ class ApiRes {
   }
 
   /// path /api/app/withdrawal/submitV2 提现
-  /// [id] 分类Id
   static Future submitWithdrawal(
       {String? accountName,
       String? accountNo,
@@ -378,7 +377,8 @@ class ApiRes {
   }
 
   /// path game/enterGame 进入某个游戏
-  /// [id] 分类Id
+  /// [gamePlatform] 平台分类Id
+  /// [gameType] 游戏Id
   static Future<GameListModel?> enterGame(
       {int? gamePlatform, String? gameType}) async {
     GameListModel? model;
@@ -389,6 +389,7 @@ class ApiRes {
     data["gameType"] = gameType ?? "1";
     model = await _basePostNet<GameListModel>(
         BaseParams(GameListModel(), path: path, data: data));
+    print(data);
     return model;
   }
 
@@ -1453,7 +1454,6 @@ class ApiRes {
     data["sort"] = sort ?? 0;
     data["pageNum"] = pageNum ?? 1;
     data["pageSize"] = pageSize;
-    print(data);
     model = await _basePostNet<MediaList>(
         BaseParams(MediaList(), path: path, data: data ?? {}));
     return model;
@@ -1504,8 +1504,22 @@ class ApiRes {
     UserBalanceModel? model;
     String? path = "wlgame/getBalance";
     model = await _basePostNet<UserBalanceModel>(BaseParams(UserBalanceModel(),
-        onSuccess: onSuccess?.call(), onError: onError, path: path, data: {}));
+        onSuccess: (_) => onSuccess?.call(),
+        onError: onError,
+        path: path,
+        data: {}));
     return model;
+  }
+
+  /// path game/oneclick 查询用户余额
+  static Future oneClickScore(
+      {Function()? onSuccess, Function(String)? onError}) async {
+    String? path = "game/oneclick";
+    await _basePostNet(BaseParams(null,
+        onSuccess: (_) => onSuccess?.call(),
+        onError: onError,
+        path: path,
+        data: {}));
   }
 
   /// path [GET] ping/config 获取APP配置文件*
@@ -1516,7 +1530,7 @@ class ApiRes {
     ConfigModel? model;
     String? path = "ping/config";
     model = await _baseGetNet<ConfigModel>(BaseParams(ConfigModel(),
-        onSuccess: onSuccess?.call(),
+        onSuccess: (_) => onSuccess?.call(),
         onError: onError,
         path: path,
         data: data ?? {}));
@@ -1531,7 +1545,7 @@ class ApiRes {
     Map<String, dynamic> data = {};
     data["value"] = code ?? "";
     model = await _basePostNet<UserInfo>(BaseParams(UserInfo(),
-        onSuccess: onSuccess?.call(),
+        onSuccess: (_) => onSuccess?.call(),
         onError: onError,
         path: path,
         data: data));
@@ -1543,7 +1557,7 @@ class ApiRes {
       {Function()? onSuccess, Function(String)? onError}) async {
     UserInfo? model;
     model = await _basePostNet<UserInfo>(BaseParams(UserInfo(),
-        onSuccess: onSuccess?.call(),
+        onSuccess: (_) => onSuccess?.call(),
         onError: onError,
         path: "user/info",
         data: {}));

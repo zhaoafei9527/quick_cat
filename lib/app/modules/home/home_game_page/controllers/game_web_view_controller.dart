@@ -16,11 +16,39 @@ import 'package:quick_cat_client/utils/app_util.dart';
 import 'package:quick_cat_client/utils/screen.dart';
 import 'package:quick_cat_client/utils/text_util.dart';
 
-import 'home_game_page_controller.dart';
+enum GameWebContentType { url, html }
+
+class GameWebViewPayload {
+  final GameWebContentType type;
+  final String content;
+  final int? gamePlatform;
+
+  const GameWebViewPayload({
+    required this.type,
+    required this.content,
+    this.gamePlatform,
+  });
+}
+
+class GameWebViewPayloadStore {
+  static final Map<String, GameWebViewPayload> _cache = {};
+
+  static String put(GameWebViewPayload payload) {
+    final key = '${DateTime.now().microsecondsSinceEpoch}_${payload.hashCode}';
+    _cache[key] = payload;
+    return key;
+  }
+
+  static GameWebViewPayload? take(String? key) {
+    if (key == null || key.isEmpty) return null;
+    return _cache.remove(key);
+  }
+}
 
 class GameWebViewPageController extends GetxController {
   RxBool enterLoading = false.obs;
   RxString webViewUri = "".obs;
+  RxString webViewHtml = "".obs;
   RxBool openGameUtils = false.obs;
   RxBool webViewLoading = true.obs;
   int? platform; // 游戏平台
@@ -61,13 +89,81 @@ class GameWebViewPageController extends GetxController {
     ApiRes.exitGame(gamePlatform: platform ?? 0);
   }
 
+  static Future<void> openGameWebView({
+    String? uri,
+    String? html,
+    int? gamePlatform,
+  }) async {
+    final bool hasUri = (uri ?? "").isNotEmpty;
+    final bool hasHtml = (html ?? "").isNotEmpty;
+    if (!hasUri && !hasHtml) {
+      Get.toNamed(Routes.ENTER_GAME_WEB_VIEW, arguments: {
+        "gamePlatform": gamePlatform,
+      });
+      return;
+    }
+    final payload = GameWebViewPayload(
+      type: hasHtml ? GameWebContentType.html : GameWebContentType.url,
+      content: hasHtml ? (html ?? "") : (uri ?? ""),
+      gamePlatform: gamePlatform,
+    );
+    final payloadKey = GameWebViewPayloadStore.put(payload);
+    await Get.toNamed(Routes.ENTER_GAME_WEB_VIEW, arguments: {
+      "payloadKey": payloadKey,
+      "gamePlatform": gamePlatform,
+    });
+  }
+
+  bool get hasValidContent =>
+      webViewUri.value.isNotEmpty || webViewHtml.value.isNotEmpty;
+
+  bool get isHtmlMode => webViewHtml.value.isNotEmpty;
+
+  bool _isHttpUrl(String value) {
+    final lower = value.toLowerCase();
+    return lower.startsWith("http://") || lower.startsWith("https://");
+  }
+
   initGameWebViewPage() {
     FIJKPlayerManager manager = FIJKPlayerManager();
     manager.disposePlayer();
     openGameUtils.value = false;
     webViewLoading.value = true;
-    webViewUri.value = Get.arguments?['uri'] ?? "";
-    platform = TextUtil.getIntArgument('gamePlatform');
+    webViewUri.value = "";
+    webViewHtml.value = "";
+
+    final args = (Get.arguments is Map) ? Get.arguments as Map : {};
+    final payload =
+        GameWebViewPayloadStore.take((args['payloadKey'] ?? "").toString());
+    if (payload != null) {
+      platform = payload.gamePlatform ??
+          int.tryParse((args['gamePlatform'] ?? "").toString()) ??
+          TextUtil.getIntArgument('gamePlatform');
+      final content = payload.content;
+      final bool shouldUseHtml = payload.type == GameWebContentType.html ||
+          (payload.type == GameWebContentType.url && !_isHttpUrl(content));
+      if (shouldUseHtml) {
+        webViewHtml.value = content;
+      } else {
+        webViewUri.value = content;
+      }
+      return;
+    }
+
+    final rawUri = (args['uri'] ?? "").toString();
+    final rawHtml = (args['html'] ?? "").toString();
+    platform = int.tryParse((args['gamePlatform'] ?? "").toString()) ??
+        TextUtil.getIntArgument('gamePlatform');
+    if (rawHtml.isNotEmpty) {
+      webViewHtml.value = rawHtml;
+    } else if (rawUri.isNotEmpty) {
+      // 兼容历史参数：uri 可能直接传 html 内容
+      if (_isHttpUrl(rawUri)) {
+        webViewUri.value = rawUri;
+      } else {
+        webViewHtml.value = rawUri;
+      }
+    }
   }
 
   @override
