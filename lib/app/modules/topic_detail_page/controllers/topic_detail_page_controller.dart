@@ -18,7 +18,7 @@ import '../../../model/home/topic_list_model.dart';
 class TopicDetailPageController extends GetxController
     with GetSingleTickerProviderStateMixin {
   TabController? sortTabController;
-  List<String> tabList = ["最新上架", "最多观看","最多喜欢"];
+  List<String> tabList = ["最新上架", "最多观看", "最多喜欢"];
   int topicId = 0;
   bool showRank = false;
   String title = "";

@@ -169,6 +169,7 @@ class Dimens {
   static double get pt193 => screen.getWidth(193);
   static double get pt195 => screen.getWidth(195);
   static double get pt197 => screen.getWidth(197);
+  static double get pt198 => screen.getWidth(198);
   static double get pt199 => screen.getWidth(199);
   static double get pt200 => screen.getWidth(200);
   static double get pt202 => screen.getWidth(202);

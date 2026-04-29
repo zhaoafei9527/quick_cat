@@ -128,59 +128,113 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
   }
 
   Widget _buildGamePageView() {
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: Dimens.pt30),
-        child: CustomScrollView(slivers: [
-          SliverList(
-              delegate: SliverChildListDelegate([
-            SizedBox(height: Dimens.pt25 + screen.paddingTop),
-            buildRunningLightView(),
-            SizedBox(height: Dimens.pt25),
-            Stack(alignment: Alignment.centerLeft, children: [
-              CoverBanner(
-                  //广告homeSwiperAds
-                  aspectRatio: 750 / 198,
-                  adsType: AdsType.homeSwiperAds,
-                  onItemClick: (Advertise model) {
-                    AppPages.jumpRouter(path: model.href, id: model.id);
-                  }),
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                _buildSmallUtilButton(
-                  btnTxt: "福利活动",
+    return CustomScrollView(slivers: [
+      SliverList(
+          delegate: SliverChildListDelegate([
+        SizedBox(height: Dimens.pt25 + screen.paddingTop),
+        buildRunningLightView(),
+        SizedBox(height: Dimens.pt25),
+        Stack(alignment: Alignment.centerLeft, children: [
+          CoverBanner(
+              //广告homeSwiperAds
+              aspectRatio: 750 / 198,
+              adsType: AdsType.homeSwiperAds,
+              onItemClick: (Advertise model) {
+                AppPages.jumpRouter(path: model.href, id: model.id);
+              }),
+          // Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          //   _buildSmallUtilButton(
+          //     btnTxt: "福利活动",
+          //     onTap: () => Get.toNamed(Routes.ACTIVITY_CENTER_PAGE),
+          //   ),
+          //   SizedBox(height: Dimens.pt10),
+          //   _buildSmallUtilButton(
+          //       btnTxt: "游戏账单",
+          //       onTap: () => Get.toNamed(Routes.BILL_RECORD_PAGE_VIEW,
+          //           arguments: {"type": 0})),
+          //   SizedBox(height: Dimens.pt10),
+          //   _buildSmallUtilButton(
+          //       btnTxt: "专属客服",
+          //       // onTap: ()=>showGameNotifyDialog(Get.context!),
+          //       onTap: () => AppUtils.goToCustomServicePage())
+          // ])
+        ]),
+        Container(
+            width: screen.screenWidth,
+            height: Dimens.pt84,
+            color: Color(0xFF232323),
+            child: Row(children: [
+              Spacer(),
+              GestureDetector(
                   onTap: () => Get.toNamed(Routes.ACTIVITY_CENTER_PAGE),
-                ),
-                SizedBox(height: Dimens.pt10),
-                _buildSmallUtilButton(
-                    btnTxt: "游戏账单",
-                    onTap: () => Get.toNamed(Routes.BILL_RECORD_PAGE_VIEW,
-                        arguments: {"type": 0})),
-                SizedBox(height: Dimens.pt10),
-                _buildSmallUtilButton(
-                    btnTxt: "专属客服",
-                    // onTap: ()=>showGameNotifyDialog(Get.context!),
-                    onTap: () => AppUtils.goToCustomServicePage())
-              ])
-            ]),
-            SizedBox(height: Dimens.pt10)
-          ])),
-          SliverPersistentHeader(
-              pinned: true,
-              delegate: _GameUtilsHeaderDelegate(
-                  child: buildRecommendGameView(showHotGame: false))),
-          SliverList(
-              delegate: SliverChildListDelegate([
-            SizedBox(height: Dimens.pt25),
-            getHengLine(color: Color(0xFF666666)),
-            SizedBox(height: Dimens.pt20),
-            buildGamePlatformList(),
-            // buildHistoryGameView(),
-            SizedBox(height: Dimens.pt25),
-            _buildGameTypesView(),
-            SizedBox(height: Dimens.pt25),
-            _buildGamePageListView(),
-            SizedBox(height: screen.bottomNavBarH + Dimens.pt25)
-          ]))
-        ]));
+                  child: Row(children: [
+                    Image.asset(R.assetsImgIconGameGif, width: Dimens.pt30),
+                    SizedBox(width: Dimens.pt5),
+                    Text("福利活动",
+                        style: TextStyle(
+                            fontSize: Dimens.pt30, color: Colors.white))
+                  ])),
+              Spacer(),
+              getHengLine(
+                  w: Dimens.pt1,
+                  h: Dimens.pt50,
+                  color: Colors.white.withOpacity(.6)),
+              Spacer(),
+              GestureDetector(
+                onTap: () => Get.toNamed(Routes.BILL_RECORD_PAGE_VIEW,
+                    arguments: {"type": 0}),
+                child: Row(children: [
+                  Image.asset(R.assetsImgIconGameIndexMoney,
+                      width: Dimens.pt30),
+                  SizedBox(width: Dimens.pt5),
+                  Text("游戏账单",
+                      style:
+                          TextStyle(fontSize: Dimens.pt30, color: Colors.white))
+                ]),
+              ),
+              Spacer(),
+              getHengLine(
+                  w: Dimens.pt1,
+                  h: Dimens.pt50,
+                  color: Colors.white.withOpacity(.6)),
+              Spacer(),
+              GestureDetector(
+                  onTap: () => AppUtils.goToCustomServicePage(),
+                  child: Row(children: [
+                    Image.asset(R.assetsImgIconGameCustom, width: Dimens.pt30),
+                    SizedBox(width: Dimens.pt5),
+                    Text("专属客服",
+                        style: TextStyle(
+                            fontSize: Dimens.pt30, color: Colors.white))
+                  ])),
+              Spacer()
+            ])),
+        SizedBox(height: Dimens.pt10)
+      ])),
+      SliverPersistentHeader(
+          pinned: true,
+          delegate: _GameUtilsHeaderDelegate(
+              child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
+            child: buildRecommendGameView(showHotGame: false),
+          ))),
+      SliverPadding(
+        padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
+        sliver: SliverList(
+            delegate: SliverChildListDelegate([
+          SizedBox(height: Dimens.pt25),
+          getHengLine(color: Color(0xFF666666)),
+          SizedBox(height: Dimens.pt20),
+          buildGamePlatformList(),
+          // buildHistoryGameView(),
+          SizedBox(height: Dimens.pt25),
+          _buildGameTypesView(),
+          SizedBox(height: Dimens.pt25),
+          _buildGamePageListView(),
+          SizedBox(height: screen.bottomNavBarH + Dimens.pt25)
+        ])),
+      )
+    ]);
   }
 
   Widget buildGamePlatformList() {
@@ -310,14 +364,12 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
                   onTap: () async {
                     logic.enterLoading.value = true;
                     await logic.enterGame(
-                        gameType: bean?.gameType,
-                        platform: bean?.gamePlatform);
+                        gameType: bean?.gameType, platform: bean?.gamePlatform);
                     logic.enterLoading.value = false;
                   },
                   child: Column(children: [
                     ImageLoader.withP(bean?.coverImg ?? "",
-                            width: Dimens.pt160,
-                            height: Dimens.pt190)
+                            width: Dimens.pt160, height: Dimens.pt190)
                         .load()
                   ]));
             })));

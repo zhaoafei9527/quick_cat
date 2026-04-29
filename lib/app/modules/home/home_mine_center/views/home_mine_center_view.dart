@@ -67,7 +67,7 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
                                   //广告minSwiperAds
                                   aspectRatio: 700 / 336,
                                   radius: Dimens.pt20,
-                                  adsType: AdsType.minSwiperAds,
+                                  adsType: AdsType.homeSwiperAds,
                                   onItemClick: (Advertise model) {
                                     AppPages.jumpRouter(
                                         path: model.href, id: model.id);

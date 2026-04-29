@@ -382,8 +382,8 @@ class VideoPlayerPageView extends GetView<VideoPlayerPageController> {
       padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
       child: CoverBanner(
           //广告longVideoSwiperAds
-          aspectRatio: 700 / 300,
-          adsType: AdsType.longVideoSwiperAds,
+          aspectRatio: 700 / 198,
+          adsType: AdsType.homeSwiperAds,
           onItemClick: (Advertise model) {
             AppPages.jumpRouter(path: model.href, id: model.id);
           }),

@@ -433,6 +433,9 @@ flutter:
     - assets/img/logo_withdraw_wallet.png
     - assets/img/logo_withdaw_card.png
     - assets/img/logo_withdraw_bo.png
+    - assets/img/icon_game_index_money.png
+    - assets/img/icon_game_gif.png
+    - assets/img/icon_game_custom.png
   uses-material-design: true
 
 

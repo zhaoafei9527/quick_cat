@@ -61,7 +61,7 @@ class ComicDetailPageView extends GetView<ComicDetailPageController> {
                             CoverBanner(
                                 //广告minSwiperAds
                                 aspectRatio: 700 / 198,
-                                adsType: AdsType.minSwiperAds,
+                                adsType: AdsType.homeSwiperAds,
                                 radius: 0,
                                 onItemClick: (Advertise model) {
                                   AppPages.jumpRouter(

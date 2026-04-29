@@ -215,9 +215,9 @@ class NovelReaderPageView extends GetView<NovelReaderPageController> {
                     children: [
                       SizedBox(height: Dimens.pt20 + screen.paddingTop),
                       AdView(
-                          type: AdsType.minSwiperAds,
+                          type: AdsType.homeSwiperAds,
                           width: Dimens.pt700,
-                          height: Dimens.pt195),
+                          height: Dimens.pt198),
                       SizedBox(height: Dimens.pt20),
                       Text(logic.title.value,
                           style: TextStyle(

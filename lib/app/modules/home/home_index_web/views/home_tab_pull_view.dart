@@ -246,35 +246,38 @@ class _HomeComicCateTabBarViewState extends State<HomeTabBarPullView>
 Widget buildRunningLightView() {
   ShareKeys shareKeys = Get.find<ShareKeys>();
   return shareKeys.runningLight != null
-      ? Column(
-          children: [
-            Image.asset(R.assetsImgLineRunlight, width: double.infinity),
-            SizedBox(
-                height: Dimens.pt86,
-                child: Row(children: [
-                  Image.asset(R.assetsImgIconBroadcast, width: Dimens.pt48),
-                  SizedBox(width: Dimens.pt20),
-                  Expanded(
-                      child: MarqueeRich(
-                          text: TextSpan(
-                              style: TextStyle(fontSize: Dimens.pt28),
-                              children: [
-                                TextSpan(
-                                    text: shareKeys.runningLight?.title ?? "",
-                                    style: TextStyle(
-                                        color: AppColors.primaryColor)),
-                                TextSpan(
-                                    text: shareKeys.runningLight?.content ?? "",
-                                    style: TextStyle(
-                                        color: AppColors.textColorWhite))
-                              ]),
-                          velocity: 1.2,
-                          gap: 30,
-                          height: Dimens.pt72))
-                ])),
-            Image.asset(R.assetsImgLineRunlight, width: double.infinity),
-          ],
-        )
+      ? Padding(
+        padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
+        child: Column(
+            children: [
+              Image.asset(R.assetsImgLineRunlight, width: double.infinity),
+              SizedBox(
+                  height: Dimens.pt86,
+                  child: Row(children: [
+                    Image.asset(R.assetsImgIconBroadcast, width: Dimens.pt48),
+                    SizedBox(width: Dimens.pt20),
+                    Expanded(
+                        child: MarqueeRich(
+                            text: TextSpan(
+                                style: TextStyle(fontSize: Dimens.pt28),
+                                children: [
+                                  TextSpan(
+                                      text: shareKeys.runningLight?.title ?? "",
+                                      style: TextStyle(
+                                          color: AppColors.primaryColor)),
+                                  TextSpan(
+                                      text: shareKeys.runningLight?.content ?? "",
+                                      style: TextStyle(
+                                          color: AppColors.textColorWhite))
+                                ]),
+                            velocity: 1.2,
+                            gap: 30,
+                            height: Dimens.pt72))
+                  ])),
+              Image.asset(R.assetsImgLineRunlight, width: double.infinity),
+            ],
+          ),
+      )
       : SizedBox();
 }
 

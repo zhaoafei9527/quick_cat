@@ -192,9 +192,9 @@ class SearchPageView extends GetView<SearchPageController> {
                 ])),
         SizedBox(height: Dimens.pt45),
         AdView(
-            type: AdsType.minSwiperAds,
+            type: AdsType.homeSwiperAds,
             width: Dimens.pt700,
-            height: Dimens.pt195),
+            height: Dimens.pt198),
         SizedBox(height: Dimens.pt25),
         SizedBox(
             height: Dimens.pt70,
@@ -203,8 +203,9 @@ class SearchPageView extends GetView<SearchPageController> {
                 itemBuilder: (context, index) => GestureDetector(
                     onTap: () {
                       logic.recommendIndex.value = index;
-                      logic.typeTabController
-                          .animateTo(index, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+                      logic.typeTabController.animateTo(index,
+                          duration: Duration(milliseconds: 300),
+                          curve: Curves.easeInOut);
                     },
                     child: Obx(() =>
                         Stack(alignment: Alignment.topLeft, children: [
