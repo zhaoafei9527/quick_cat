@@ -80,6 +80,9 @@ enum AdsType {
 
   /// 首页呼吸广告按钮 20
   homeBreathingAds,
+
+  // 吃瓜列表广告 21
+  melonListAds,
 }
 
 class LocalAdsStore {

@@ -68,7 +68,7 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
                         children: [
                           CoverBanner(
                               //广告homeSwiperAds
-                              aspectRatio: 750 / 394,
+                              aspectRatio: 750 / 198,
                               list: gameInfo.imgs,
                               onItemClick: (Advertise model) {
                                 // AppPages.jumpRouter(path: model.href, id: model.id);
@@ -139,7 +139,7 @@ class HomeGamePageView extends GetView<HomeGamePageController> {
             Stack(alignment: Alignment.centerLeft, children: [
               CoverBanner(
                   //广告homeSwiperAds
-                  aspectRatio: 750 / 330,
+                  aspectRatio: 750 / 198,
                   adsType: AdsType.homeSwiperAds,
                   onItemClick: (Advertise model) {
                     AppPages.jumpRouter(path: model.href, id: model.id);

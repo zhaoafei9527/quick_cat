@@ -2,6 +2,7 @@
 import 'package:quick_cat_client/app/dialog/common_dialog.dart';
 import 'package:quick_cat_client/app/themes/app_colors.dart';
 import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/utils/app_util.dart';
 import 'package:quick_cat_client/utils/screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -78,6 +79,42 @@ class _PostItemState extends State<PostItem> {
     if (firstImg.isNotEmpty && image != firstImg) {
       image = firstImg;
     }
+    if (postBrief?.isAds ?? false) {
+      return GestureDetector(
+        onTap: () => AppPages.jumpRouter(
+            path: postBrief?.adsPath ?? "", id: postBrief?.adsId),
+
+        child: Padding(
+            padding:
+                EdgeInsets.symmetric(horizontal: widget.padding ?? Dimens.pt30),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Stack(alignment: Alignment.bottomCenter, children: [
+                ImageLoader.withP(postBrief?.adsCover,
+                        width: screen.screenWidth, height: Dimens.pt276)
+                    .load(),
+                Positioned(
+                    top: Dimens.pt20,
+                    right: Dimens.pt20,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Dimens.pt10, vertical: Dimens.pt5),
+                      decoration:
+                          BoxDecoration(color: Colors.black.withOpacity(0.5)),
+                      child: Text("广告",
+                          style: TextStyle(
+                              color: Color(0xFFFDF44F), fontSize: Dimens.pt24)),
+                    )),
+                Positioned(
+                    bottom: Dimens.pt20,
+                    child: Text(postBrief?.adsTitle ?? "",
+                        style: TextStyle(
+                            fontSize: Dimens.pt24, color: Color(0xFFFDF44F))))
+              ]),
+              SizedBox(height: Dimens.pt20)
+            ])),
+      );
+    }
 
     return GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -120,8 +157,9 @@ class _PostItemState extends State<PostItem> {
                         ])),
                     child: Text.rich(TextSpan(children: [
                       TextSpan(
-                          text: (postBrief?.base?.title ?? "").isEmpty? postBrief?.node?.text ?? "":
-                              postBrief?.base?.title ?? "",
+                          text: (postBrief?.base?.title ?? "").isEmpty
+                              ? postBrief?.node?.text ?? ""
+                              : postBrief?.base?.title ?? "",
                           style: TextStyle(
                               fontSize: Dimens.pt24, color: Colors.white),
                           recognizer: _tapRecognizer),

@@ -29,7 +29,7 @@ class Pubspec {
 
   static const versionIsPreRelease = false;
 
-  static const debug = true;
+  static const debug = false;
 
   static const qiye = false;
 
@@ -68,7 +68,7 @@ class Pubspec {
   static const prod_app_lines = <dynamic>[
     "https://kmutzacn.sccw-cn.com",
     "https://kmzxsa.0913.org",
-    "https://api.lbsone.com",
+    "https://api.calfmedia.com",
     "https://apikm.nineoneapp.com",
     "https://d2fztf6d01of6d.cloudfront.net",
   ];

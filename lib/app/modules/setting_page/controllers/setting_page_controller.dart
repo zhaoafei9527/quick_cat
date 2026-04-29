@@ -128,7 +128,7 @@ class SettingPageController extends GetxController {
           },
           nickName: nameField.text);
     } else {
-      var result = await showPlayerCommonDialog(Get.context!,
+      await showPlayerCommonDialog(Get.context!,
           title: "友情提示",
           content: "该功能仅会员用户可使用,请先获得会员！",
           btnActionIndex: 0);
@@ -262,6 +262,9 @@ class SettingPageController extends GetxController {
               showTypeToast(msg: "登录错误：$err");
             });
         if (userInfo != null) {
+          final shareKeys = Get.find<ShareKeys>();
+          await shareKeys.setUserInfo(userInfo);
+          await shareKeys.getUserBalance();
           showTypeToast(msg: "二维码账号找回成功", toastType: ToastType.SUCCESS);
           Future.delayed(Durations.extralong4, () async {
             await Get.offAllNamed(Routes.SPLASH_PAGE);

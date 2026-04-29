@@ -77,11 +77,23 @@ class PostBrief extends BaseNetModel {
 
   PostBase? base;
   PostNode? node;
+  bool? isAds;
+  String? adsId;
+  String? adsTitle;
+  String? adsCover;
+  String? adsPath;
 
   // for ui
   bool isSelected = false;
 
-  PostBrief({this.base, this.node});
+  PostBrief(
+      {this.base,
+      this.node,
+      this.isAds,
+      this.adsId,
+      this.adsTitle,
+      this.adsCover,
+      this.adsPath});
 
   PostBrief.fromJson(Map<String, dynamic> json) {
     if (null != json['base']) {
@@ -179,8 +191,8 @@ class PostBase {
       this.isEmojis,
       this.mediaID,
       this.isCollect,
-        this.firstImg,
-        this.isHot,
+      this.firstImg,
+      this.isHot,
       this.minRecharge});
 
   PostBase.fromJson(Map<String, dynamic> json) {

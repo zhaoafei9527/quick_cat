@@ -228,7 +228,7 @@ class _HomeComicCateTabBarViewState extends State<HomeTabBarPullView>
     return Column(children: [
       CoverBanner(
           //广告homeSwiperAds
-          aspectRatio: 750 / 336,
+          aspectRatio: 750 / 198,
           adsType: AdsType.homeSwiperAds,
           onItemClick: (Advertise model) {
             AppPages.jumpRouter(path: model.href, id: model.id);

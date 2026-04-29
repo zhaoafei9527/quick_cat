@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 // 🌎 Project imports:
 import 'package:quick_cat_client/app/data/address.dart';
 import 'package:quick_cat_client/app/data/share_key.dart';
+import 'package:quick_cat_client/app/model/post_list_model.dart';
 
 Future<MediaInfo?> getAdsMediaInfo(AdsType adsType) async {
   MediaInfo? adMedia;
@@ -25,6 +26,21 @@ Future<MediaInfo?> getAdsMediaInfo(AdsType adsType) async {
     );
   }
   return adMedia;
+}
+
+Future<PostBrief?> getAdsPostInfo(AdsType adsType) async {
+  PostBrief? adPost;
+  Advertise? ads = await LocalAdsStore().randomWhere(adsType);
+  if (ads != null) {
+    adPost = PostBrief(
+      isAds: true,
+      adsId: ads.id,
+      adsTitle: ads.title ?? "",
+      adsCover: ads.cover,
+      adsPath: ads.href,
+    );
+  }
+  return adPost;
 }
 
 String getShowWatchNumberStr(num number, {int count = 0}) {

@@ -129,10 +129,12 @@ class _CustomFIJKPlayerState extends State<CustomFIJKPlayer> {
       // 如果是缩略模式或者简单模式，并且当前页面不是视频详情页或者播放器页面，则暂停播放
       if (!manager.isShrinkModel &&
           !manager.simpleModel &&
-          Get.currentRoute != Routes.VIDEO_PLAYER_PAGE) {
+          (Get.currentRoute != Routes.VIDEO_PLAYER_PAGE &&
+              !manager.isFullScreen)) {
         player.pause();
         return;
       } else if (manager.simpleModel &&
+          !manager.isFullScreen &&
           Get.currentRoute != Routes.POST_DETAILE_PAGE) {
         player.pause();
         return;

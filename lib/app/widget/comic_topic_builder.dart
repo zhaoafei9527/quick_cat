@@ -703,7 +703,7 @@ Widget videoItemCover(MediaInfo model,
                       style: TextStyle(
                           fontSize: Dimens.pt26,
                           color: (model.isAds ?? false)
-                              ? AppColors.primaryColor
+                              ? AppColors.textYellowColor
                               : AppColors.textColorWhite))
                 ]))
           ])));

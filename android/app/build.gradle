@@ -52,7 +52,7 @@ channel {
 }
 
 android {
-    namespace "com.quick.player.client"
+    namespace "com.gua.rkmpa.client"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
@@ -67,7 +67,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.gua.player.client"
+        applicationId "com.gua.rkmpa.client"
 
         minSdkVersion 21
         multiDexEnabled true

@@ -18,6 +18,7 @@ import 'package:quick_cat_client/app/views/pull_refresh_view.dart';
 import 'package:quick_cat_client/app/widget/post_item.dart';
 import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import 'package:quick_cat_client/utils/app_util.dart';
+import 'package:quick_cat_client/utils/common_util.dart';
 import 'package:quick_cat_client/utils/screen.dart';
 import 'package:quick_cat_client/utils/toast_util.dart';
 import '../../../../../utils/dimens.dart';
@@ -48,40 +49,46 @@ class _PostRecommendViewState extends State<PostRecommendView> {
 
   loadData() async {
     postList = [];
-    PostBriefResp? model = await _getNetData(pageNum: 1);
-    if ((model?.list ?? []).isNotEmpty) {
-      postList.assignAll(model?.list ?? []);
+    List<PostBrief> model = await _getNetData(pageNum: 1);
+    if (model.isNotEmpty) {
+      postList.assignAll(model);
     } else {
       pageNum = 1;
     }
 
     pullRefreshController.requestSuccess(
-        isFirstPage: true, isEmpty: (model?.list ?? []).isEmpty);
+        isFirstPage: true, isEmpty: model.isEmpty);
     setState(() {});
   }
 
   void loadMoreData() async {
     var page = pageNum += 1;
-    PostBriefResp? model = await _getNetData(pageNum: page);
-    if (model != null) {
+    List<PostBrief> model = await _getNetData(pageNum: page);
+    if (model.isNotEmpty) {
       pageNum = page;
-      postList.addAll((model.list ?? []));
+      postList.addAll((model));
 
       pullRefreshController.requestSuccess(
-          isFirstPage: false, hasMore: (model.list ?? []).length >= 10);
+          isFirstPage: false, hasMore: (model).length >= 10);
     } else {
       pullRefreshController.requestFail(isFirstPage: false);
     }
     setState(() {});
   }
 
-  Future<PostBriefResp?> _getNetData({int? pageNum}) async {
-    PostBriefResp? model;
+  Future<List<PostBrief>> _getNetData({int? pageNum}) async {
+    List<PostBrief> mediaList = [];
     if (widget.id > 0) {
-      model = await ApiRes.getPostList(
+      PostBrief? adPost;
+      PostBriefResp? model = await ApiRes.getPostList(
           data: {"id": widget.id, "pageNum": pageNum, "sort": sort});
+      mediaList = model?.list ?? [];
+      adPost = await getAdsPostInfo(AdsType.melonListAds);
+      if (adPost != null) {
+        mediaList.insert(mediaList.length, adPost);
+      }
     }
-    return model;
+    return mediaList;
   }
 
   @override
@@ -94,7 +101,7 @@ class _PostRecommendViewState extends State<PostRecommendView> {
           SliverToBoxAdapter(
               //广告communitySwiperAds
               child: CoverBanner(
-                  aspectRatio: 750 / 336,
+                  aspectRatio: 750 / 198,
                   adsType: AdsType.homeSwiperAds,
                   onItemClick: (Advertise model) {
                     AppPages.jumpRouter(path: model.href, id: model.id);
@@ -169,28 +176,7 @@ Widget buildRecommendGameView({bool? showHotGame}) {
                                         width: Dimens.pt180,
                                         height: Dimens.pt210,
                                         radius: Dimens.pt8)
-                                    .load(),
-                                Container(
-                                    width: Dimens.pt180,
-                                    height: Dimens.pt115,
-                                    alignment: Alignment.bottomCenter,
-                                    padding:
-                                        EdgeInsets.only(bottom: Dimens.pt10),
-                                    decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                            begin: Alignment.topCenter,
-                                            end: Alignment.bottomCenter,
-                                            colors: [
-                                          Colors.transparent,
-                                          Colors.black.withOpacity(0.7)
-                                        ])),
-                                    child: Text(data?[i].title ?? "",
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: Dimens.pt24,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600)))
+                                    .load()
                               ]));
                     },
                     separatorBuilder: (c, i) => SizedBox(width: Dimens.pt10),

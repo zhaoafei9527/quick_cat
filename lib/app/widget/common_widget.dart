@@ -236,11 +236,13 @@ Widget buildPayTypeWidget(PaymentType? paymentType,
         width: w,
         height: h,
         alignment: Alignment.center,
-        color: theme.getColor(ThemeColor.textGrey),
+        decoration: BoxDecoration(
+            color: theme.getColor(ThemeColor.textGrey),
+            borderRadius: BorderRadius.circular(Dimens.pt12)),
         child: Text("广告",
             style: TextStyle(
                 fontSize: fontSize ?? Dimens.pt22,
-                color: theme.getColor(ThemeColor.primary))));
+                color: theme.getColor(ThemeColor.textYellow))));
   }
   switch (paymentType) {
     case PaymentType.freePaymentType:

@@ -126,7 +126,7 @@ class VipCenterPageView extends GetView<VipCenterPageController> {
                   color: Colors.black.withOpacity(.5),
                   child: getLoadingWidget())
               : const SizedBox(),
-        ),
+        )
       ]);
     });
   }

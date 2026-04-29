@@ -1,4 +1,4 @@
-package com.quick.player.client
+package com.gua.rkmpa.client
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine

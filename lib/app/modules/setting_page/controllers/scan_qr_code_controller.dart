@@ -56,9 +56,12 @@ class ScanQrCodeController extends GetxController {
               showTypeToast(msg: "登录错误：$err");
             });
         if (userInfo != null) {
+          final shareKeys = Get.find<ShareKeys>();
+          await shareKeys.setUserInfo(userInfo);
+          await shareKeys.getUserBalance();
           showTypeToast(msg: "二维码账号找回成功", toastType: ToastType.SUCCESS);
           Future.delayed(Durations.extralong4, () async {
-            await Get.offAllNamed(Routes.SPLASH_PAGE);
+            await Get.offAllNamed(Routes.HOME);
           });
         }
       }
