@@ -2,6 +2,7 @@
 import 'package:quick_cat_client/app/data/share_key.dart';
 import 'package:quick_cat_client/app/modules/home/home_mine_center/views/home_mine_center_view.dart';
 import 'package:quick_cat_client/app/themes/theme_manager.dart';
+import 'package:quick_cat_client/utils/app_util.dart';
 import 'package:quick_cat_client/utils/time_util.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +33,7 @@ class UserTermsPageView extends GetView<UserTermsPageController> {
           appBar: getCommonAppBar("会员权益", actions: [
             GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                onTap: () => Get.toNamed(Routes.MESSAGE_CENTER_PAGE),
+                onTap: () => AppUtils.goToCustomServicePage(),
                 child: Text("在线客服",
                     style: TextStyle(
                         fontSize: Dimens.pt28,

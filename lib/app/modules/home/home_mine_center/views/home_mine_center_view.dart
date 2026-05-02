@@ -65,7 +65,7 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
                             child: Column(children: [
                               CoverBanner(
                                   //广告minSwiperAds
-                                  aspectRatio: 700 / 336,
+                                  aspectRatio: 700 / 198,
                                   radius: Dimens.pt20,
                                   adsType: AdsType.homeSwiperAds,
                                   onItemClick: (Advertise model) {

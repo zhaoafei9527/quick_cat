@@ -1,4 +1,4 @@
-import 'dart:ffi';
+import 'dart:math';
 
 import 'package:quick_cat_client/app/data/ads_type.dart';
 import 'package:quick_cat_client/app/data/enum.dart';
@@ -9,7 +9,6 @@ import 'package:quick_cat_client/app/modules/home/home_index_web/controllers/hom
 import 'package:quick_cat_client/app/modules/home/home_post_page/views/post_recommend_view.dart';
 import 'package:quick_cat_client/app/routes/app_pages.dart';
 import 'package:quick_cat_client/app/themes/app_colors.dart';
-import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:quick_cat_client/app/views/page_pull_view.dart';
 import 'package:quick_cat_client/app/views/pull_refresh_view.dart';
 import 'package:quick_cat_client/app/widget/colored_marquee.dart';
@@ -18,10 +17,9 @@ import 'package:quick_cat_client/app/widget/common_widget.dart';
 import 'package:quick_cat_client/app/widget/cover_banner.dart';
 import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import 'package:quick_cat_client/r.dart';
-import 'package:quick_cat_client/utils/app_util.dart';
+import 'package:quick_cat_client/utils/common_util.dart';
 import 'package:quick_cat_client/utils/dimens.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 typedef AsyncListValueGetter<V> = Function({int pageNum, int id});
@@ -188,8 +186,10 @@ class _HomeComicCateTabBarViewState extends State<HomeTabBarPullView>
         key: Key("pullKey_$index"),
         dataGetter: (int pageNum, int size) async {
           TopicList? media = await widget.dataGetter(pageNum: pageNum, id: id);
-          return media?.list ?? [];
+          return _insertBigListAd(List<MediaInfo>.from(media?.list ?? []));
         },
+        pageDataCountGetter: (list) =>
+            list.where((item) => item.isAds != true).length,
         emptyView: buildCommonEmptyView("宝贝,没有找到东西哦～"),
         widgetBuilder:
             (BuildContext context, List<dynamic> list, Widget? child) {
@@ -199,6 +199,27 @@ class _HomeComicCateTabBarViewState extends State<HomeTabBarPullView>
               child: buildCommonMediaGrid(list.cast<MediaInfo>(),
                   mediaType: mediaType));
         });
+  }
+
+  AdsType _bigListAdsType() {
+    final mediaType = MediaType.values[widget.type];
+    if (mediaType == MediaType.videoLong || mediaType == MediaType.cartoon) {
+      return AdsType.longVideoListAds;
+    }
+    return AdsType.shortVideoListAds;
+  }
+
+  Future<List<MediaInfo>> _insertBigListAd(List<MediaInfo> list) async {
+    if (list.isEmpty) return list;
+    try {
+      final ad = await getAdsMediaInfo(_bigListAdsType())
+          .timeout(const Duration(milliseconds: 800), onTimeout: () => null);
+      if (ad == null) return list;
+      list.insert(Random().nextInt(list.length + 1), ad);
+    } catch (e) {
+      debugPrint("home_tab_pull_view: insert big list ad failed $e");
+    }
+    return list;
   }
 
   Widget buildTopicTypeContent() {
@@ -221,21 +242,19 @@ class _HomeComicCateTabBarViewState extends State<HomeTabBarPullView>
   }
 
   Widget buildTopGridWidget() {
-    ThemeManager theme = Get.find<ThemeManager>();
-    ShareKeys shareKeys = Get.find<ShareKeys>();
-    bool isComics = widget.type == MediaType.comic.index ||
-        widget.type == MediaType.novel.index;
     return Column(children: [
       CoverBanner(
           //广告homeSwiperAds
           aspectRatio: 750 / 198,
           adsType: AdsType.homeSwiperAds,
+
           onItemClick: (Advertise model) {
             AppPages.jumpRouter(path: model.href, id: model.id);
           }),
       SizedBox(height: Dimens.pt25),
       buildRecommendGameView(),
       SizedBox(height: Dimens.pt50),
+
     ]);
   }
 

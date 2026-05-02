@@ -129,9 +129,7 @@ class SettingPageController extends GetxController {
           nickName: nameField.text);
     } else {
       await showPlayerCommonDialog(Get.context!,
-          title: "友情提示",
-          content: "该功能仅会员用户可使用,请先获得会员！",
-          btnActionIndex: 0);
+          title: "友情提示", content: "该功能仅会员用户可使用,请先获得会员！", btnActionIndex: 0);
     }
   }
 
@@ -275,7 +273,6 @@ class SettingPageController extends GetxController {
       }
     }
   }
-
 
   getUserAvatarList() async {
     Map<String, List<AvatarInfo>> avatarType = {};

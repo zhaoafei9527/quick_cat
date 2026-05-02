@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import 'package:get/get.dart';
+import 'package:quick_cat_client/app/modules/home/home_game_page/controllers/game_web_view_controller.dart';
 import 'package:quick_cat_client/app/modules/withdraw_cash_bank/views/withdraw_type_view.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
@@ -451,6 +452,7 @@ class AppPages {
       // 某个游戏跳转 game://in_game_page?gameType=0000&gamePlatform=1
       // 所有外部网页 launch://http://192.168.16:8090
       // 首页跳转 insert://home?index=0
+      // 游戏退出 game://home_game_page
       String route = path ?? "";
       Map<String, String> args = getArgsInPath(route);
       ShareKeys shareKeys = Get.find<ShareKeys>();
@@ -468,13 +470,15 @@ class AppPages {
         if (router.split("?").isNotEmpty) {
           router = router.split("?")[0];
           if (router == "home_game_page") {
-            AppUtils.jumpToHome(index: 2);
+            if (Get.isRegistered<GameWebViewPageController>()) {
+              final game = Get.find<GameWebViewPageController>();
+              game.exitGame();
+            }
           } else if (router == "in_game_page") {
             String gameType = args['gameType'] ?? '';
             int gamePlatform = int.tryParse(args['gamePlatform'] ?? '') ?? 0;
             HomeGamePageController game = Get.find<HomeGamePageController>();
-            await game.enterGame(
-                gameType: gameType, platform: gamePlatform);
+            await game.enterGame(gameType: gameType, platform: gamePlatform);
           }
         }
       } else if (route.startsWith("webView://")) {

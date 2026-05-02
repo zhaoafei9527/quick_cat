@@ -78,7 +78,8 @@ class TopicDetailPageController extends GetxController
         adMedia = await getAdsMediaInfo(AdsType.shortVideoListAds);
       }
       if (adMedia != null) {
-        mediaList.insert(mediaList.length, adMedia);
+        int insertIndex = Random().nextInt(mediaList.length + 1);
+        mediaList.insert(insertIndex, adMedia);
       }
     }
 

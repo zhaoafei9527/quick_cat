@@ -240,7 +240,7 @@ class PullRefreshController {
         isEmpty = !hasMore;
       }
       isEmpty ??= false;
-      _refreshSuc(isEmpty: isEmpty,hasMore: true);
+      _refreshSuc(isEmpty: isEmpty, hasMore: hasMore ?? true);
     } else {
       if (null == hasMore && null != isEmpty) {
         hasMore = !isEmpty;

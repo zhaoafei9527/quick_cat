@@ -52,7 +52,7 @@ channel {
 }
 
 android {
-    namespace "com.gua.rkmpa.client"
+    namespace "com.gua.client.xmra726"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
@@ -67,7 +67,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.gua.rkmpa.client"
+        applicationId "com.gua.client.xmra726"
 
         minSdkVersion 21
         multiDexEnabled true

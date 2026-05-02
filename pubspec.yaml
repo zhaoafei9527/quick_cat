@@ -436,6 +436,8 @@ flutter:
     - assets/img/icon_game_index_money.png
     - assets/img/icon_game_gif.png
     - assets/img/icon_game_custom.png
+    - assets/img/icon_game_cp_sel.png
+    - assets/img/icon_game_cp.png
   uses-material-design: true
 
 

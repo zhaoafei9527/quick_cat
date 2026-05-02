@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'dart:math';
+
 import 'package:quick_cat_client/app/data/enum.dart';
 import 'package:quick_cat_client/app/data/share_key.dart';
 import 'package:quick_cat_client/app/dialog/common_dialog.dart';
@@ -85,7 +87,8 @@ class _PostRecommendViewState extends State<PostRecommendView> {
       mediaList = model?.list ?? [];
       adPost = await getAdsPostInfo(AdsType.melonListAds);
       if (adPost != null) {
-        mediaList.insert(mediaList.length, adPost);
+        int insertIndex = Random().nextInt(mediaList.length + 1);
+        mediaList.insert(insertIndex, adPost);
       }
     }
     return mediaList;

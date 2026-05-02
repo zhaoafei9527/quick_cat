@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:quick_cat_client/app/data/ads_type.dart';
 import 'package:quick_cat_client/app/model/home/config_model_model.dart';
+import 'package:quick_cat_client/app/modules/home/controllers/home_controller.dart';
 import 'package:quick_cat_client/app/routes/app_pages.dart';
-import 'package:quick_cat_client/app/themes/app_colors.dart';
 import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import 'package:quick_cat_client/utils/dimens.dart';
 import 'package:quick_cat_client/utils/logger_utils.dart';
@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 
 import '../../r.dart';
 
-enum FloatingAdPosition { left, right }
+enum FloatingAdPosition { right }
 
 class FloatingAdsManager extends GetxService {
   final Map<FloatingAdPosition, OverlayEntry> _entries = {};
@@ -23,12 +23,51 @@ class FloatingAdsManager extends GetxService {
 
   static FloatingAdsManager get to => Get.find<FloatingAdsManager>();
 
+  /// 仅主导航 [Routes.HOME] 且底部 tab 为 0 时展示；离开首页或切换 tab 时由 [ensureFloatingAds] / [syncWithNavigation] 移除浮层。
+  bool _floatingAdsAllowed() {
+    if (Get.currentRoute != Routes.HOME) return false;
+    if (!Get.isRegistered<HomeController>()) return false;
+    return Get.find<HomeController>().tabIndex.value == 0;
+
+  }
+
+  void _detachOverlaysKeepDismissState() {
+    for (final side in FloatingAdPosition.values.toList()) {
+      final entry = _entries.remove(side);
+      entry?.remove();
+      entry?.dispose();
+    }
+    _scheduledAttach = false;
+  }
+
+  /// 路由栈变化时调用（例如从首页跳转到其它页），确保浮窗立即收起。
+  void syncWithNavigation() {
+    if (!_floatingAdsAllowed()) {
+      _detachOverlaysKeepDismissState();
+      return;
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final ctx = Get.context ?? Get.overlayContext;
+      if (ctx != null && ctx.mounted) {
+        ensureFloatingAds(ctx);
+      }
+    });
+  }
+
   void ensureFloatingAds(BuildContext context) {
+    if (!_floatingAdsAllowed()) {
+      _detachOverlaysKeepDismissState();
+      return;
+    }
     if (_dismissed.length == FloatingAdPosition.values.length) return;
     if (_scheduledAttach) return;
     _scheduledAttach = true;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _scheduledAttach = false;
+      if (!_floatingAdsAllowed()) {
+        _detachOverlaysKeepDismissState();
+        return;
+      }
       await _attachToOverlay(context);
     });
   }
@@ -55,7 +94,7 @@ class FloatingAdsManager extends GetxService {
         await LocalAdsStore().where(AdsType.homeBreathingAds);
     if (adsList.isEmpty) {
       return {
-        FloatingAdPosition.left: null,
+        // FloatingAdPosition.left: null,
         FloatingAdPosition.right: null,
       };
     }
@@ -68,7 +107,7 @@ class FloatingAdsManager extends GetxService {
       log.i("FloatingAdsManager", "仅有一个呼吸灯广告，左右共用: ${leftAd.id}");
     }
     return {
-      FloatingAdPosition.left: leftAd,
+      // FloatingAdPosition.left: leftAd,
       FloatingAdPosition.right: rightAd,
     };
   }
@@ -120,7 +159,6 @@ class _FloatingAdBubbleState extends State<FloatingAdBubble>
       duration: const Duration(seconds: 1),
       vsync: this,
     )..repeat(reverse: true);
-
     _scaleAnimation = Tween<double>(begin: 1.0, end: .9).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
@@ -138,7 +176,7 @@ class _FloatingAdBubbleState extends State<FloatingAdBubble>
     return Positioned(
         left: isRight ? null : Dimens.pt25,
         right: isRight ? Dimens.pt25 : null,
-        top: (screen.screenHeight / 2) + Dimens.pt100,
+        top: (screen.screenHeight / 2) + Dimens.pt250,
         child: ScaleTransition(
             scale: _scaleAnimation,
             child: Stack(alignment: Alignment.topRight, children: [
@@ -146,9 +184,7 @@ class _FloatingAdBubbleState extends State<FloatingAdBubble>
                 onTap: () => AppPages.jumpRouter(
                     path: widget.advertise.href, id: widget.advertise.id),
                 child: ImageLoader.withP(widget.advertise.cover,
-                        width: Dimens.pt150,
-                        height: Dimens.pt150,
-                        radius: Dimens.pt12)
+                        width: Dimens.pt200)
                     .load(),
               ),
               Padding(

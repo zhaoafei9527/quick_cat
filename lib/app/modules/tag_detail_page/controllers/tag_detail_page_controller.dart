@@ -54,14 +54,14 @@ class TagDetailPageController extends GetxController
     }
   }
 
-  Future<List<MediaInfo>?> dataGetter(int pageNum,int sortIndex) async {
+  Future<List<MediaInfo>?> dataGetter(int pageNum, int sortIndex) async {
     if (isAuthor) {
-      MediaList? medias = await ApiRes.getComicsOfAuthorName(
-          author: author, pageNum: pageNum);
+      MediaList? medias =
+          await ApiRes.getComicsOfAuthorName(author: author, pageNum: pageNum);
       return medias?.list ?? [];
     } else {
-      List<MediaInfo> media = await dataGetterFunction(
-          pageNum: pageNum, sortType: sortIndex);
+      List<MediaInfo> media =
+          await dataGetterFunction(pageNum: pageNum, sortType: sortIndex);
       return media;
     }
   }
@@ -100,7 +100,8 @@ class TagDetailPageController extends GetxController
         adMedia = await getAdsMediaInfo(AdsType.shortVideoListAds);
       }
       if (adMedia != null) {
-        mediaList.insert(mediaList.length, adMedia);
+        int insertIndex = Random().nextInt(mediaList.length + 1);
+        mediaList.insert(insertIndex, adMedia);
       }
     }
 

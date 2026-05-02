@@ -1,19 +1,17 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
-import 'package:get/get.dart';
-
 // 🌎 Project imports:
 import 'package:quick_cat_client/utils/array_util.dart';
-import 'package:quick_cat_client/utils/dimens.dart';
 import 'pull_refresh_view.dart';
 
 typedef AsyncListValueGetter<V> = Function(int pageNum, int pageSize);
+typedef PageDataCountGetter<V> = int Function(List<V> pageList);
 
 class PagePullView<V> extends StatefulWidget {
   /// 数据获取器，规定null为失败，为有意义的值，[]为成功且有意义
   final AsyncListValueGetter<V> dataGetter;
+  final PageDataCountGetter<V>? pageDataCountGetter;
 
   final ValueWidgetBuilder<List<V>> widgetBuilder;
   final Widget? emptyView;
@@ -23,6 +21,7 @@ class PagePullView<V> extends StatefulWidget {
   const PagePullView(
       {super.key,
       required this.dataGetter,
+      this.pageDataCountGetter,
       this.emptyView,
       this.enablePullDown,
       this.enablePullUp,
@@ -32,11 +31,14 @@ class PagePullView<V> extends StatefulWidget {
   PagePullViewState<V> createState() => PagePullViewState<V>();
 }
 
-class PagePullViewState<V> extends State<PagePullView>
+class PagePullViewState<V> extends State<PagePullView<V>>
     with AutomaticKeepAliveClientMixin {
   int pageNum = 1;
   PullRefreshController controller = PullRefreshController(isRequest: true);
   List<V> list = [];
+
+  int _pageDataCount(List<V> pageList) =>
+      widget.pageDataCountGetter?.call(pageList) ?? pageList.length;
 
   @override
   void initState() {
@@ -63,13 +65,14 @@ class PagePullViewState<V> extends State<PagePullView>
       controller.requestFail(isFirstPage: true);
       return;
     }
+    final pageList = mediaList as List<V>;
     controller.requestSuccess(
         isFirstPage: true,
-        isEmpty: ArrayUtil.isEmpty(mediaList),
-        hasMore: (mediaList.length >= 10));
+        isEmpty: ArrayUtil.isEmpty(pageList),
+        hasMore: (_pageDataCount(pageList) >= 10));
     pageNum = 1;
     if (mounted) {
-      setState(() => list = mediaList as List<V>);
+      setState(() => list = pageList);
     }
   }
 
@@ -80,12 +83,13 @@ class PagePullViewState<V> extends State<PagePullView>
       controller.requestFail(isFirstPage: false);
       return;
     }
+    final pageList = mediaList as List<V>;
     controller.requestSuccess(
-        isFirstPage: false, hasMore: mediaList.length >= 10);
+        isFirstPage: false, hasMore: _pageDataCount(pageList) >= 10);
 
     pageNum = page;
     if (mounted) {
-      setState(() => list.addAll(mediaList as List<V>));
+      setState(() => list.addAll(pageList));
     }
   }
 

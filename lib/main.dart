@@ -20,6 +20,7 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 
 // 🌎 Project imports:
 import 'package:quick_cat_client/app/themes/app_colors.dart';
+import 'package:quick_cat_client/app/widget/floating_ads_manager.dart';
 import 'package:quick_cat_client/plugins_utils/VideoPlayer/fijk_player.dart';
 import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/m3u8_cache_manager.dart';
 import 'package:quick_cat_client/utils/isolate_manager.dart';
@@ -176,6 +177,11 @@ Future<void> main() async {
           initialRoute: AppPages.INITIAL,
           initialBinding: CommonBinding(),
           getPages: AppPages.routes,
+          routingCallback: (_) {
+            if (Get.isRegistered<FloatingAdsManager>()) {
+              FloatingAdsManager.to.syncWithNavigation();
+            }
+          },
           theme: AppTheme.dark,
           builder: EasyLoading.init(),
           showPerformanceOverlay: false,

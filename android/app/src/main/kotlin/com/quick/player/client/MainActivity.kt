@@ -1,4 +1,4 @@
-package com.gua.rkmpa.client
+package com.gua.client.xmra726
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
