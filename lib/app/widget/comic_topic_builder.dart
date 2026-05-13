@@ -290,8 +290,9 @@ Widget buildCommonMediaGrid(List<MediaInfo> mediaList,
         padding: EdgeInsets.only(top: Dimens.pt12),
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          bool isH = (mediaList[index].coverData?.width ?? 0) >
+          bool isH = (mediaList[index].coverData?.width ?? 0) >=
               (mediaList[index].coverData?.high ?? 0);
+
           return SizedBox(
               height: isH ? Dimens.pt250 : Dimens.pt560,
               width: Dimens.pt340 + Dimens.pt5,
@@ -345,7 +346,7 @@ class SixVerticalGridBuilder extends StatelessWidget {
   final int? crossAxisCount;
   final double? childAspectRatio;
 
-   SixVerticalGridBuilder(this.topic,
+  SixVerticalGridBuilder(this.topic,
       {this.onItemClick,
       super.key,
       required this.type,

@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 
 // 🌎 Project imports:
 import 'package:marquee/marquee.dart';
+import 'package:quick_cat_client/utils/app_util.dart';
 import '../../../../r.dart';
 import '../../../../utils/dimens.dart';
 import '../../../../utils/screen.dart';
@@ -32,7 +33,7 @@ class VipCenterPageView extends GetView<VipCenterPageController> {
             backgroundColor: AppColors.bgColor,
             appBar: getCommonAppBar("充值", actions: [
               GestureDetector(
-                  onTap: () => Get.toNamed(Routes.MESSAGE_CENTER_PAGE),
+                  onTap: () => AppUtils.goToCustomServicePage(),
                   child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text("在线客服",

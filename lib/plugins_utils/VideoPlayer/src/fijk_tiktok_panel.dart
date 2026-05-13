@@ -146,7 +146,7 @@ class _FijkTiktokPanelState extends State<FijkTiktokPanel> {
       setState(() => _bufferPercent = percent / 10.0);
     });
     _currentPosSubs = p.onCurrentPosUpdate.listen((v) async {
-      checkPlayEnv();
+      // checkPlayEnv();
       if (!(widget.mediaInfo?.playable ?? false) &&
           v.inSeconds > 5 &&
           !_playChecked) {
