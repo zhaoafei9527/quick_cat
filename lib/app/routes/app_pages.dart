@@ -515,6 +515,14 @@ class AppPages {
             throw Exception('Could not launch $path');
           }
         }
+      }else if (route.startsWith("http")) {
+        if (!await launchUrl(
+          Uri.parse(route),
+          webOnlyWindowName: '_blank',
+          mode: LaunchMode.externalApplication,
+        )) {
+          throw Exception('Could not launch $path');
+        }
       } else {
         Get.toNamed(route, arguments: args);
       }

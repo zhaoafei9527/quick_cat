@@ -29,7 +29,6 @@ class PayList extends BaseNetModel {
   }
 }
 
-
 class OnlineChargeModes {
   String? desc;
   String? id;
@@ -38,14 +37,14 @@ class OnlineChargeModes {
   int? type;
   bool? status;
 
-  OnlineChargeModes(
-      {this.desc,
-        this.id,
-        this.nickname,
-        this.type,
-        this.avatar,
-        this.status,
-       });
+  OnlineChargeModes({
+    this.desc,
+    this.id,
+    this.nickname,
+    this.type,
+    this.avatar,
+    this.status,
+  });
 
   OnlineChargeModes.fromJson(Map<String, dynamic> json) {
     desc = json['desc'];
@@ -80,13 +79,12 @@ class OnlineRecharge extends BaseNetModel {
 
   OnlineRecharge.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      if(json['data']['list'] != null){
+      if (json['data']['list'] != null) {
         list = <OnlineChargeModes>[];
         json['data']['list'].forEach((v) {
           list?.add(OnlineChargeModes.fromJson(v));
         });
       }
-
     }
   }
 
@@ -99,6 +97,25 @@ class OnlineRecharge extends BaseNetModel {
   }
 }
 
+class vipDayRange {
+  int? days;
+  int? amountRange;
+
+  vipDayRange({this.days, this.amountRange});
+
+  vipDayRange.fromJson(Map<String, dynamic> json) {
+    days = json['days'];
+    amountRange = json['amountRange'] ?? json['desc'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['days'] = days;
+    data['amountRange'] = amountRange;
+    data['desc'] = amountRange;
+    return data;
+  }
+}
 
 class PayModes {
   String? desc;
@@ -113,6 +130,8 @@ class PayModes {
   int? payAmount;
   int? rchgUse;
   int? vipDay;
+  int? rechargeRangeType;
+  List<vipDayRange>? vipDayRangeList;
 
   PayModes(
       {this.desc,
@@ -126,6 +145,8 @@ class PayModes {
       this.status,
       this.payAmount,
       this.rchgUse,
+      this.rechargeRangeType,
+      this.vipDayRangeList,
       this.vipDay});
 
   PayModes.fromJson(Map<String, dynamic> json) {
@@ -134,6 +155,13 @@ class PayModes {
     goldBase = json['goldBase'];
     id = json['id'];
     name = json['name'];
+    rechargeRangeType = json['rechargeRangeType'];
+    if (json["vipList"] != null) {
+      vipDayRangeList = <vipDayRange>[];
+      json['vipList'].forEach((v) {
+        vipDayRangeList?.add(vipDayRange.fromJson(v));
+      });
+    }
     nickname = json['nickname'];
     type = json['type'];
     avatar = json['avatar'];
@@ -149,6 +177,7 @@ class PayModes {
     data['giftGold'] = giftGold;
     data['goldBase'] = goldBase;
     data['id'] = id;
+    data['rechargeRangeType'] = rechargeRangeType;
     data['name'] = name;
     data['nickname'] = nickname;
     data['type'] = type;
@@ -157,6 +186,7 @@ class PayModes {
     data['payAmount'] = payAmount;
     data['rchgUse'] = rchgUse;
     data['vipDay'] = vipDay;
+    data["vipList"] = vipDayRangeList?.map((v) => v.toJson()).toList();
     return data;
   }
 }

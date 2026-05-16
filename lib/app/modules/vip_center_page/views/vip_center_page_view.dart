@@ -1,8 +1,8 @@
 // 🐦 Flutter imports:
 import 'package:quick_cat_client/app/model/home/pay_list_model.dart';
-import 'package:quick_cat_client/app/model/home/user_info_model.dart';
 import 'package:quick_cat_client/app/modules/home/home_index_web/views/home_tab_pull_view.dart';
 import 'package:quick_cat_client/app/widget/common_app_bar.dart';
+import 'package:quick_cat_client/app/widget/text_field.dart';
 import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // 🌎 Project imports:
-import 'package:marquee/marquee.dart';
 import 'package:quick_cat_client/utils/app_util.dart';
 import '../../../../r.dart';
 import '../../../../utils/dimens.dart';
@@ -113,7 +112,7 @@ class VipCenterPageView extends GetView<VipCenterPageController> {
                                 child: Center(
                                     child: logic.amountMenu.isNotEmpty
                                         ? Text(
-                                            "¥${(logic.amountMenu[logic.amountSelect.value].payAmount ?? 0) ~/ 100}/确认支付",
+                                            "¥${logic.showInputPriceView ? logic.inputAmount.value : (logic.amountMenu[logic.amountSelect.value].payAmount ?? 0) ~/ 100}/确认支付",
                                             style: TextStyle(
                                                 fontSize: Dimens.pt36,
                                                 color: Colors.white))
@@ -238,7 +237,7 @@ class VipCenterPageView extends GetView<VipCenterPageController> {
           style: TextStyle(fontSize: Dimens.pt32, color: Colors.white)),
       SizedBox(height: Dimens.pt30),
       SizedBox(
-        height: Dimens.pt144,
+        height: Dimens.pt144 + Dimens.pt20,
         child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemBuilder: (c, index) => GestureDetector(
@@ -248,74 +247,173 @@ class VipCenterPageView extends GetView<VipCenterPageController> {
             separatorBuilder: (c, index) => SizedBox(width: Dimens.pt17),
             itemCount: logic.payWayList.length),
       ),
+      if (logic.showInputPriceView) _buildInputPriceView(),
+      if (logic.showNoInputPriceView) _buildNoInputPriceView()
+    ]);
+  }
+
+  Widget _buildNoInputPriceView() {
+    VipCenterPageController logic = Get.find<VipCenterPageController>();
+
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(height: Dimens.pt50),
-      if (!logic.showOnlineRecharge.value) ...[
-        Text("充值金额",
-            style: TextStyle(fontSize: Dimens.pt32, color: Colors.white)),
-        SizedBox(height: Dimens.pt45),
-        Wrap(
-            direction: Axis.horizontal,
-            spacing: Dimens.pt10,
-            alignment: WrapAlignment.start,
-            runSpacing: Dimens.pt15,
-            children: List.generate(
-                logic.amountMenu.length,
-                (index) => GestureDetector(
-                    onTap: () => logic.vipAmountChange(index),
-                    child: Stack(alignment: Alignment.topLeft, children: [
-                      Image.asset(
-                          logic.amountSelect.value == index
-                              ? R.assetsImgBgVipPriceSel
-                              : R.assetsImgBgVipPrice,
-                          width: Dimens.pt222,
-                          height: Dimens.pt157),
-                      Obx(() => SizedBox(
-                          width: Dimens.pt222,
-                          height: Dimens.pt157,
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("赠送VIP${logic.amountMenu[index].vipDay}天",
+      Text("充值金额",
+          style: TextStyle(fontSize: Dimens.pt32, color: Colors.white)),
+      SizedBox(height: Dimens.pt45),
+      Wrap(
+          direction: Axis.horizontal,
+          spacing: Dimens.pt10,
+          alignment: WrapAlignment.start,
+          runSpacing: Dimens.pt15,
+          children: List.generate(
+              logic.amountMenu.length,
+              (index) => GestureDetector(
+                  onTap: () => logic.vipAmountChange(index),
+                  child: Stack(alignment: Alignment.topLeft, children: [
+                    Image.asset(
+                        logic.amountSelect.value == index
+                            ? R.assetsImgBgVipPriceSel
+                            : R.assetsImgBgVipPrice,
+                        width: Dimens.pt222,
+                        height: Dimens.pt157),
+                    Obx(() => SizedBox(
+                        width: Dimens.pt222,
+                        height: Dimens.pt157,
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("赠送VIP${logic.amountMenu[index].vipDay}天",
+                                  style: TextStyle(
+                                      fontSize: Dimens.pt26,
+                                      color: Color(0xFFB2F6AF))),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                        margin: EdgeInsets.only(
+                                            bottom: Dimens.pt15),
+                                        child: getPriceShadowText(
+                                            text: "¥",
+                                            fontSize: Dimens.pt26,
+                                            fontWeight: FontWeight.w700)),
+                                    getPriceShadowText(
+                                        text:
+                                            "${(logic.amountMenu[index].payAmount ?? 0) ~/ 100}",
+                                        fontSize: Dimens.pt58,
+                                        fontWeight: FontWeight.w700)
+                                  ])
+                            ]))),
+                    if (index == 0)
+                      Transform.translate(
+                        offset: Offset(0, -Dimens.pt20),
+                        child: Container(
+                            width: Dimens.pt150,
+                            height: Dimens.pt40,
+                            decoration: BoxDecoration(
+                              color: AppColors.mainRed,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(Dimens.pt22),
+                                  bottomRight: Radius.circular(Dimens.pt22)),
+                            ),
+                            child: Center(
+                                child: Text("95%用户选择",
                                     style: TextStyle(
-                                        fontSize: Dimens.pt26,
-                                        color: Color(0xFFB2F6AF))),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Container(
-                                          margin: EdgeInsets.only(
-                                              bottom: Dimens.pt15),
-                                          child: getPriceShadowText(
-                                              text: "¥",
-                                              fontSize: Dimens.pt26,
-                                              fontWeight: FontWeight.w700)),
-                                      getPriceShadowText(
-                                          text:
-                                              "${(logic.amountMenu[index].payAmount ?? 0) ~/ 100}",
-                                          fontSize: Dimens.pt58,
-                                          fontWeight: FontWeight.w700)
-                                    ])
-                              ])))
-                      // Obx(() => Container(
-                      //     width: Dimens.pt150,
-                      //     height: Dimens.pt40,
-                      //     decoration: BoxDecoration(
-                      //         color: AppColors.mainRed),
-                      //     child: Center(
-                      //         child: Text(
-                      //             "赠送VIP${logic.amountMenu[index].vipDay}天",
-                      //             style: TextStyle(
-                      //                 fontSize: Dimens.pt21,
-                      //                 color: Colors.white)))))
-                    ]))))
-      ]
+                                        fontSize: Dimens.pt21,
+                                        color: Colors.white)))),
+                      )
+                  ]))))
+    ]);
+  }
+
+  Widget _buildInputPriceView() {
+    VipCenterPageController logic = Get.find<VipCenterPageController>();
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      SizedBox(height: Dimens.pt20),
+      Text("【官方推荐】使用电子钱包充值每笔最高加赠10%彩金,充提秒到账,安全无忧,让娱乐更简单提现更加方便！",
+          style: TextStyle(fontSize: Dimens.pt26, color: Color(0xFFFFDB9E))),
+      SizedBox(height: Dimens.pt10),
+      Row(children: [
+        Text("钱包下载：",
+            style: TextStyle(fontSize: Dimens.pt26, color: Colors.white)),
+        GestureDetector(
+            onTap: () => AppPages.jumpRouter(path: logic.downloadPath.value),
+            child: Container(
+                width: Dimens.pt128,
+                height: Dimens.pt41,
+                decoration: BoxDecoration(
+                    color: Color(0xFFFFDB9E),
+                    borderRadius: BorderRadius.circular(Dimens.pt45)),
+                child: Center(
+                  child: Text("点击下载",
+                      style: TextStyle(
+                          fontSize: Dimens.pt26, color: Color(0xFF8B3200))),
+                ))),
+        Spacer(),
+        Text("钱包使用教程：：",
+            style: TextStyle(fontSize: Dimens.pt26, color: Colors.white)),
+        GestureDetector(
+            onTap: () => AppPages.jumpRouter(path: logic.descPath.value),
+            child: Container(
+                width: Dimens.pt128,
+                height: Dimens.pt41,
+                decoration: BoxDecoration(
+                    color: Color(0xFFFFDB9E),
+                    borderRadius: BorderRadius.circular(Dimens.pt45)),
+                child: Center(
+                  child: Text("点击查看",
+                      style: TextStyle(
+                          fontSize: Dimens.pt26, color: Color(0xFF8B3200))),
+                ))),
+      ]),
+      SizedBox(height: Dimens.pt50),
+      Text("充值金额",
+          style: TextStyle(fontSize: Dimens.pt32, color: Colors.white)),
+      SizedBox(height: Dimens.pt50),
+      Stack(clipBehavior: Clip.none, alignment: Alignment.topRight, children: [
+        Container(
+            width: screen.screenWidth,
+            height: Dimens.pt90,
+            padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
+            decoration: BoxDecoration(
+                color: Color(0xFF24242F),
+                borderRadius: BorderRadius.circular(Dimens.pt8)),
+            child: GetCommonTextField(
+                controller: logic.priceController,
+                maxLength: 25,
+                textStyle:
+                    TextStyle(color: Colors.white, fontSize: Dimens.pt26),
+                inputType: TextInputType.number,
+                hintStyle:
+                    TextStyle(color: Color(0xFFA19D98), fontSize: Dimens.pt26),
+                hintText: "¥ 10-300000",
+                onChanged: logic.onInputAmountChanged,
+                onSubmitted: logic.onInputAmountChanged)),
+        Transform.translate(
+          offset: Offset(0, -Dimens.pt25),
+          child: Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: Dimens.pt15, vertical: Dimens.pt5),
+              decoration: BoxDecoration(
+                color: AppColors.mainRed,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(Dimens.pt22),
+                    bottomRight: Radius.circular(Dimens.pt22)),
+              ),
+              child: Obx(() => logic.inputVipDay.value > 0
+                  ? Text("赠送VIP${logic.inputVipDay.value}天",
+                      style:
+                          TextStyle(fontSize: Dimens.pt20, color: Colors.white))
+                  : const SizedBox())),
+        )
+      ])
     ]);
   }
 
   Widget _buildPayTypeItem(VipCenterPageController logic, int index) {
     int selectIndex = logic.selectedRectangleIndex.value;
     return Stack(alignment: Alignment.bottomCenter, children: [
+      SizedBox(width: Dimens.pt160, height: Dimens.pt144 + Dimens.pt25),
       Container(
           width: Dimens.pt160,
           height: Dimens.pt144,
@@ -338,28 +436,27 @@ class VipCenterPageView extends GetView<VipCenterPageController> {
       if ((logic.payWayList[index].bonusRatio ?? 0) > 0)
         Positioned(
             top: 0,
-            right: 0,
+            left: 0,
             child: Container(
-                width: Dimens.pt58,
-                height: Dimens.pt30,
-                color: selectIndex == index
-                    ? AppColors.bgGreyColor
-                    : AppColors.textYellowColor,
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimens.pt15, vertical: Dimens.pt5),
+                decoration: BoxDecoration(
+                  color: AppColors.mainRed,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(Dimens.pt22),
+                      bottomRight: Radius.circular(Dimens.pt22)),
+                ),
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text("送",
                       style: TextStyle(
-                          fontSize: Dimens.pt16,
-                          color: logic.selectedRectangleIndex.value != index
-                              ? AppColors.bgGreyColor
-                              : AppColors.textYellowColor)),
+                          fontSize: Dimens.pt22,
+                          color: AppColors.textColorWhite)),
                   SizedBox(width: Dimens.pt1),
                   Text("${logic.payWayList[index].bonusRatio}%",
                       style: TextStyle(
-                          fontSize: Dimens.pt24,
-                          color: logic.selectedRectangleIndex.value != index
-                              ? AppColors.bgGreyColor
-                              : AppColors.textYellowColor))
+                          fontSize: Dimens.pt22,
+                          color: AppColors.textColorWhite))
                 ]))),
       // if (logic.selectedRectangleIndex.value == index)
       // Image.asset(R.assetsImgIconPayTip, width: Dimens.pt16)
@@ -370,7 +467,6 @@ class VipCenterPageView extends GetView<VipCenterPageController> {
     ShareKeys shareKeys = Get.find<ShareKeys>();
     return Obx(() {
       VipCenterPageController logic = Get.find<VipCenterPageController>();
-      UserInfo userInfo = logic.userInfo.value;
       return Stack(alignment: Alignment.centerRight, children: [
         Image.asset(R.assetsImgBgVipCard,
             width: screen.screenWidth, height: Dimens.pt280),

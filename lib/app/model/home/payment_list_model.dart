@@ -34,16 +34,26 @@ class PaymentDataList {
   int? rechargeType;
   String? icon;
   String? desc;
+  String? downloadUrl;
+  String? descUrl;
   int? bonusRatio; // 充值赠送比例
 
   PaymentDataList(
-      {this.rechargeName, this.rechargeType, this.icon, this.bonusRatio});
+      {this.rechargeName,
+      this.rechargeType,
+      this.icon,
+      this.bonusRatio,
+      this.desc,
+      this.downloadUrl,
+      this.descUrl});
 
   PaymentDataList.fromJson(Map<String, dynamic> json) {
     rechargeName = json['rechargeName'];
     rechargeType = json['rechargeType'];
     desc = json['desc'];
     icon = json['icon'];
+    downloadUrl = json['downloadUrl'] ?? json['desc'];
+    descUrl = json['descUrl'] ?? json['desc'];
     bonusRatio = json['bonusRatio'];
   }
 
