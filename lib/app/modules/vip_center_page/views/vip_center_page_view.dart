@@ -404,7 +404,9 @@ class VipCenterPageView extends GetView<VipCenterPageController> {
                   ? Text("赠送VIP${logic.inputVipDay.value}天",
                       style:
                           TextStyle(fontSize: Dimens.pt20, color: Colors.white))
-                  : const SizedBox())),
+                  : Text("送VIP",
+                  style:
+                  TextStyle(fontSize: Dimens.pt20, color: Colors.white)))),
         )
       ])
     ]);
