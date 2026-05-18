@@ -163,7 +163,7 @@ Widget buildRecommendGameView({bool? showHotGame}) {
             }
             List<Advertise>? data = snapshot.data;
             return SizedBox(
-                height: Dimens.pt210,
+                height: Dimens.pt170,
                 child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.only(left: Dimens.pt30),
@@ -176,16 +176,15 @@ Widget buildRecommendGameView({bool? showHotGame}) {
                               alignment: Alignment.bottomCenter,
                               children: [
                                 ImageLoader.withP(data?[i].cover ?? "",
-                                        width: Dimens.pt180,
-                                        height: Dimens.pt210,
-                                        radius: Dimens.pt8)
+                                        width: Dimens.pt146,
+                                        height: Dimens.pt170)
                                     .load()
                               ]));
                     },
                     separatorBuilder: (c, i) => SizedBox(width: Dimens.pt10),
                     itemCount: data?.length ?? 0));
           }),
-      SizedBox(height: Dimens.pt10)
+      SizedBox(height: Dimens.pt20)
     ],
     Container(
         width: screen.screenWidth,
