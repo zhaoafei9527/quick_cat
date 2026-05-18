@@ -91,9 +91,11 @@ class ShortVideoPlayerView extends GetView<ShortVideoPlayerController> {
                       List.generate(shareKeys.mediaTagType.length, (index) {
                     return PagePullView<TagList>(
                         key: Key("pullKey_tagType_$index"),
+                        enablePullUp: false,
+                        enablePullDown: true,
                         dataGetter: (int pageNum, int size) async {
                           TagTypeNetModel? model = await ApiRes.getTagListById(
-                              shareKeys.mediaTagType[index].id ?? 0);
+                              shareKeys.mediaTagType[index].id ?? 0, pageNum);
                           return model?.tagTypeList?[0].list ?? [];
                         },
                         emptyView: buildCommonEmptyView("宝贝,没有找到东西哦～"),

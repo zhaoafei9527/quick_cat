@@ -1289,11 +1289,13 @@ class ApiRes {
 
   /// 根据标签分类获取标签列表
   /// path tag/getTagType
-  static Future<TagTypeNetModel?> getTagListById(int id) async {
+  static Future<TagTypeNetModel?> getTagListById(int id,int pageNum) async {
     TagTypeNetModel? model;
     String? path = "tag/getTagType";
     Map<String, dynamic> data = {};
     data["id"] = id;
+    data["pageNum"] = pageNum;
+    data["pageSize"] = 10;
     model = await _basePostNet<TagTypeNetModel>(
         BaseParams(TagTypeNetModel(), path: path, data: data));
     return model;

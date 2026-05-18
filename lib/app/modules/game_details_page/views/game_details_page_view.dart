@@ -37,23 +37,24 @@ class GameDetailsPageView extends GetView<GameDetailsPageController> {
             appBar: getCommonAppBar("详情"),
             body: Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
-                child: GetX<GameDetailsPageController>(
-                    builder: (GameDetailsPageController logic) {
-                  if (logic.billType == BillInfoType.billTypeWithdraw.index) {
-                    return logic.initOk.value
-                        ? _buildWithDrawInfo(logic)
-                        : getLoadingWidget();
-                  } else if (logic.billType ==
-                      BillInfoType.billTypeRecharge.index) {
-                    return logic.initOk.value
-                        ? _buildRechargeInfo(logic)
-                        : getLoadingWidget();
-                  } else {
-                    return Container();
-                  }
-                })));
+                child: _buildView(logic)));
       }
     });
+  }
+}
+
+Widget _buildView(GameDetailsPageController logic){
+  if (logic.billType == BillInfoType.billTypeWithdraw.index) {
+    return logic.initOk.value
+        ? _buildWithDrawInfo(logic)
+        : getLoadingWidget();
+  } else if (logic.billType ==
+      BillInfoType.billTypeRecharge.index) {
+    return logic.initOk.value
+        ? _buildRechargeInfo(logic)
+        : getLoadingWidget();
+  } else {
+    return Container();
   }
 }
 
@@ -169,7 +170,8 @@ Widget _buildGameBillInfo(GameDetailsPageController logic) {
                 width: Dimens.pt100,
                 borderColor: const Color(0xFFFFB715),
                 backgroundColor: const Color(0xFF171F20),
-                dropDownSpacing: Dimens.pt12))
+                dropDownSpacing: Dimens.pt12)),
+          SizedBox(width: Dimens.pt25)
         ])),
     if (logic.gameBillId.value > 0)
       OldDetailView(gameId: logic.gameBillId.value)
@@ -274,6 +276,9 @@ class _OldDetailViewState extends State<OldDetailView> {
   void initState() {
     super.initState();
     GameDetailsPageController logic = Get.find<GameDetailsPageController>();
+
+
+
     _future = ApiRes.getBillInfo(id: widget.gameId, billType: logic.billType);
   }
 
@@ -289,6 +294,7 @@ class _OldDetailViewState extends State<OldDetailView> {
     return FutureBuilder<BillDetailsInfo?>(
         future: _future,
         builder: (context, snapshot) {
+
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: getLoadingView());
           }
@@ -300,6 +306,7 @@ class _OldDetailViewState extends State<OldDetailView> {
                         style: TextStyle(color: Colors.white70))));
           }
           WlGameData? wlGameData = snapshot.data?.wlGameData;
+
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: Dimens.pt22),
             child: Column(children: [

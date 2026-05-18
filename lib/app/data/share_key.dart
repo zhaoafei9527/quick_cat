@@ -288,7 +288,7 @@ class ShareKeys extends GetxController {
     try {
       userBalance.value = _formatBalanceString(userInfo.balance.toString());
       UserBalanceModel? model = await ApiRes.getUserBalance();
-      if (model != null && model.code == 0) {
+      if (model != null && model.code == 200) {
         userBalance.value =
             _formatBalanceString(model.data?.balance?.toString());
         userTransferable.value = model.data?.transferable ?? "0.0";

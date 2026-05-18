@@ -205,8 +205,8 @@ Widget buildRecommendGameView({bool? showHotGame}) {
           SizedBox(width: Dimens.pt10),
           GestureDetector(
               onTap: () async {
-                shareKeys.balanceRefreshTurns.value += 1;
                 await shareKeys.getUserBalance();
+                shareKeys.balanceRefreshTurns.value += 1;
               },
               child: Obx(() => AnimatedRotation(
                   turns: shareKeys.balanceRefreshTurns.value,
@@ -217,9 +217,9 @@ Widget buildRecommendGameView({bool? showHotGame}) {
           GestureDetector(
             onTap: () async {
               await ApiRes.oneClickScore(onSuccess: () {
-                showTypeToast(msg: "下分成功", toastType: ToastType.SUCCESS);
+                showTypeToast(msg: "取回下分成功", toastType: ToastType.SUCCESS);
               }, onError: (msg) {
-                showTypeToast(msg: "下分失败：$msg", toastType: ToastType.Error);
+                showTypeToast(msg: "取回下分失败：$msg", toastType: ToastType.Error);
               });
               await shareKeys.getUserBalance();
             },

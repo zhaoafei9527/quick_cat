@@ -177,12 +177,12 @@ class WlGameData {
   String? gameId;
   int? gameStartTime;
   int? id;
-  double? profit;
+  int? profit;
   String? recordId;
   int? time;
   String? updatedAt;
   int? userId;
-  double? validBet;
+  int? validBet;
 
   WlGameData(
       {this.category,

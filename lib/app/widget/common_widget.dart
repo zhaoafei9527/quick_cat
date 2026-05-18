@@ -94,6 +94,7 @@ Widget buildCommonTabBar(
     {double? distance,
     TabController? controller,
     List<Widget>? tabs,
+    ValueChanged<int>? onTap,
     double? fontSize,
     Color? fontColor,
     Color? boxColor,
@@ -110,6 +111,7 @@ Widget buildCommonTabBar(
       padding: padding ?? EdgeInsets.zero,
       child: TabBar(
           controller: controller,
+          onTap: onTap,
           isScrollable: isScrollable ?? true,
           tabs: tabs ?? [],
           labelStyle: TextStyle(fontSize: fontSize ?? Dimens.pt36),

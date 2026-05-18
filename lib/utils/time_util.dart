@@ -254,8 +254,8 @@ class TimeUtil {
   }
 
   /// 金额 分转元 11000 = 110.00
-  static String amountConversion(double? amount) {
-    var minutes = ((amount ?? .0)  / 100).toStringAsFixed(2);
+  static String amountConversion(num? amount) {
+    var minutes = ((amount ?? .0) / 100).toStringAsFixed(2);
     return minutes;
   }
 
@@ -273,8 +273,14 @@ class TimeUtil {
       return "银行卡";
     } else if (type == 'usdt') {
       return "USDT";
+    } else if (type == 'bobi') {
+      return "波币钱包";
+    } else if (type == 'okpay') {
+      return "OKPAY钱包";
+    } else if (type == 'gopay') {
+      return "GOPAY钱包";
     }
-    return "";
+    return type;
   }
 
   /// 提现状态类型

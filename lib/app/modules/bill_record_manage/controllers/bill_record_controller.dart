@@ -26,15 +26,33 @@ class BillRecordController extends GetxController
   GlobalKey<PagePullViewState> withdrawalKey = GlobalKey();
   GlobalKey<PagePullViewState> recordKey = GlobalKey();
   GlobalKey<PagePullViewState> gameKey = GlobalKey();
+  int _lastTabIndex = 0;
+  final Map<int, int> _selectedDateIndexByTab = {};
+
+  static const List<Map<String, dynamic>> _commonDateCodes = [
+    {"name": "今日", "value": 1},
+    {"name": "本周", "value": 2},
+    {"name": "本月", "value": 3},
+    {"name": "全部", "value": 0}
+  ];
+
+  static const List<Map<String, dynamic>> _gameDateCodes = [
+    {"name": "今日", "value": 1},
+    {"name": "昨日", "value": 2},
+  ];
+
+  int get selectedDateCodeValue {
+    if (dateCodesList.isEmpty) return 0;
+    if (selectDateValue.value < 0 ||
+        selectDateValue.value >= dateCodesList.length) {
+      return dateCodesList.first["value"] ?? 0;
+    }
+    return dateCodesList[selectDateValue.value]["value"] ?? 0;
+  }
 
   @override
   void onInit() async {
-    dateCodesList.value = [
-      {"name": "今日", "value": 1},
-      {"name": "本周", "value": 2},
-      {"name": "本月", "value": 3},
-      {"name": "全部", "value": 0}
-    ];
+    dateCodesList.assignAll(_commonDateCodes);
     typeCodeList.value = [
       {"name": "全部", "value": 0},
       {"name": "收入", "value": 1},
@@ -54,48 +72,53 @@ class BillRecordController extends GetxController
       {"name": "人工", "value": 10}
     ];
     if ((Get.arguments?['type'] ?? 0) >= 0) {
+      final int initialIndex = Get.arguments?['type'] ?? 0;
+      _lastTabIndex = initialIndex;
+      _selectedDateIndexByTab[initialIndex] = selectDateValue.value;
       tabController = TabController(
-          length: tabList.length,
-          initialIndex: Get.arguments?['type'] ?? 0,
-          vsync: this);
+          length: tabList.length, initialIndex: initialIndex, vsync: this);
+      _syncDateCodesForTab(initialIndex);
       tabController?.addListener(() {
-        if (tabController?.index == 3) {
-          dateCodesList.value = [
-            {"name": "今日", "value": 1},
-            {"name": "昨日", "value": 2},
-          ];
-        } else {
-          dateCodesList.value = [
-            {"name": "今日", "value": 1},
-            {"name": "本周", "value": 2},
-            {"name": "本月", "value": 3},
-            {"name": "全部", "value": 0}
-          ];
-        }
-        if (tabController?.index == 0) {
-          rechargeKey.currentState?.refresh();
-        } else if (tabController?.index == 1) {
-          withdrawalKey.currentState?.refresh();
-        } else if (tabController?.index == 2) {
-          recordKey.currentState?.refresh();
-        } else if (tabController?.index == 3) {
-          gameKey.currentState?.refresh();
-        }
+        final int currentIndex = tabController?.index ?? 0;
+        if (currentIndex == _lastTabIndex) return;
+        _lastTabIndex = currentIndex;
+        _syncDateCodesForTab(currentIndex);
+        _refreshTab(currentIndex);
       });
     }
     super.onInit();
   }
 
+  chooseTab(int index) {
+    _lastTabIndex = index;
+    _syncDateCodesForTab(index);
+    _refreshTab(index);
+  }
+
   chooseDate(index) {
     selectDateValue.value = index;
+    _selectedDateIndexByTab[tabController?.index ?? 0] = index;
     showDateChoose.value = false;
-    if (tabController?.index == 0) {
+    _refreshTab(tabController?.index ?? 0);
+  }
+
+  void _syncDateCodesForTab(int tabIndex) {
+    final List<Map<String, dynamic>> nextDateCodes =
+        tabIndex == 3 ? _gameDateCodes : _commonDateCodes;
+    dateCodesList.assignAll(nextDateCodes);
+    final int savedIndex = _selectedDateIndexByTab[tabIndex] ?? 0;
+    selectDateValue.value =
+        savedIndex >= 0 && savedIndex < nextDateCodes.length ? savedIndex : 0;
+  }
+
+  void _refreshTab(int tabIndex) {
+    if (tabIndex == 0) {
       rechargeKey.currentState?.refresh();
-    } else if (tabController?.index == 1) {
+    } else if (tabIndex == 1) {
       withdrawalKey.currentState?.refresh();
-    } else if (tabController?.index == 2) {
+    } else if (tabIndex == 2) {
       recordKey.currentState?.refresh();
-    } else if (tabController?.index == 3) {
+    } else if (tabIndex == 3) {
       gameKey.currentState?.refresh();
     }
   }

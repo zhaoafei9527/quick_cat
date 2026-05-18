@@ -418,11 +418,11 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
                               onTap: () async {
                                 await ApiRes.oneClickScore(onSuccess: () {
                                   showTypeToast(
-                                      msg: "下分成功",
+                                      msg: "取回下分成功",
                                       toastType: ToastType.SUCCESS);
                                 }, onError: (msg) {
                                   showTypeToast(
-                                      msg: "下分失败：$msg",
+                                      msg: "取回下分失败：$msg",
                                       toastType: ToastType.Error);
                                 });
                                 await shareKeys.getUserBalance();

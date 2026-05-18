@@ -47,21 +47,21 @@ class BillRecordPageView extends GetView<BillRecordController> {
                           child: buildCommonTabBar(
                               distance: Dimens.pt2,
                               controller: logic.tabController,
+                              onTap: logic.chooseTab,
                               alignment: TabAlignment.start,
                               insets: Dimens.pt35,
                               fontSize: Dimens.pt28,
                               tabs: logic.tabList.map((e) => Text(e)).toList()),
                         ),
                         SizedBox(width: Dimens.pt15),
-                        Obx(() =>
-                            CommonDropdownSelector(
-                                listData: logic.dateCodesList,
-                                selectedIndex: logic.selectDateValue.value,
-                                onItemTap: logic.chooseDate,
-                                width: Dimens.pt100,
-                                borderColor: const Color(0xFFFFB715),
-                                backgroundColor: const Color(0xFF171F20),
-                                dropDownSpacing: Dimens.pt12))
+                        Obx(() => CommonDropdownSelector(
+                            listData: logic.dateCodesList,
+                            selectedIndex: logic.selectDateValue.value,
+                            onItemTap: logic.chooseDate,
+                            width: Dimens.pt100,
+                            borderColor: const Color(0xFFFFB715),
+                            backgroundColor: const Color(0xFF171F20),
+                            dropDownSpacing: Dimens.pt12))
                         // Obx(() => _buildDropdownView(
                         //     width: Dimens.pt100,
                         //     onTap: () => logic.showDateChoose.value =
@@ -75,11 +75,11 @@ class BillRecordPageView extends GetView<BillRecordController> {
                           child: TabBarView(
                               controller: logic.tabController,
                               children: [
-                                _buildRechargeRecord(),
-                                _buildWithdrawalRecords(),
-                                _buildAllRecordList(),
-                                _buildGameRecordsList(),
-                              ]))
+                            _buildRechargeRecord(),
+                            _buildWithdrawalRecords(),
+                            _buildAllRecordList(),
+                            _buildGameRecordsList(),
+                          ]))
                     ]),
                     // _buildDateChooseView(),
                     // _buildTypeChooseView(),
@@ -98,108 +98,99 @@ class BillRecordPageView extends GetView<BillRecordController> {
               key: logic.gameKey,
               dataGetter: (int pageNum, int size) async {
                 GameDetail? model = await ApiRes.getGameDetailList(
-                    pageNum: pageNum,
-                    dayType: logic.dateCodesList[logic.selectDateValue.value]
-                    ["value"]);
+                    pageNum: pageNum, dayType: logic.selectedDateCodeValue);
                 return model?.list ?? [];
               },
               emptyView: buildCommonEmptyView("宝贝,赶快下注一把游戏吧～"),
               widgetBuilder:
                   (BuildContext context, List<dynamic> list, Widget? child) {
                 return ListView.separated(
-                    itemBuilder: (c, index) =>
-                        Container(
-                            height: Dimens.pt195,
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: Dimens.pt25),
-                            decoration: BoxDecoration(color: Color(0xFF222433)),
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(children: [
-                                    ImageLoader.withP(list[index].icon,
+                    itemBuilder: (c, index) => Container(
+                        height: Dimens.pt195,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
+                        decoration: BoxDecoration(color: Color(0xFF222433)),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(children: [
+                                ImageLoader.withP(list[index].icon,
                                         height: Dimens.pt31)
-                                        .load(),
-                                    SizedBox(width: Dimens.pt10),
-                                    Text(list[index].title ?? "",
+                                    .load(),
+                                SizedBox(width: Dimens.pt10),
+                                Text(list[index].title ?? "",
+                                    style: TextStyle(
+                                        fontSize: Dimens.pt24,
+                                        color: Colors.white)),
+                                Spacer(),
+                                GestureDetector(
+                                  onTap: () => Get.toNamed(
+                                      Routes.GAME_DETAILS_PAGE,
+                                      arguments: {
+                                        "gamePlatform":
+                                            "${list[index].gamePlatform}",
+                                        "gameName":
+                                            "${list[index].title ?? ''}",
+                                        "icon": "${list[index].icon ?? ''}",
+                                        "billType":
+                                            "${BillInfoType.billTypeGame.index}"
+                                      }),
+                                  child: Row(children: [
+                                    Text("详情",
                                         style: TextStyle(
-                                            fontSize: Dimens.pt24,
+                                            fontSize: Dimens.pt22,
                                             color: Colors.white)),
-                                    Spacer(),
-                                    GestureDetector(
-                                      onTap: () =>
-                                          Get.toNamed(
-                                              Routes.GAME_DETAILS_PAGE,
-                                              arguments: {
-                                                "gamePlatform":
-                                                "${list[index].gamePlatform}",
-                                                "gameName":
-                                                "${list[index].title ?? ''}",
-                                                "icon": "${list[index].icon ??
-                                                    ''}",
-                                                "billType":
-                                                "${BillInfoType.billTypeGame
-                                                    .index}"
-                                              }),
-                                      child: Row(children: [
-                                        Text("详情",
-                                            style: TextStyle(
-                                                fontSize: Dimens.pt22,
-                                                color: Colors.white)),
-                                        Icon(Icons.arrow_forward_ios,
-                                            size: Dimens.pt24)
-                                      ]),
-                                    )
+                                    Icon(Icons.arrow_forward_ios,
+                                        size: Dimens.pt24)
                                   ]),
-                                  SizedBox(height: Dimens.pt40),
-                                  Row(children: [
-                                    Column(children: [
-                                      Text("下注注量",
-                                          style: TextStyle(
-                                              fontSize: Dimens.pt22,
-                                              color: Color(0xFFA3A3A7))),
-                                      SizedBox(height: Dimens.pt10),
-                                      Text("${list[index].count ?? 0}",
-                                          style: TextStyle(
-                                              fontSize: Dimens.pt22,
-                                              color: Colors.white))
-                                    ]),
-                                    Spacer(),
-                                    Column(
-                                        crossAxisAlignment:
+                                )
+                              ]),
+                              SizedBox(height: Dimens.pt40),
+                              Row(children: [
+                                Column(children: [
+                                  Text("下注注量",
+                                      style: TextStyle(
+                                          fontSize: Dimens.pt22,
+                                          color: Color(0xFFA3A3A7))),
+                                  SizedBox(height: Dimens.pt10),
+                                  Text("${list[index].count ?? 0}",
+                                      style: TextStyle(
+                                          fontSize: Dimens.pt22,
+                                          color: Colors.white))
+                                ]),
+                                Spacer(),
+                                Column(
+                                    crossAxisAlignment:
                                         CrossAxisAlignment.center,
-                                        children: [
-                                          Text("下注金额",
-                                              style: TextStyle(
-                                                  fontSize: Dimens.pt24,
-                                                  color: Color(0xFFA3A3A7))),
-                                          SizedBox(height: Dimens.pt10),
-                                          Text("¥${list[index].totalValidBet ??
-                                              0}",
-                                              style: TextStyle(
-                                                  fontSize: Dimens.pt24,
-                                                  color: Color(0xFFFFB715)))
-                                        ]),
-                                    Spacer(),
-                                    Column(children: [
-                                      Text("结算金额",
+                                    children: [
+                                      Text("下注金额",
                                           style: TextStyle(
-                                              fontSize: Dimens.pt22,
+                                              fontSize: Dimens.pt24,
                                               color: Color(0xFFA3A3A7))),
                                       SizedBox(height: Dimens.pt10),
-                                      Text("${list[index].totalProfit ?? 0}",
+                                      Text("¥${list[index].totalValidBet ?? 0}",
                                           style: TextStyle(
-                                              fontSize: Dimens.pt22,
-                                              color:
+                                              fontSize: Dimens.pt24,
+                                              color: Color(0xFFFFB715)))
+                                    ]),
+                                Spacer(),
+                                Column(children: [
+                                  Text("结算金额",
+                                      style: TextStyle(
+                                          fontSize: Dimens.pt22,
+                                          color: Color(0xFFA3A3A7))),
+                                  SizedBox(height: Dimens.pt10),
+                                  Text("${list[index].totalProfit ?? 0}",
+                                      style: TextStyle(
+                                          fontSize: Dimens.pt22,
+                                          color:
                                               (list[index].totalProfit ?? 0) < 0
                                                   ? Color(0xFF1CCD21)
                                                   : Color(0xFFF52C56)))
-                                    ])
-                                  ])
-                                ])),
-                    separatorBuilder: (c, index) =>
-                        SizedBox(
+                                ])
+                              ])
+                            ])),
+                    separatorBuilder: (c, index) => SizedBox(
                           height: Dimens.pt10,
                         ),
                     itemCount: list.length);
@@ -217,31 +208,29 @@ class BillRecordPageView extends GetView<BillRecordController> {
         //         logic.showTypeChoose.value = !logic.showTypeChoose.value,
         //     value: logic.typeCodeList[logic.selectTypeValue.value]["name"])),
 
-        Obx(() =>
-            CommonDropdownSelector(
-                listData: logic.typeCodeList,
-                selectedIndex: logic.selectTypeValue.value,
-                onItemTap: logic.chooseBillType,
-                width: Dimens.pt170,
-                triggerHeight: Dimens.pt55,
-                borderColor: const Color(0xFFFFB715),
-                backgroundColor: Colors.transparent,
-                itemBackground: const Color(0xFF171F20),
-                dropDownSpacing: Dimens.pt12)),
+        Obx(() => CommonDropdownSelector(
+            listData: logic.typeCodeList,
+            selectedIndex: logic.selectTypeValue.value,
+            onItemTap: logic.chooseBillType,
+            width: Dimens.pt170,
+            triggerHeight: Dimens.pt55,
+            borderColor: const Color(0xFFFFB715),
+            backgroundColor: Colors.transparent,
+            itemBackground: const Color(0xFF171F20),
+            dropDownSpacing: Dimens.pt12)),
 
         SizedBox(width: Dimens.pt80),
 
-        Obx(() =>
-            CommonDropdownSelector(
-                listData: logic.sysTypeCodeList,
-                selectedIndex: logic.selectSysTypeValue.value,
-                onItemTap: logic.chooseSysType,
-                width: Dimens.pt170,
-                triggerHeight: Dimens.pt55,
-                borderColor: const Color(0xFFFFB715),
-                backgroundColor: Colors.transparent,
-                itemBackground: const Color(0xFF171F20),
-                dropDownSpacing: Dimens.pt12)),
+        Obx(() => CommonDropdownSelector(
+            listData: logic.sysTypeCodeList,
+            selectedIndex: logic.selectSysTypeValue.value,
+            onItemTap: logic.chooseSysType,
+            width: Dimens.pt170,
+            triggerHeight: Dimens.pt55,
+            borderColor: const Color(0xFFFFB715),
+            backgroundColor: Colors.transparent,
+            itemBackground: const Color(0xFF171F20),
+            dropDownSpacing: Dimens.pt12)),
       ]),
       SizedBox(height: Dimens.pt25),
       Container(
@@ -264,50 +253,46 @@ class BillRecordPageView extends GetView<BillRecordController> {
               dataGetter: (int pageNum, int size) async {
                 IeDetailModel? model = await ApiRes.getIeDetailList(
                     pageNum: pageNum,
-                    dayType: logic.selectDateValue.value,
-                    ieType:logic.selectSysTypeValue.value,
+                    dayType: logic.selectedDateCodeValue,
+                    ieType: logic.selectSysTypeValue.value,
                     markType: logic.selectTypeValue.value);
-                    return model?.list ?? [];
-                },
+                return model?.list ?? [];
+              },
               emptyView: buildCommonEmptyView("宝贝,赶快充值一点点🤏吧～"),
               widgetBuilder:
                   (BuildContext context, List<dynamic> list, Widget? child) {
                 return ListView.separated(
-                    itemBuilder: (c, index) =>
-                        Container(
-                            height: Dimens.pt110,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color: Colors.white.withOpacity(.1)))),
-                            child: Row(children: [
-                              _getTableRow(
-                                  text: ((list[index].coinAmount ?? 0) / 100)
-                                      .toStringAsFixed(2)),
-                              SizedBox(width: Dimens.pt20),
-                              _getTableRow(
-                                  text: ((list[index].recharge ?? 0) / 100)
-                                      .toStringAsFixed(2),
-                                  width: Dimens.pt140),
-                              SizedBox(width: Dimens.pt20),
-                              _getTableRow(
-                                  text: TimeUtil.buildChineseYYMMDD(
-                                      list[index].createdAt ?? ""),
-                                  width: Dimens.pt160),
-                              SizedBox(width: Dimens.pt20),
-                              _getTableRow(
-                                  text: list[index].markType == 1
-                                      ? '收入'
-                                      : '支出',
-                                  width: Dimens.pt80),
-                              const Spacer(),
-                              _getTableRow(
-                                  text: TimeUtil.tranType(list[index].tranType),
-                                  width: Dimens.pt80),
-                            ])),
-                    separatorBuilder: (c, index) =>
-                        SizedBox(
+                    itemBuilder: (c, index) => Container(
+                        height: Dimens.pt110,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: Colors.white.withOpacity(.1)))),
+                        child: Row(children: [
+                          _getTableRow(
+                              text: ((list[index].coinAmount ?? 0) / 100)
+                                  .toStringAsFixed(2)),
+                          SizedBox(width: Dimens.pt20),
+                          _getTableRow(
+                              text: ((list[index].recharge ?? 0) / 100)
+                                  .toStringAsFixed(2),
+                              width: Dimens.pt140),
+                          SizedBox(width: Dimens.pt20),
+                          _getTableRow(
+                              text: TimeUtil.buildChineseYYMMDD(
+                                  list[index].createdAt ?? ""),
+                              width: Dimens.pt160),
+                          SizedBox(width: Dimens.pt20),
+                          _getTableRow(
+                              text: list[index].markType == 1 ? '收入' : '支出',
+                              width: Dimens.pt80),
+                          const Spacer(),
+                          _getTableRow(
+                              text: TimeUtil.tranType(list[index].tranType),
+                              width: Dimens.pt80),
+                        ])),
+                    separatorBuilder: (c, index) => SizedBox(
                           height: Dimens.pt10,
                         ),
                     itemCount: list.length);
@@ -357,17 +342,15 @@ class BillRecordPageView extends GetView<BillRecordController> {
               key: logic.withdrawalKey,
               dataGetter: (int pageNum, int size) async {
                 RechargeModel? model = await ApiRes.getWithdrawalList(
-                    pageNum: pageNum,
-                    dayType: logic.dateCodesList[logic.selectDateValue.value]
-                    ["value"]);
+                    pageNum: pageNum, dayType: logic.selectedDateCodeValue);
                 return model?.list ?? [];
               },
               emptyView: buildCommonEmptyView("宝贝,赶快充值一点点吧～"),
               widgetBuilder:
                   (BuildContext context, List<dynamic> list, Widget? child) {
+                print("list.length===>${list.length}");
                 return ListView.separated(
-                    itemBuilder: (c, index) =>
-                        Container(
+                    itemBuilder: (c, index) => Container(
                           height: Dimens.pt110,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
@@ -396,33 +379,30 @@ class BillRecordPageView extends GetView<BillRecordController> {
                             const Spacer(),
                             _getTableRow(
                                 text: "详情",
-                                onTap: () =>
-                                    Get.toNamed(
+                                onTap: () => Get.toNamed(
                                         Routes.GAME_DETAILS_PAGE,
                                         arguments: {
                                           "id": "${list[index].id}",
                                           "billType":
-                                          "${BillInfoType.billTypeWithdraw
-                                              .index}"
+                                              "${BillInfoType.billTypeWithdraw.index}"
                                         }),
                                 color: AppColors.textYellowColor,
                                 width: Dimens.pt80),
                           ]),
                         ),
                     separatorBuilder: (c, index) =>
-                        SizedBox(
-                          height: Dimens.pt10,
-                        ),
+                        SizedBox(height: Dimens.pt10),
                     itemCount: list.length);
               }))
     ]);
   }
 
-  Widget _getTableRow({double? width,
-    String? text,
-    double? fontSize,
-    Color? color,
-    Function? onTap}) {
+  Widget _getTableRow(
+      {double? width,
+      String? text,
+      double? fontSize,
+      Color? color,
+      Function? onTap}) {
     return GestureDetector(
       onTap: () => onTap?.call(),
       child: SizedBox(
@@ -455,17 +435,14 @@ class BillRecordPageView extends GetView<BillRecordController> {
               key: logic.rechargeKey,
               dataGetter: (int pageNum, int size) async {
                 RechargeModel? model = await ApiRes.getRechargeList(
-                    pageNum: pageNum,
-                    dayType: logic.dateCodesList[logic.selectDateValue.value]
-                    ["value"]);
+                    pageNum: pageNum, dayType: logic.selectedDateCodeValue);
                 return model?.list ?? [];
               },
               emptyView: buildCommonEmptyView("宝贝,赶快充值一点点吧～"),
               widgetBuilder:
                   (BuildContext context, List<dynamic> list, Widget? child) {
                 return ListView.separated(
-                    itemBuilder: (c, index) =>
-                        Container(
+                    itemBuilder: (c, index) => Container(
                           height: Dimens.pt110,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
@@ -479,7 +456,7 @@ class BillRecordPageView extends GetView<BillRecordController> {
                             SizedBox(width: Dimens.pt45),
                             _getTableRow(
                                 text:
-                                TimeUtil.paymentType(list[index].payMode)),
+                                    TimeUtil.paymentType(list[index].payMode)),
                             SizedBox(width: Dimens.pt45),
                             _getTableRow(
                                 text: TimeUtil.buildChineseYYMMDD(
@@ -491,8 +468,7 @@ class BillRecordPageView extends GetView<BillRecordController> {
                                     list[index].status ?? "")),
                           ]),
                         ),
-                    separatorBuilder: (c, index) =>
-                        SizedBox(
+                    separatorBuilder: (c, index) => SizedBox(
                           height: Dimens.pt10,
                         ),
                     itemCount: list.length);
@@ -510,8 +486,8 @@ class BillRecordPageView extends GetView<BillRecordController> {
           decoration: BoxDecoration(
               border: index != (list ?? []).length - 1
                   ? Border(
-                  bottom: BorderSide(
-                      color: const Color(0xFFFFB715), width: Dimens.pt2))
+                      bottom: BorderSide(
+                          color: const Color(0xFFFFB715), width: Dimens.pt2))
                   : null),
           child: Text(list?[index]["name"] ?? "",
               style: TextStyle(fontSize: Dimens.pt24, color: Colors.white))),
@@ -523,56 +499,52 @@ class BillRecordPageView extends GetView<BillRecordController> {
     return Positioned(
         top: Dimens.pt55 + Dimens.pt80,
         left: screen.screenWidth / 2 + Dimens.pt16,
-        child: Obx(() =>
-            AnimatedOpacity(
-                duration: Durations.short4,
-                opacity: logic.showSysTypeChoose.value ? 1 : 0,
-                child: IgnorePointer(
-                    ignoring: !logic.showSysTypeChoose.value,
-                    child: Container(
-                        width: Dimens.pt170,
-                        decoration: BoxDecoration(
-                            color: Color(0xFF171F20),
-                            border: Border.all(color: Color(0xFFFFB715)),
-                            borderRadius: BorderRadius.circular(Dimens.pt6)),
-                        child: Column(children: [
-                          ...List.generate(
-                              logic.sysTypeCodeList.length,
-                                  (index) =>
-                                  _buildDropdownItem(
-                                      list: logic.sysTypeCodeList,
-                                      onTap: () => logic.chooseSysType(index),
-                                      index: index))
-                        ]))))));
+        child: Obx(() => AnimatedOpacity(
+            duration: Durations.short4,
+            opacity: logic.showSysTypeChoose.value ? 1 : 0,
+            child: IgnorePointer(
+                ignoring: !logic.showSysTypeChoose.value,
+                child: Container(
+                    width: Dimens.pt170,
+                    decoration: BoxDecoration(
+                        color: Color(0xFF171F20),
+                        border: Border.all(color: Color(0xFFFFB715)),
+                        borderRadius: BorderRadius.circular(Dimens.pt6)),
+                    child: Column(children: [
+                      ...List.generate(
+                          logic.sysTypeCodeList.length,
+                          (index) => _buildDropdownItem(
+                              list: logic.sysTypeCodeList,
+                              onTap: () => logic.chooseSysType(index),
+                              index: index))
+                    ]))))));
   }
 
   Widget _buildDateChooseView() {
     BillRecordController logic = Get.find<BillRecordController>();
     return Positioned(
         top: Dimens.pt65,
-        child: Obx(() =>
-            AnimatedOpacity(
-                duration: Durations.short4,
-                opacity: logic.showDateChoose.value ? 1 : 0,
-                child: IgnorePointer(
-                  ignoring: !logic.showDateChoose.value,
-                  child: Container(
-                      width: Dimens.pt100,
-                      decoration: BoxDecoration(
-                          color: Color(0xFF171F20),
-                          border: Border.all(color: Color(0xFFFFB715)),
-                          borderRadius: BorderRadius.circular(Dimens.pt6)),
-                      child: Column(children: [
-                        ...List.generate(
-                            logic.dateCodesList.length,
-                                (index) =>
-                                GestureDetector(
-                                    onTap: () => logic.chooseDate(index),
-                                    child: _buildDropdownItem(
-                                        list: logic.dateCodesList,
-                                        onTap: () => logic.chooseDate(index),
-                                        index: index)))
-                      ])),
-                ))));
+        child: Obx(() => AnimatedOpacity(
+            duration: Durations.short4,
+            opacity: logic.showDateChoose.value ? 1 : 0,
+            child: IgnorePointer(
+              ignoring: !logic.showDateChoose.value,
+              child: Container(
+                  width: Dimens.pt100,
+                  decoration: BoxDecoration(
+                      color: Color(0xFF171F20),
+                      border: Border.all(color: Color(0xFFFFB715)),
+                      borderRadius: BorderRadius.circular(Dimens.pt6)),
+                  child: Column(children: [
+                    ...List.generate(
+                        logic.dateCodesList.length,
+                        (index) => GestureDetector(
+                            onTap: () => logic.chooseDate(index),
+                            child: _buildDropdownItem(
+                                list: logic.dateCodesList,
+                                onTap: () => logic.chooseDate(index),
+                                index: index)))
+                  ])),
+            ))));
   }
 }

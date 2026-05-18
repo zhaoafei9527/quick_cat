@@ -71,7 +71,7 @@ class GameWebViewPageController extends GetxController {
   quiteExitGame() async {
     List<String> btnList = ["否", "是"];
     ShareKeys shareKeys = Get.find<ShareKeys>();
-    shareKeys.getUserBalance();
+
     await showPlayerCommonDialog(Get.context!,
         isGameDialog: true,
         content: "确认退出游戏？",
@@ -79,15 +79,16 @@ class GameWebViewPageController extends GetxController {
         btnCall: [
           () => Get.back(),
           () async {
+            await ApiRes.exitGame(gamePlatform: platform ?? 0);
+            await shareKeys.getUserBalance();
             AppUtils.jumpToHome(index: 2);
-            ApiRes.exitGame(gamePlatform: platform ?? 0);
           }
         ]);
   }
 
   exitGame() async {
     AppUtils.jumpToHome(index: 2);
-    ApiRes.exitGame(gamePlatform: platform ?? 0);
+    await ApiRes.exitGame(gamePlatform: platform ?? 0);
     await ApiRes.oneClickScore();
   }
 

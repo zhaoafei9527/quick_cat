@@ -37,7 +37,7 @@ class DetailList {
   String? icon; // 游戏图标
   String? title; // 游戏标题
   num? totalProfit; // 总盈亏
-  double? totalValidBet; // 总有效投注额
+  int? totalValidBet; // 总有效投注额
   int? count; // 下单注
 
   String? recordId;
@@ -66,6 +66,7 @@ class DetailList {
     time = json['time'];
     count = json['count'];
     gameTime = json['gameTime'];
+    icon = json['icon'];
     totalValidBet = json['totalValidBet'];
   }
 
@@ -73,6 +74,7 @@ class DetailList {
     final data = <String, dynamic>{};
     data['gamePlatform'] = gamePlatform;
     data['title'] = title;
+    data['icon'] = icon;
     data['count'] = count;
     data['totalProfit'] = totalProfit;
     data['recordId'] = recordId;
