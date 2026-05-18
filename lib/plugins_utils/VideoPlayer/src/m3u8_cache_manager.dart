@@ -197,6 +197,11 @@ class M3u8CacheManager {
           final rangeHeader = request.headers[HttpHeaders.rangeHeader];
           final totalLen = await file.length();
           final contentType = _guessMimeType(originUrl);
+          final task = _findTaskBySegment(originUrl);
+          if (task != null) {
+            _markSegmentCached(task, originUrl, totalLen);
+            unawaited(_prefetchAhead(task, originUrl));
+          }
 
           log.i("_cache_manager", "文件大小: $totalLen, 类型: $contentType");
 
@@ -209,14 +214,6 @@ class M3u8CacheManager {
                 : (totalLen - 1);
             final clampedStart = start.clamp(0, totalLen - 1);
             final clampedEnd = end.clamp(clampedStart, totalLen - 1);
-
-            // 统计更新使用区间大小
-            final task = _findTaskBySegment(originUrl);
-            if (task != null) {
-              final partLen = (clampedEnd - clampedStart + 1);
-              task.downloadedBytes += partLen;
-              task.downloadedSegments += 1;
-            }
 
             return Response(
               206,
@@ -234,11 +231,6 @@ class M3u8CacheManager {
           }
 
           // 非 Range 全量返回
-          final task = _findTaskBySegment(originUrl);
-          if (task != null) {
-            task.downloadedBytes += totalLen;
-            task.downloadedSegments += 1;
-          }
           return Response.ok(
             file.openRead(),
             headers: {
@@ -264,7 +256,7 @@ class M3u8CacheManager {
     );
     _proxyBaseUrl = "http://127.0.0.1:$port";
 
-    print("✅ Proxy started: $_proxyBaseUrl");
+    log.i("_cache_manager", "Proxy started: $_proxyBaseUrl");
   }
 
   /// 获取代理地址
@@ -277,7 +269,7 @@ class M3u8CacheManager {
 
   /// 传入远程m3u8，开始解析并缓存，返回可播放的本地m3u8地址
   Future<String> preparePlayableUrl(String remoteM3u8Url,
-      {MediaInfo? mediaInfo}) async {
+      {MediaInfo? mediaInfo, int cacheAheadSegmentCount = 2}) async {
     // 非 m3u8 直连回退
     if (!remoteM3u8Url.toLowerCase().contains('.m3u8')) {
       return remoteM3u8Url;
@@ -297,9 +289,14 @@ class M3u8CacheManager {
 
     var task = _urlToTask[normalized];
     if (task == null) {
-      task = _DownloadTask(url: normalized, proxyBase: _proxyBaseUrl!);
+      task = _DownloadTask(
+          url: normalized,
+          proxyBase: _proxyBaseUrl!,
+          cacheAheadSegmentCount: cacheAheadSegmentCount);
       _urlToTask[normalized] = task;
       unawaited(_startDownloadTask(task, mediaInfo: mediaInfo));
+    } else {
+      task.cacheAheadSegmentCount = cacheAheadSegmentCount;
     }
     await task.waitForPlaylistReady(timeout: const Duration(seconds: 5));
     return "$_proxyBaseUrl/playlist/${task.taskId}";
@@ -364,6 +361,7 @@ class M3u8CacheManager {
         unawaited(_addToIndex(mediaId));
       }
       task.dispose();
+      _urlToTask.remove(task.url);
     }
   }
 
@@ -429,7 +427,6 @@ class M3u8CacheManager {
         // 如果无法访问缓存目录，只使用任务统计
       }
 
-
       return totalBytes / (1024 * 1024); // 转换为 MB
     } catch (e) {
       log.i("_cache_manager", "获取缓存大小失败: $e");
@@ -461,6 +458,9 @@ class M3u8CacheManager {
   }
 
   _DownloadTask? _findTaskBySegment(String segmentUrl) {
+    for (final t in _urlToTask.values) {
+      if (t.segmentUris.any((uri) => uri.toString() == segmentUrl)) return t;
+    }
     // 通过前缀匹配所属playlist的host判断
     try {
       final host = Uri.parse(segmentUrl).origin;
@@ -473,6 +473,51 @@ class M3u8CacheManager {
       return null;
     } catch (_) {
       return null;
+    }
+  }
+
+  void _markSegmentCached(_DownloadTask task, String segmentUrl, int length) {
+    if (!task.cachedSegmentUrls.add(segmentUrl)) return;
+    task.downloadedBytes += length;
+    task.downloadedSegments = task.cachedSegmentUrls.length;
+    task.progressController.add(CacheEvent(
+      progress: task.totalSegments == 0
+          ? 0
+          : min(1.0, task.downloadedSegments / task.totalSegments),
+      downloadedBytes: task.downloadedBytes,
+      downloadedSegments: task.downloadedSegments,
+      speedKBps: 0,
+    ));
+  }
+
+  Future<void> _prefetchAhead(
+      _DownloadTask task, String currentSegmentUrl) async {
+    if (task.cacheAheadSegmentCount <= 0 || task.segmentUris.isEmpty) return;
+    final currentIndex = task.segmentUris
+        .indexWhere((uri) => uri.toString() == currentSegmentUrl);
+    if (currentIndex < 0) return;
+    final end = min(
+      task.segmentUris.length - 1,
+      currentIndex + task.cacheAheadSegmentCount,
+    );
+    for (var i = currentIndex + 1; i <= end; i++) {
+      if (task.isDisposed) return;
+      await task.waitIfPaused();
+      final segmentUrl = task.segmentUris[i].toString();
+      if (task.cachedSegmentUrls.contains(segmentUrl) ||
+          !task.prefetchingSegmentUrls.add(segmentUrl)) {
+        continue;
+      }
+      try {
+        await _initCacheManager();
+        final file = await _cacheManager.getSingleFile(segmentUrl);
+        if (task.isDisposed) return;
+        _markSegmentCached(task, segmentUrl, await file.length());
+      } catch (e) {
+        log.i("_cache_manager", "预取分片失败: $segmentUrl, 错误: $e");
+      } finally {
+        task.prefetchingSegmentUrls.remove(segmentUrl);
+      }
     }
   }
 
@@ -570,6 +615,7 @@ class M3u8CacheManager {
       }
 
       task.totalSegments = max(1, segmentUris.length);
+      task.segmentUris = segmentUris;
       // 确保含有 #EXTM3U 作为首行
       if (!hasExtm3u) {
         rewritten.insert(0, '#EXTM3U');
@@ -595,8 +641,8 @@ class M3u8CacheManager {
       // 通知playlist已就绪
       task._playlistReadyCompleter?.complete();
 
-      // 3. 主动拉取分片到缓存（顺序下载，支持暂停/恢复）
-      await _downloadSegments(task, segmentUris);
+      // 3. 不再进入页面后拉完整个 m3u8，分片由本地代理按播放进度按需缓存。
+      //    代理收到当前分片请求时，会按 cacheAheadSegmentCount 预取后续少量分片。
 
       // 4. 如果有 MediaInfo，保存缓存信息到内存
       if (mediaInfo != null && mediaInfo.id != null) {
@@ -607,61 +653,21 @@ class M3u8CacheManager {
     }
   }
 
-  Future<void> _downloadSegments(_DownloadTask task, List<Uri> segments) async {
-    // 定时速度上报
-    Timer? timer;
-    int lastBytes = 0;
-    timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      final diff = task.downloadedBytes - lastBytes;
-      lastBytes = task.downloadedBytes;
-      final speedKBps = diff / 1024;
-      final event = CacheEvent(
-        progress: task.totalSegments == 0
-            ? 0
-            : min(1.0, task.downloadedSegments / task.totalSegments),
-        downloadedBytes: task.downloadedBytes,
-        downloadedSegments: task.downloadedSegments,
-        speedKBps: speedKBps,
-      );
-      task.progressController.add(event);
-    });
-
-    try {
-      for (final uri in segments) {
-        if (task.isDisposed) break;
-        // 等待恢复
-        await task.waitIfPaused();
-        // 使用缓存管理器拉取，命中则立即返回
-        await _initCacheManager();
-        final file = await _cacheManager.getSingleFile(uri.toString());
-        final len = await file.length();
-        task.downloadedBytes += len;
-        task.downloadedSegments += 1;
-      }
-      // 完成上报一次
-      final event = CacheEvent(
-        progress: 1.0,
-        downloadedBytes: task.downloadedBytes,
-        downloadedSegments: task.downloadedSegments,
-        speedKBps: 0,
-      );
-      task.progressController.add(event);
-    } finally {
-      timer.cancel();
-    }
-  }
-
   Future<String> _fetchText(String url) async {
     final client = HttpClient();
-    client.userAgent = 'Dart/CacheManager';
-    final req = await client.getUrl(Uri.parse(url));
-    final resp = await req.close();
-    if (resp.statusCode != 200) {
-      throw HttpException('fetch m3u8 failed: ${resp.statusCode}',
-          uri: Uri.parse(url));
+    try {
+      client.userAgent = 'Dart/CacheManager';
+      final req = await client.getUrl(Uri.parse(url));
+      final resp = await req.close();
+      if (resp.statusCode != 200) {
+        throw HttpException('fetch m3u8 failed: ${resp.statusCode}',
+            uri: Uri.parse(url));
+      }
+      final bytes = await resp.fold<List<int>>([], (p, e) => p..addAll(e));
+      return utf8.decode(bytes);
+    } finally {
+      client.close(force: true);
     }
-    final bytes = await resp.fold<List<int>>([], (p, e) => p..addAll(e));
-    return utf8.decode(bytes);
   }
 
   Uri? _pickMediaPlaylistUri(String baseUrl, String content) {
@@ -843,8 +849,16 @@ class _DownloadTask {
   int totalSegments = 0;
   String? rewrittenPlaylistContent;
   String? sourceOrigin;
+  int cacheAheadSegmentCount;
+  List<Uri> segmentUris = [];
+  final Set<String> cachedSegmentUrls = {};
+  final Set<String> prefetchingSegmentUrls = {};
 
-  _DownloadTask({required this.url, required this.proxyBase});
+  _DownloadTask({
+    required this.url,
+    required this.proxyBase,
+    required this.cacheAheadSegmentCount,
+  });
 
   // 播放列表就绪信号
   Completer<void>? _playlistReadyCompleter;

@@ -7,11 +7,11 @@ import 'package:quick_cat_client/app/model/home/config_model_model.dart';
 import 'package:quick_cat_client/app/model/home/video_play_model.dart';
 import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/fijk_tiktok_panel.dart';
+import 'package:quick_cat_client/plugins_utils/video_player_core/video_player_core.dart';
 import 'package:quick_cat_client/utils/logger_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../app/data/ads_type.dart';
@@ -28,7 +28,8 @@ class FijkTiktokFeedPage extends StatefulWidget {
   final List<MediaInfo> medias;
   final int initIndex;
   final bool firstPlay; // 是否第一次播放（默认 false）
-  final int cacheCount; // 最多同时保留几个 Player（默认 5）
+  final int cacheCount; // 最多同时保留几个 Player（默认 3）
+  final int cacheAheadSegmentCount; // 播放进度后预缓存的 m3u8 分片数
   final FijkTiktokFeedController? controller;
   final Function(int pageNum)? onLoadMore; // 可选：加载更多回调
   final Function(int id)? onVideoPlay; // 可选：播放视频回调（用于广告等）
@@ -38,7 +39,8 @@ class FijkTiktokFeedPage extends StatefulWidget {
       {super.key,
       required this.medias,
       this.controller,
-      this.cacheCount = 5,
+      this.cacheCount = 3,
+      this.cacheAheadSegmentCount = 2,
       this.onLoadMore,
       this.onVideoPlay,
       this.onAdsClick,
@@ -51,12 +53,11 @@ class FijkTiktokFeedPage extends StatefulWidget {
 
 class _FijkTiktokFeedPageState extends State<FijkTiktokFeedPage>
     with WidgetsBindingObserver {
-  late final PageController _pageController;
-  late final PlayerPoolManager _pool;
   late List<MediaInfo> _medias;
+  final CoreFijkTiktokFeedController _coreController =
+      CoreFijkTiktokFeedController();
   int _current = 0;
   int pageNum = 1; // 当前页码
-  bool _loading = false;
   bool initOk = false;
 
   // 移除未使用的字段
@@ -67,81 +68,56 @@ class _FijkTiktokFeedPageState extends State<FijkTiktokFeedPage>
     WidgetsBinding.instance.addObserver(this);
     // 初始化tiktok 页面控制器 计算进入时最大的页码位置
     pageNum = widget.medias.length ~/ 10;
-    _pageController = PageController(
-        initialPage: widget.initIndex, keepPage: true, viewportFraction: 1.0);
     getMediaList();
   }
 
   Future<void> getMediaList() async {
     _medias = await getAdsMediaList(widget.medias);
-    setState(() => initOk = true);
-    _pool = PlayerPoolManager(medias: _medias, capacity: widget.cacheCount);
     widget.controller?._attach(this);
-    // 预加载第 0 个及邻居（立即触发）
-    // ignore: discarded_futures
-    _pool.switchTo(widget.initIndex,
-        dir: ScrollDirection.idle, autoPlay: widget.firstPlay);
+    if (mounted) setState(() => initOk = true);
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    M3u8CacheManager manager = M3u8CacheManager();
-    manager.stop(_medias[_current].videoUrl ?? "");
-    _pageController.dispose();
-    _pool.disposeAll();
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // 前后台切换：仅对当前 index 的播放器做处理
-    final holder = _pool.holderOf(_current);
     ShareKeys shareKeys = Get.find<ShareKeys>();
-    if (holder == null) return;
     if (state == AppLifecycleState.paused ||
         state == AppLifecycleState.inactive ||
         state == AppLifecycleState.detached) {
-      holder.pause();
+      _coreController.togglePause(true);
     } else if (state == AppLifecycleState.resumed &&
         shareKeys.tabIndex.value == 1) {
-      // holder.play();
+      // _coreController.togglePause(false);
     }
   }
 
-  void _onPageChanged(int index) async {
-    final dir = index > _current
-        ? ScrollDirection.forward
-        : index < _current
-            ? ScrollDirection.reverse
-            : ScrollDirection.idle;
+  Future<void> _onCoreVideoPlay(CoreVideoItem item, int index) async {
     _current = index;
-    _pool.switchTo(index, dir: dir);
-    // 加载更多视频
-    if (_loading) return;
-    if (index >= _medias.length - 1 && widget.onLoadMore != null) {
-      // 如果到达最后一页，触发加载更多
-      _loading = true;
-      List<MediaInfo> model = await widget.onLoadMore!(pageNum + 1);
-      _loading = false;
-      if (model.isNotEmpty) _medias.addAll(model);
-      _medias = await getAdsMediaList(_medias);
-      // 同步更新 pool 中的 medias 引用，确保索引一致
-      _pool.updateMedias(_medias);
-
-      print("_mediasLen:${_medias.length},_poolLen:${_pool.medias.length}");
-      pageNum++;
-    }
+    final media = item.extra is MediaInfo ? item.extra as MediaInfo : null;
+    if (media == null || (media.isAds ?? false)) return;
+    unawaited(WatchRecord.addWatchRecord(media, MediaType.videoShort));
 
     // 请求视频播放权限
-    if (!(_medias[index].isAds ?? false)) {
-      MediaPlayModel? playModel =
-          await widget.onVideoPlay?.call(_medias[index].id ?? 0);
-      if (playModel != null && playModel.mediaInfo != null) {
-        _medias[index].playable = playModel.playable;
-      }
+    MediaPlayModel? playModel = await widget.onVideoPlay?.call(media.id ?? 0);
+    if (playModel != null && playModel.mediaInfo != null) {
+      media.playable = playModel.playable;
     }
-    setState(() {});
+  }
+
+  Future<List<CoreVideoItem>> _loadMoreCoreItems(int nextPage) async {
+    if (widget.onLoadMore == null) return [];
+    final model = await widget.onLoadMore!(nextPage);
+    if (model.isEmpty) return [];
+    final withAds = await getAdsMediaList(model);
+    _medias.addAll(withAds);
+    pageNum = nextPage;
+    log.i("_tiktok_player", "_mediasLen:${_medias.length}");
+    return withAds.map(_toCoreVideoItem).toList();
   }
 
   @override
@@ -156,25 +132,85 @@ class _FijkTiktokFeedPageState extends State<FijkTiktokFeedPage>
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.white))));
     }
     return Scaffold(
-        backgroundColor: Colors.black,
-        body: PageView.builder(
-            scrollDirection: Axis.vertical,
-            controller: _pageController,
-            physics: const PageScrollPhysics(),
-            onPageChanged: _onPageChanged,
-            itemCount: _medias.length,
-            itemBuilder: (context, index) {
-              final holder = _pool.holderOf(index);
-              bool isAds = _medias[index].isAds ?? false;
-              return !isAds
-                  ? FeedVideoItem(
-                      index: index,
-                      mediaInfo: _medias[index],
-                      controller: widget.controller,
-                      isActive: index == _current,
-                      holder: holder)
-                  : _buildAdsView(mediaInfo: _medias[index]);
-            }));
+      backgroundColor: Colors.black,
+      body: CoreFijkTiktokFeedPage(
+        items: _medias.map(_toCoreVideoItem).toList(),
+        initIndex: widget.initIndex,
+        firstPlay: widget.firstPlay,
+        playerCacheCount: widget.cacheCount,
+        cacheConfig: CoreVideoCacheConfig(
+          aheadSegmentCount: widget.cacheAheadSegmentCount,
+        ),
+        controller: _coreController,
+        isVideoItem: (item) {
+          final media =
+              item.extra is MediaInfo ? item.extra as MediaInfo : null;
+          return !(media?.isAds ?? false);
+        },
+        onLoadMore: _loadMoreCoreItems,
+        onVideoPlay: _onCoreVideoPlay,
+        coverBuilder: (_, item) {
+          final media =
+              item.extra is MediaInfo ? item.extra as MediaInfo : null;
+          return ImageLoader.withP(media?.coverImg ?? '',
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity)
+              .load();
+        },
+        placeholderBuilder: (_, item, __) {
+          final media =
+              item.extra is MediaInfo ? item.extra as MediaInfo : null;
+          return Stack(alignment: Alignment.center, children: [
+            ImageLoader.withP(media?.coverImg ?? '',
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity)
+                .load(),
+            CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
+          ]);
+        },
+        nonVideoItemBuilder: (_, item) {
+          final media =
+              item.extra is MediaInfo ? item.extra as MediaInfo : null;
+          return _buildAdsView(mediaInfo: media);
+        },
+        overlayBuilder: (context, item, player, state) {
+          final media =
+              item.extra is MediaInfo ? item.extra as MediaInfo : null;
+          return FijkTiktokPanel(
+            player,
+            viewSize: Size(
+              MediaQuery.of(context).size.width,
+              MediaQuery.of(context).size.height,
+            ),
+            mediaInfo: media,
+            buildContext: context,
+            controller: widget.controller,
+            texturePos: Rect.fromLTWH(
+              0,
+              0,
+              MediaQuery.of(context).size.width,
+              MediaQuery.of(context).size.height,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  CoreVideoItem _toCoreVideoItem(MediaInfo media) {
+    return CoreVideoItem(
+      id: media.id,
+      url: media.isAds == true ? '' : getVideoRemotePath(media.videoUrl ?? ''),
+      title: media.title,
+      coverUrl: media.coverImg,
+      width: media.width,
+      height: media.height,
+      playable: media.playable ?? true,
+      extra: media,
+    );
   }
 
   Widget _buildAdsView({MediaInfo? mediaInfo}) {
@@ -219,6 +255,27 @@ class _FijkTiktokFeedPageState extends State<FijkTiktokFeedPage>
                           color: theme.getColor(ThemeColor.primary))))
             ]))
       ]),
+    );
+  }
+
+  void appendMedias(List<MediaInfo> newMedias) {
+    setState(() {
+      _medias.addAll(newMedias);
+    });
+    _coreController.append(newMedias.map(_toCoreVideoItem).toList());
+  }
+
+  void resetMedias(List<MediaInfo> newMedias,
+      {int initIndex = 0, bool autoPlay = false}) {
+    setState(() {
+      _medias = List.of(newMedias);
+      _current = initIndex.clamp(0, newMedias.length - 1);
+      pageNum = newMedias.length ~/ 10;
+    });
+    _coreController.resetItems(
+      _medias.map(_toCoreVideoItem).toList(),
+      initIndex: _current,
+      autoPlay: autoPlay,
     );
   }
 }
@@ -296,6 +353,7 @@ class PlayerHolder {
   final int index; // 视频索引
   final String path;
   final MediaInfo? media;
+  final int cacheAheadSegmentCount;
   final FijkPlayer player = FijkPlayer();
   final ValueNotifier<bool> preparedNotifier = ValueNotifier(false);
 
@@ -310,8 +368,13 @@ class PlayerHolder {
   StreamSubscription<Duration>? _posSub;
   Timer? _loopGuardTimer;
   String _resolvedUri = ""; // 记录实际用于播放的地址，便于重置兜底
+  int _operationToken = 0;
 
-  PlayerHolder({required this.index, required this.path, this.media});
+  PlayerHolder(
+      {required this.index,
+      required this.path,
+      required this.cacheAheadSegmentCount,
+      this.media});
 
   bool get isDisposed => _isDisposed;
 
@@ -326,7 +389,8 @@ class PlayerHolder {
   bool get isLooping => _isLooping; // 添加getter
 
   /// 仅预加载（不自动播放）
-  Future<void> preload() async {
+  Future<void> preload({int? token}) async {
+    final int currentToken = token ?? _operationToken;
     await player.setOption(
         FijkOption.codecCategory, "mediacodec", 1); // 启用硬件解码（Android/iOS）
     await player.setOption(
@@ -343,18 +407,20 @@ class PlayerHolder {
     final cacheManager = M3u8CacheManager();
     String uri = getVideoRemotePath(path);
     try {
-      final localUri =
-          await cacheManager.preparePlayableUrl(uri, mediaInfo: media);
+      final localUri = await cacheManager.preparePlayableUrl(uri,
+          mediaInfo: media, cacheAheadSegmentCount: cacheAheadSegmentCount);
       uri = localUri;
     } catch (e) {
       // 出错时直接回退到原始可播放地址，避免一直卡缓冲
       log.i("_tiktok_player_play", "本地缓存播放解析出错：$e");
     }
 
-    if (_isDisposed || _isPrepared) return;
+    if (_isDisposed || _isPrepared || currentToken != _operationToken) return;
     player.addListener(_onPlayerStateChanged);
     await player.setDataSource(uri, autoPlay: false);
+    if (_isDisposed || currentToken != _operationToken) return;
     await player.prepareAsync();
+    if (_isDisposed || currentToken != _operationToken) return;
     _resolvedUri = uri;
     _isPrepared = true;
   }
@@ -386,23 +452,31 @@ class PlayerHolder {
   /// 开始播放（若尚未 prepare，会等待）
   Future<void> play() async {
     if (_isDisposed) return;
+    final int currentToken = ++_operationToken;
     if (!_isPrepared) {
-      await preload();
+      await preload(token: currentToken);
     }
+    if (_isDisposed || currentToken != _operationToken) return;
     await player.start();
   }
 
   Future<void> pause() async {
     if (_isDisposed) return;
+    _operationToken++;
     final cacheManager = M3u8CacheManager();
     if (player.state == FijkState.started) {
       cacheManager.stop(player.dataSource ?? "");
       await player.pause();
+    } else if (player.state == FijkState.asyncPreparing) {
+      try {
+        await player.reset();
+      } catch (_) {}
     }
   }
 
   Future<void> stop() async {
     if (_isDisposed) return;
+    _operationToken++;
     await player.stop();
   }
 
@@ -450,23 +524,20 @@ class PlayerHolder {
 class PlayerPoolManager {
   List<MediaInfo> medias;
   final int capacity; // 例如 5
+  final int cacheAheadSegmentCount;
   final Map<int, PlayerHolder> _holders = {};
 
   int currentIndex = 0;
 
-  PlayerPoolManager({required this.medias, this.capacity = 3}) {
+  PlayerPoolManager(
+      {required this.medias,
+      this.capacity = 3,
+      this.cacheAheadSegmentCount = 2}) {
     if (capacity < 1) {
       throw ArgumentError('Capacity must be at least 1');
     }
     if (medias.isEmpty) {
       throw ArgumentError('Media list cannot be empty');
-    }
-    // 初始化 holders
-    for (int i = 0; i < medias.length; i++) {
-      if (!(medias[i].isAds ?? false)) {
-        _holders[i] = PlayerHolder(
-            index: i, path: medias[i].videoUrl ?? "", media: medias[i]);
-      }
     }
   }
 
@@ -483,7 +554,10 @@ class PlayerPoolManager {
       return null;
     }
     return _holders[index] ??= PlayerHolder(
-        index: index, path: medias[index].videoUrl ?? "", media: medias[index]);
+        index: index,
+        path: medias[index].videoUrl ?? "",
+        media: medias[index],
+        cacheAheadSegmentCount: cacheAheadSegmentCount);
   }
 
   /// 追加一批视频到池中（仅限未存在的索引）
@@ -493,7 +567,10 @@ class PlayerPoolManager {
       final index = medias.length + i;
       if (!_holders.containsKey(index) && !(media.isAds ?? false)) {
         _holders[index] = PlayerHolder(
-            index: index, path: media.videoUrl ?? "", media: media);
+            index: index,
+            path: media.videoUrl ?? "",
+            media: media,
+            cacheAheadSegmentCount: cacheAheadSegmentCount);
         medias.add(media);
       }
     }
@@ -683,26 +760,14 @@ class FijkTiktokFeedController extends ChangeNotifier {
   void togglePause(bool pause) {
     final s = _state;
     if (s == null) return;
-    final holder = s._pool.holderOf(s._current);
-    if (holder == null) return;
-    if (pause) {
-      unawaited(holder.pause());
-    } else {
-      unawaited(holder.play());
-    }
+    s._coreController.togglePause(pause);
   }
 
   void resetMedias(List<MediaInfo> newMedias,
       {int initIndex = 0, bool autoPlay = false}) {
     final s = _state;
     if (s == null || newMedias.isEmpty) return;
-    s._medias.clear();
-    s._medias.addAll(newMedias);
-    // 同步更新 pool 中的 medias 引用
-    s._pool.updateMedias(s._medias);
-    s._pageController.jumpToPage(initIndex.clamp(0, newMedias.length - 1));
-    s.pageNum = newMedias.length ~/ 10;
-    s._current = initIndex;
+    s.resetMedias(newMedias, initIndex: initIndex, autoPlay: autoPlay);
     notifyListeners();
   }
 
@@ -710,16 +775,7 @@ class FijkTiktokFeedController extends ChangeNotifier {
   void append(List<MediaInfo> newMedias) {
     final s = _state;
     if (s == null || newMedias.isEmpty) return;
-    final start = s._medias.length;
-    s.setState(() {
-      s._medias.addAll(newMedias);
-    });
-    // 同步更新 pool 中的 medias 引用
-    s._pool.updateMedias(s._medias);
-    // 若正处在最后一项且继续向前浏览，补一次邻居预加载
-    if (start == s._current + 1) {
-      unawaited(s._pool.switchTo(s._current, dir: ScrollDirection.forward));
-    }
+    s.appendMedias(newMedias);
     notifyListeners();
   }
 
@@ -730,7 +786,7 @@ class FijkTiktokFeedController extends ChangeNotifier {
   Future<void> setAllLooping(bool loop) async {
     final s = _state;
     if (s == null) return;
-    await s._pool.setAllLooping(loop);
+    await s._coreController.setAllLooping(loop);
     notifyListeners();
   }
 
@@ -738,7 +794,7 @@ class FijkTiktokFeedController extends ChangeNotifier {
   Future<void> setCurrentLooping(bool loop) async {
     final s = _state;
     if (s == null) return;
-    await s._pool.setLooping(s._current, loop);
+    await s._coreController.setCurrentLooping(loop);
     notifyListeners();
   }
 
@@ -746,7 +802,7 @@ class FijkTiktokFeedController extends ChangeNotifier {
   bool getCurrentLooping() {
     final s = _state;
     if (s == null) return true;
-    return s._pool.getLooping(s._current);
+    return s._coreController.getCurrentLooping();
   }
 }
 

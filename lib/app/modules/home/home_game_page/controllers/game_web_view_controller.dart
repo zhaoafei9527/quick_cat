@@ -88,6 +88,7 @@ class GameWebViewPageController extends GetxController {
   exitGame() async {
     AppUtils.jumpToHome(index: 2);
     ApiRes.exitGame(gamePlatform: platform ?? 0);
+    await ApiRes.oneClickScore();
   }
 
   static Future<void> openGameWebView({

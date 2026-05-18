@@ -74,19 +74,19 @@ class _AppLifecycleHandlerState extends State<AppLifecycleHandler>
         unawaited(playerManager.pauseForAppLifecycle());
         cacheManager.pauseAll();
         // 后台时、重新调用退出游戏接口，确保游戏状态正确
-        if (Get.isRegistered<GameWebViewPageController>()) {
-          final game = Get.find<GameWebViewPageController>();
-          unawaited(game.exitGame());
-        }
+        // if (Get.isRegistered<GameWebViewPageController>()) {
+        //   final game = Get.find<GameWebViewPageController>();
+        //   unawaited(game.exitGame());
+        // }
         break;
       case AppLifecycleState.detached:
         unawaited(playerManager.disposeForAppExit());
         cacheManager.stopAll();
         unawaited(cacheManager.stopProxy());
-        if (Get.isRegistered<GameWebViewPageController>()) {
-          final game = Get.find<GameWebViewPageController>();
-          unawaited(game.exitGame());
-        }
+        // if (Get.isRegistered<GameWebViewPageController>()) {
+        //   final game = Get.find<GameWebViewPageController>();
+        //   unawaited(game.exitGame());
+        // }
         break;
     }
   }

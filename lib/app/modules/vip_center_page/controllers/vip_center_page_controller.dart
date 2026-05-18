@@ -175,22 +175,22 @@ class VipCenterPageController extends GetxController {
   }
 
   void goWithdrawCash() async {
-    ShareKeys shareKeys = Get.find<ShareKeys>();
-    if ((shareKeys.userInfo.mobile ?? "").isNotEmpty) {
-      Get.toNamed(Routes.WITHDRAW_CASH_BANK);
-    } else {
+    UserInfo userInfo = Get.find<ShareKeys>().userInfo;
+    if (userInfo.mobile == null || userInfo.mobile?.isEmpty == true) {
       showPlayerCommonDialog(Get.context!,
-          title: "友情提示",
+          title: "温情提示",
           content:
-              "当前为游客账号,为避免账号丢失,请绑定手\n机号码升级成正式账号！\n正式账号特权：\n1.立即获得3元现金\n2.可提现APP余额\n3.可通过手机登陆",
+          "当前为游客账号,为避免账号丢失,请绑定手\n机号码升级成正式账号！\n正式账号特权：\n1.立即获得3元现金\n2.可提现APP余额\n3.可通过手机登陆",
           btnList: ["立即绑定"],
           btnCall: [
-            () {
+                () {
               Get.back();
               Get.toNamed(Routes.BIND_MOBILE_PAGE);
             }
           ],
           btnActionIndex: 0);
+    } else {
+      Get.toNamed(Routes.WITHDRAW_TYPE_PAGE);
     }
   }
 

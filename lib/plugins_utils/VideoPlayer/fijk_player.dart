@@ -6,6 +6,7 @@ import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/barrage_builder.dart';
 import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/fijk_panel.dart';
 import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/m3u8_cache_manager.dart';
+import 'package:quick_cat_client/plugins_utils/video_player_core/video_player_core.dart';
 import 'package:quick_cat_client/utils/common_util.dart';
 import 'package:quick_cat_client/utils/logger_utils.dart';
 import 'package:quick_cat_client/utils/screen.dart';
@@ -27,9 +28,10 @@ class FIJKVideoPlayer extends StatefulWidget {
   final bool? loop; // 是否循环播放
   final MediaInfo? mediaInfo; // 视频信息
   final double? aspectRatio;
+  final int cacheAheadSegmentCount; // 播放进度后预缓存的 m3u8 分片数
   final Function? onCompleted; // 完成播放会调
 
-  FIJKVideoPlayer(
+  const FIJKVideoPlayer(
       {super.key,
       required this.url,
       this.title,
@@ -39,6 +41,7 @@ class FIJKVideoPlayer extends StatefulWidget {
       this.canPlay = true,
       this.loop = true,
       this.aspectRatio = 9 / 16,
+      this.cacheAheadSegmentCount = 2,
       this.mediaInfo,
       this.onCompleted});
 
@@ -57,17 +60,7 @@ class _FIJKVideoPlayerState extends State<FIJKVideoPlayer> {
   }
 
   Future<void> initPlayVideo() async {
-    final cacheManager = M3u8CacheManager();
     videoUri = getVideoRemotePath(widget.url);
-    try {
-      final playableUrl = await cacheManager.preparePlayableUrl(videoUri,
-          mediaInfo: widget.mediaInfo);
-      videoUri = playableUrl;
-    } catch (e) {
-      // 出错时直接回退到原始可播放地址，避免一直卡缓冲
-      videoUri = videoUri;
-    }
-
     // 使用 FIJKPlayerManager 获取或创建播放器实例
     final playerManager = FIJKPlayerManager();
     playerManager.player?.setLoop(0);
@@ -79,7 +72,7 @@ class _FIJKVideoPlayerState extends State<FIJKVideoPlayer> {
       setState(() {});
     } else {
       // 获取或创建播放器实例
-      playerManager.getPlayer(url: videoUri, autoPlay: true);
+      playerManager.getPlayer();
     }
 
     // 如果是简单模式，设置播放器为简单模式
@@ -99,7 +92,7 @@ class _FIJKVideoPlayerState extends State<FIJKVideoPlayer> {
       setState(() => _playable = playerManager.player!.isPlayable());
     }
     if (playerManager.player?.state == FijkState.prepared) {
-      print(
+      log.i("_fijk_player_log",
           "widget.autoPlay${widget.autoPlay}===>playerManager.playMark${playerManager.playMark}");
       if (!widget.autoPlay && !playerManager.playMark) {
         playerManager.player?.pause();
@@ -131,26 +124,55 @@ class _FIJKVideoPlayerState extends State<FIJKVideoPlayer> {
   Widget build(BuildContext context) {
     ThemeManager theme = Get.find<ThemeManager>();
     final playerManager = FIJKPlayerManager();
+    final player = playerManager.getPlayer();
 
-    return _playable && playerManager.hasPlayer
-        ? FijkView(
-            player: playerManager.player!,
-            color: theme.getColor(ThemeColor.bg),
-            cover: ImageLoader.withP(widget.cover).loadMemory(),
-            panelBuilder: (player, data, context, size, rect) =>
-                CustomFIJKPlayer(player,
-                    buildContext: context, viewSize: size, texturePos: rect),
-            height: screen.screenWidth * widget.aspectRatio!,
-            fs: true,
-            width: screen.screenWidth)
-        : Container(
-            height: screen.screenWidth * widget.aspectRatio!,
-            width: screen.screenWidth,
-            color: theme.getColor(ThemeColor.bg),
-            child: Stack(alignment: Alignment.center, children: [
-              ImageLoader.withP(widget.cover, width: screen.screenWidth).load(),
-              getLoadingWidget()
-            ]));
+    return SizedBox(
+      height: screen.screenWidth * widget.aspectRatio!,
+      width: screen.screenWidth,
+      child: CoreFijkVideoPlayer(
+        item: CoreVideoItem(
+          id: widget.mediaInfo?.id,
+          url: getVideoRemotePath(widget.url),
+          title: widget.title ?? widget.mediaInfo?.title,
+          coverUrl: widget.cover,
+          extra: widget.mediaInfo,
+        ),
+        player: player,
+        releasePlayerOnDispose: false,
+        autoPlay: widget.autoPlay,
+        loop: false,
+        aspectRatio: 1 / widget.aspectRatio!,
+        fs: true,
+        backgroundColor: theme.getColor(ThemeColor.bg),
+        cacheConfig: CoreVideoCacheConfig(
+          aheadSegmentCount: widget.cacheAheadSegmentCount,
+        ),
+        onPlayableUrlResolved: (url) {
+          videoUri = url;
+          playerManager.videoRemoteUri = url;
+        },
+        onStateChanged: (state) {
+          if (!_playable && state.prepared && mounted) {
+            setState(() => _playable = true);
+          }
+        },
+        coverBuilder: (_, __) =>
+            Image(image: ImageLoader.withP(widget.cover).loadMemory()),
+        placeholderBuilder: (_, __, ___) => Container(
+          color: theme.getColor(ThemeColor.bg),
+          child: Stack(alignment: Alignment.center, children: [
+            ImageLoader.withP(widget.cover, width: screen.screenWidth).load(),
+            getLoadingWidget()
+          ]),
+        ),
+        panelBuilder: (player, data, context, size, rect) => CustomFIJKPlayer(
+          player,
+          buildContext: context,
+          viewSize: size,
+          texturePos: rect,
+        ),
+      ),
+    );
   }
 }
 
@@ -162,7 +184,7 @@ class FIJKPlayerManager {
 
   FIJKPlayerManager._internal();
 
-  String PLAYER_BOOM_KEY = "_key_set_player_boom";
+  String playerBoomKey = "_key_set_player_boom";
 
   // 播放器全剧状态部分
   bool isFullScreen = false; // 是否全屏状态
@@ -235,7 +257,7 @@ class FIJKPlayerManager {
 
   void setPlayerBoom(bool status) {
     isOpenBoom = status;
-    lightKV.setBool(PLAYER_BOOM_KEY, status);
+    lightKV.setBool(playerBoomKey, status);
   }
 
   void togglePlay() {

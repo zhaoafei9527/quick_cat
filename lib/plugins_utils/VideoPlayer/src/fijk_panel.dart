@@ -219,7 +219,7 @@ class _CustomFIJKPlayerState extends State<CustomFIJKPlayer> {
 
   Future<void> _getBoomStatus() async {
     FIJKPlayerManager manager = FIJKPlayerManager();
-    bool? status = await lightKV.getBool(manager.PLAYER_BOOM_KEY);
+    bool? status = await lightKV.getBool(manager.playerBoomKey);
     _openPlayerBoom = status ?? false;
   }
 
