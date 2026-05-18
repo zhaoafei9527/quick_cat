@@ -204,17 +204,16 @@ class WithdrawCashFormWidget extends GetView<WithdrawCashBankController> {
                                         TextSpan(
                                             text:
                                                 "2.提现后会经过人工审核，确保您的资金安全，请耐心等候\n"
-                                                "3.单笔提现金额200～30000元（整数提现）\n"
+                                                "3.单笔提现金额${logic.withdrawAmountRangeText}元（整数提现）\n"
                                                 "4.如提现后长时间未通过审核，可能是提现款项系统卡单，此笔订单将会原路返回，请不用担心\n"
                                                 "6.提现前请核对您的银行卡信息是否有误，避免提现失败，提现前核查银行卡状态是否正常，避免提现后资金异常无法使用\n"
                                                 "7.提现资金均为正常金流，无需担心资金安全，如果提现后银行卡出现异常状态，请联系在线客服进行反馈\n")
                                       else
                                         TextSpan(
-                                            text:
-                                                "2.电子钱包提现秒到账；无风控，保护您的资金安全 "
-                                                    "3.单笔提现金额200～30000元（整数提现） "
-                                                    "4.请完整填写电子钱包账户钱包地址 "
-                                                    "5.严正声明：本平台严禁洗黑钱，恶意套利等行为，一经发现，严肃处理！")
+                                            text: "2.电子钱包提现秒到账；无风控，保护您的资金安全 "
+                                                "3.单笔提现金额${logic.withdrawAmountRangeText}元（整数提现） "
+                                                "4.请完整填写电子钱包账户钱包地址 "
+                                                "5.严正声明：本平台严禁洗黑钱，恶意套利等行为，一经发现，严肃处理！")
                                     ]),
                                 style: TextStyle(
                                     fontSize: Dimens.pt24,
@@ -268,8 +267,8 @@ class WithdrawCashFormWidget extends GetView<WithdrawCashBankController> {
         focusNode: logic.cashFocusNode,
         controller: logic.cashField,
         inputType: TextInputType.number,
-        maxLength: 10,
-        hintText: "单笔提现金额 200-30000元（整数)",
+        maxLength: logic.cashInputMaxLength,
+        hintText: logic.withdrawAmountHintText,
         textStyle: TextStyle(
             fontSize: Dimens.pt24,
             fontWeight: FontWeight.w600,
@@ -278,6 +277,7 @@ class WithdrawCashFormWidget extends GetView<WithdrawCashBankController> {
             fontSize: Dimens.pt24,
             fontWeight: FontWeight.w600,
             color: const Color(0xFF8A8785)),
-        onSubmitted: (String text) => {});
+        onChanged: logic.onCashAmountChanged,
+        onSubmitted: logic.onCashAmountSubmitted);
   }
 }

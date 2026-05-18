@@ -18,10 +18,18 @@ class WithdrawCashBankController extends GetxController {
   int withdrawWtype = WithdrawType.bank.index;
   String paramName = '';
   String paramIcon = '';
+  int minNum = 200;
+  int maxNum = 30000;
 
   bool get isBankWithdraw => withdrawWtype == WithdrawType.bank.index;
 
   String get pageAppBarTitle => paramName.isNotEmpty ? "$paramName提现" : '提现';
+
+  String get withdrawAmountRangeText => '$minNum-$maxNum';
+
+  String get withdrawAmountHintText => '单笔提现金额 $withdrawAmountRangeText元（整数)';
+
+  int get cashInputMaxLength => maxNum > 0 ? maxNum.toString().length : 10;
 
   WalletInfo? get currentWalletInfo {
     List<WalletInfo> walletList = userInfo.value.wallets ?? [];
@@ -93,7 +101,44 @@ class WithdrawCashBankController extends GetxController {
     withdrawWtype = int.tryParse(p['wtype'] ?? '') ?? WithdrawType.bank.index;
     paramName = p['name'] ?? '';
     paramIcon = p['icon'] ?? '';
+    minNum = _positiveIntParam(p['minNum']) ?? minNum;
+    maxNum = _positiveIntParam(p['maxNum']) ?? maxNum;
+    if (maxNum < minNum) {
+      final temp = maxNum;
+      maxNum = minNum;
+      minNum = temp;
+    }
     count.value++;
+  }
+
+  int? _positiveIntParam(String? value) {
+    final num = int.tryParse(value ?? '');
+    if (num == null || num <= 0) return null;
+    return num;
+  }
+
+  void onCashAmountChanged(String text) {
+    final sanitizedText = text.replaceAll(RegExp(r'[^0-9]'), '');
+    final amount = int.tryParse(sanitizedText) ?? 0;
+    final nextText =
+        maxNum > 0 && amount > maxNum ? maxNum.toString() : sanitizedText;
+    if (nextText != text) {
+      cashField.value = TextEditingValue(
+        text: nextText,
+        selection: TextSelection.collapsed(offset: nextText.length),
+      );
+    }
+  }
+
+  void onCashAmountSubmitted(String text) {
+    final amount = int.tryParse(text) ?? 0;
+    if (amount > 0 && amount < minNum) {
+      final minText = minNum.toString();
+      cashField.value = TextEditingValue(
+        text: minText,
+        selection: TextSelection.collapsed(offset: minText.length),
+      );
+    }
   }
 
   FocusNode nameFocusNode = FocusNode();
@@ -271,7 +316,15 @@ class WithdrawCashBankController extends GetxController {
       showTypeToast(msg: "提现金额不能大于可提现余额");
       return;
     }
-    if (money >= 20000 && (money % 100) == 0) {
+    if (doubleAmount < minNum) {
+      showTypeToast(msg: "提现金额不能小于$minNum元");
+      return;
+    }
+    if (doubleAmount > maxNum) {
+      showTypeToast(msg: "提现金额不能大于$maxNum元");
+      return;
+    }
+    if ((money % 100) == 0) {
       await ApiRes.submitWithdrawal(
           accountName: accountName,
           accountNo: accountNo,
@@ -289,7 +342,7 @@ class WithdrawCashBankController extends GetxController {
             showTypeToast(msg: "提现提交成功", toastType: ToastType.SUCCESS);
           });
     } else {
-      showTypeToast(msg: "提现数额必须是大于200的整数倍");
+      showTypeToast(msg: "提现金额必须是$withdrawAmountRangeText元的整数");
     }
 
     // if (model != null) envList.value = model.list ?? [];

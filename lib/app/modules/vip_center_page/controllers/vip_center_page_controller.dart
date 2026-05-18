@@ -140,7 +140,14 @@ class VipCenterPageController extends GetxController {
   }
 
   void onInputAmountChanged(String text) {
-    final amount = int.tryParse(text) ?? 0;
+    final sanitizedText = text.replaceAll(RegExp(r'[^0-9]'), '');
+    if (sanitizedText != text) {
+      priceController.value = TextEditingValue(
+        text: sanitizedText,
+        selection: TextSelection.collapsed(offset: sanitizedText.length),
+      );
+    }
+    final amount = int.tryParse(sanitizedText) ?? 0;
     inputAmount.value = amount;
     final amountRange = _amountRangeByAmount(amount);
     if (amountRange == null) {

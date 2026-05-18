@@ -65,7 +65,9 @@ class _WithdrawTypeViewState extends State<WithdrawTypeView> {
                           icon: e.icon,
                           title: e.name,
                           path: e.path,
-                          wtype: e.wtype))
+                          wtype: e.wtype,
+                          minNum: e.minNum,
+                          maxNum: e.maxNum))
                       .toList());
             }));
   }
@@ -76,9 +78,17 @@ class WithdrawTypeItem extends StatelessWidget {
   final String? title;
   final String? path;
   final int? wtype;
+  final int? minNum;
+  final int? maxNum;
 
   const WithdrawTypeItem(
-      {super.key, this.icon, this.title, this.path, this.wtype});
+      {super.key,
+      this.icon,
+      this.title,
+      this.path,
+      this.wtype,
+      this.minNum,
+      this.maxNum});
 
   Widget _iconWidget() {
     final ic = icon;
@@ -99,6 +109,8 @@ class WithdrawTypeItem extends StatelessWidget {
               'wtype': '${wtype ?? 0}',
               'name': title ?? '',
               'icon': icon ?? '',
+              'minNum': '${minNum ?? 0}',
+              'maxNum': '${maxNum ?? 0}',
             });
           }
         },

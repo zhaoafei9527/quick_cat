@@ -149,19 +149,23 @@ class RedeemInfo {
   }
 }
 
-
 class WithdrawTypeBean {
   String? name;
   String? icon;
   int? wtype;
+
   /// 客户端路由；未下发时统一走 [Routes.WITHDRAW_CASH_BANK]，由 query 参数区分渠道
   String? path;
+  int? maxNum;
+  int? minNum;
 
   WithdrawTypeBean({this.name, this.icon, this.wtype, this.path});
 
   WithdrawTypeBean.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     icon = json['icon']?.toString();
+    maxNum = _readInt(json['maxNum']) ~/ 100;
+    minNum = _readInt(json['minNum']) ~/ 100;
     final t = json['wtype'];
     if (t is int) {
       wtype = t;
@@ -176,6 +180,12 @@ class WithdrawTypeBean {
     }
     path ??= json['jumpPath']?.toString();
     path ??= json['route']?.toString();
+  }
+
+  int _readInt(dynamic value) {
+    if (value is int) return value;
+    if (value is num) return value.toInt();
+    return int.tryParse(value?.toString() ?? '') ?? 0;
   }
 }
 
