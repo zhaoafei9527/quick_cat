@@ -348,7 +348,7 @@ class BillRecordPageView extends GetView<BillRecordController> {
               emptyView: buildCommonEmptyView("宝贝,赶快充值一点点吧～"),
               widgetBuilder:
                   (BuildContext context, List<dynamic> list, Widget? child) {
-                print("list.length===>${list.length}");
+
                 return ListView.separated(
                     itemBuilder: (c, index) => Container(
                           height: Dimens.pt110,
@@ -363,8 +363,9 @@ class BillRecordPageView extends GetView<BillRecordController> {
                                     list[index].amount ?? 0)),
                             SizedBox(width: Dimens.pt45),
                             _getTableRow(
-                                text: TimeUtil.paymentType(
-                                    list[index]?.payMode ?? "unionpay")),
+                                text: TimeUtil.withdrawalOrderType(
+                                    list[index].orderType)),
+
                             SizedBox(width: Dimens.pt45),
                             _getTableRow(
                                 text: TimeUtil.buildYYMMDDPunctuate(

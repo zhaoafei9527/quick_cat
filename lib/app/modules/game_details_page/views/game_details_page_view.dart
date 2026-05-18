@@ -43,16 +43,11 @@ class GameDetailsPageView extends GetView<GameDetailsPageController> {
   }
 }
 
-Widget _buildView(GameDetailsPageController logic){
+Widget _buildView(GameDetailsPageController logic) {
   if (logic.billType == BillInfoType.billTypeWithdraw.index) {
-    return logic.initOk.value
-        ? _buildWithDrawInfo(logic)
-        : getLoadingWidget();
-  } else if (logic.billType ==
-      BillInfoType.billTypeRecharge.index) {
-    return logic.initOk.value
-        ? _buildRechargeInfo(logic)
-        : getLoadingWidget();
+    return logic.initOk.value ? _buildWithDrawInfo(logic) : getLoadingWidget();
+  } else if (logic.billType == BillInfoType.billTypeRecharge.index) {
+    return logic.initOk.value ? _buildRechargeInfo(logic) : getLoadingWidget();
   } else {
     return Container();
   }
@@ -129,7 +124,9 @@ Widget _buildWithDrawInfo(GameDetailsPageController logic) {
         label: "完成时间",
         content: TimeUtil.buildYYMMDDHHNN(wlGameData?.finishedAt ?? "")),
     _buildDetailsRow(label: "备注信息", content: wlGameData?.checkMark ?? ""),
-    _buildDetailsRow(label: "提现方式", content: wlGameData?.mode),
+    _buildDetailsRow(
+        label: "提现方式",
+        content: TimeUtil.withdrawalOrderType(wlGameData?.orderType)),
     _buildDetailsRow(label: "银行卡号", content: wlGameData?.accountNo ?? ""),
     _buildDetailsRow(label: "开户名称", content: wlGameData?.accountName ?? ""),
     _buildDetailsRow(label: "所属银行", content: wlGameData?.bankName ?? ""),
@@ -277,8 +274,6 @@ class _OldDetailViewState extends State<OldDetailView> {
     super.initState();
     GameDetailsPageController logic = Get.find<GameDetailsPageController>();
 
-
-
     _future = ApiRes.getBillInfo(id: widget.gameId, billType: logic.billType);
   }
 
@@ -294,7 +289,6 @@ class _OldDetailViewState extends State<OldDetailView> {
     return FutureBuilder<BillDetailsInfo?>(
         future: _future,
         builder: (context, snapshot) {
-
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: getLoadingView());
           }

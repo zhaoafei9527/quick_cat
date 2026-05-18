@@ -1,4 +1,4 @@
-package com.gua.client.xmra726
+package com.nova.mirror.zqf817
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine

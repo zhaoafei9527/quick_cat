@@ -46,6 +46,7 @@ class RechargeInfo {
   String? orderNo; // 充值订单号
   String? createdAt; // 创建时间
   String? payMode;
+  int? orderType; // 提现类型
 
   RechargeInfo(
       {this.amount,
@@ -57,7 +58,8 @@ class RechargeInfo {
       this.desc,
       this.orderNo,
       this.createdAt,
-      this.payMode});
+      this.payMode,
+      this.orderType});
 
   RechargeInfo.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
@@ -70,6 +72,7 @@ class RechargeInfo {
     orderNo = json['orderNo'];
     createdAt = json['createdAt'];
     payMode = json['payMode'];
+    orderType = json['orderType'];
   }
 
   Map<String, dynamic> toJson() {
@@ -84,6 +87,7 @@ class RechargeInfo {
     data['createdAt'] = createdAt;
     data['orderNo'] = orderNo;
     data['payMode'] = payMode;
+    data['orderType'] = orderType;
     return data;
   }
 }

@@ -71,7 +71,7 @@ Widget buildMediaTopicWidget(TopicList topic, MediaType type,
       aspectRatio = 345 / 250;
     }
     child = SixVerticalGridBuilder(observableTopic,
-        type: type, crossAxisCount: 2, childAspectRatio: aspectRatio);
+        type: type, crossAxisCount: 3, childAspectRatio: aspectRatio);
   } else if (topic.showType == TopicShowType.nineGridThree) {
     // 小
     child = SixVerticalGridBuilder(observableTopic, type: type);

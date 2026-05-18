@@ -52,7 +52,7 @@ channel {
 }
 
 android {
-    namespace "com.gua.client.xmra726"
+    namespace "com.nova.mirror.zqf817"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
@@ -67,7 +67,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.gua.client.xmra726"
+        applicationId "com.nova.mirror.zqf817"
 
         minSdkVersion 21
         multiDexEnabled true

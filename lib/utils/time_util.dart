@@ -283,6 +283,26 @@ class TimeUtil {
     return type;
   }
 
+  /// 提现方式
+  static String withdrawalOrderType(int? type) {
+    if (type == 1) {
+      return "银行卡";
+    } else if (type == 2) {
+      return "支付宝";
+    } else if (type == 3) {
+      return "微信";
+    } else if (type == 4) {
+      return "USDT";
+    } else if (type == 5) {
+      return "波币";
+    } else if (type == 6) {
+      return "gopay";
+    } else if (type == 7) {
+      return "okpay";
+    }
+    return "";
+  }
+
   /// 提现状态类型
   static String withdrawalStatusType(int type) {
     if (type == 0) {
