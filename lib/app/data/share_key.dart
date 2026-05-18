@@ -286,7 +286,7 @@ class ShareKeys extends GetxController {
   /// 获取并更新用户余额数据
   Future<void> getUserBalance() async {
     try {
-      userBalance.value = _formatBalanceString(userInfo.balance.toString());
+      // userBalance.value = _formatBalanceString(userInfo.balance.toString());
       UserBalanceModel? model = await ApiRes.getUserBalance();
       if (model != null && model.code == 200) {
         userBalance.value =
