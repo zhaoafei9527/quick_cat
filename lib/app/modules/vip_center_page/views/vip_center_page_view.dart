@@ -330,7 +330,7 @@ class VipCenterPageView extends GetView<VipCenterPageController> {
     VipCenterPageController logic = Get.find<VipCenterPageController>();
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(height: Dimens.pt20),
-      Text("【官方推荐】使用电子钱包充值每笔最高加赠10%彩金,充提秒到账,安全无忧,让娱乐更简单提现更加方便！",
+      Text("【官方推荐】使用电子钱包充值每笔加赠彩金,充提秒到账,安全无忧,让娱乐更简单提现更加方便！",
           style: TextStyle(fontSize: Dimens.pt26, color: Color(0xFFFFDB9E))),
       SizedBox(height: Dimens.pt10),
       Row(children: [
@@ -405,8 +405,8 @@ class VipCenterPageView extends GetView<VipCenterPageController> {
                       style:
                           TextStyle(fontSize: Dimens.pt20, color: Colors.white))
                   : Text("送VIP",
-                  style:
-                  TextStyle(fontSize: Dimens.pt20, color: Colors.white)))),
+                      style: TextStyle(
+                          fontSize: Dimens.pt20, color: Colors.white)))),
         )
       ])
     ]);
@@ -415,13 +415,15 @@ class VipCenterPageView extends GetView<VipCenterPageController> {
   Widget _buildPayTypeItem(VipCenterPageController logic, int index) {
     int selectIndex = logic.selectedRectangleIndex.value;
     return Stack(alignment: Alignment.bottomCenter, children: [
-      SizedBox(width: Dimens.pt160, height: Dimens.pt144 + Dimens.pt25),
+      SizedBox(width: Dimens.pt144, height: Dimens.pt144 + Dimens.pt25),
       Container(
-          width: Dimens.pt160,
+          width: Dimens.pt144,
           height: Dimens.pt144,
-          color: selectIndex == index
-              ? AppColors.textColorWhite
-              : Color(0xFF24242F),
+          decoration: BoxDecoration(
+              color: selectIndex == index
+                  ? AppColors.textColorWhite
+                  : Color(0xFF24242F),
+              borderRadius: BorderRadius.circular(Dimens.pt4)),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(4.0),
@@ -443,11 +445,10 @@ class VipCenterPageView extends GetView<VipCenterPageController> {
                 padding: EdgeInsets.symmetric(
                     horizontal: Dimens.pt15, vertical: Dimens.pt5),
                 decoration: BoxDecoration(
-                  color: AppColors.mainRed,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(Dimens.pt22),
-                      bottomRight: Radius.circular(Dimens.pt22)),
-                ),
+                    color: AppColors.mainRed,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(Dimens.pt22),
+                        bottomRight: Radius.circular(Dimens.pt22))),
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text("送",
