@@ -206,7 +206,7 @@ Future showShareAccountDialog() {
   return Get.bottomSheet(
       backgroundColor: Color(0xFF2C2C34),
       Container(
-          height: Dimens.pt800,
+          height: Dimens.pt600,
           padding: EdgeInsets.symmetric(
               horizontal: Dimens.pt30, vertical: Dimens.pt30),
           decoration: BoxDecoration(
@@ -226,32 +226,32 @@ Future showShareAccountDialog() {
                       Icon(Icons.close, color: Colors.white, size: Dimens.pt36))
             ]),
             SizedBox(height: Dimens.pt60),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              GestureDetector(
-                  onTap: () {
-                    Clipboard.setData(
-                            ClipboardData(text: userInfo.inviteUrl ?? ""))
-                        .then((_) {
-                      ApiRes.addTaskRecord();
-                      showToast(msg: "文本已复制到剪切板");
-                    });
-                    Get.back();
-                  },
-                  child: Column(children: [
-                    Image.asset(R.assetsImgIconShareLink, width: Dimens.pt120),
-                    SizedBox(height: Dimens.pt10),
-                    Row(children: [
-                      Text("下载地址",
-                          style: TextStyle(
-                              fontSize: Dimens.pt28, color: Colors.white)),
-                      Image.asset(R.assetsImgIconShareVideo, width: Dimens.pt40)
-                    ])
-                  ]))
-            ]),
+            // Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            //   GestureDetector(
+            //       onTap: () {
+            //         Clipboard.setData(
+            //                 ClipboardData(text: userInfo.inviteUrl ?? ""))
+            //             .then((_) {
+            //           ApiRes.addTaskRecord();
+            //           showToast(msg: "文本已复制到剪切板");
+            //         });
+            //         Get.back();
+            //       },
+            //       child: Column(children: [
+            //         Image.asset(R.assetsImgIconShareLink, width: Dimens.pt120),
+            //         SizedBox(height: Dimens.pt10),
+            //         Row(children: [
+            //           Text("下载地址",
+            //               style: TextStyle(
+            //                   fontSize: Dimens.pt28, color: Colors.white)),
+            //           Image.asset(R.assetsImgIconShareVideo, width: Dimens.pt40)
+            //         ])
+            //       ]))
+            // ]),
             SizedBox(height: Dimens.pt60),
-            Text("分享APP给好友,每邀请10人,送3天VIP",
-                style: TextStyle(fontSize: Dimens.pt28, color: Colors.white)),
-            SizedBox(height: Dimens.pt60),
+            // Text("分享APP给好友,每邀请10人,送3天VIP",
+            //     style: TextStyle(fontSize: Dimens.pt28, color: Colors.white)),
+            // SizedBox(height: Dimens.pt60),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               GestureDetector(
                   onTap: () {

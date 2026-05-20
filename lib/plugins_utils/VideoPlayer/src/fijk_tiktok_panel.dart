@@ -334,7 +334,8 @@ class _FijkTiktokPanelState extends State<FijkTiktokPanel> {
                       icon: R.assetsImgIconVideoShareShort,
                       onTap: () async {
                         await player.pause();
-                        showShareAccountDialog();
+                        // showShareAccountDialog();
+                        Get.toNamed(Routes.INVITED_PAGE);
                       },
                       text: "分享")),
               _buildVideoNumber(

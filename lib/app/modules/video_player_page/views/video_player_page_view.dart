@@ -484,7 +484,8 @@ class VideoPlayerPageView extends GetView<VideoPlayerPageController> {
 
                   _buildVideoNumber(
                       icon: R.assetsImgIconVideoShare,
-                      onTap: () => showShareAccountDialog(),
+                      // onTap: () => showShareAccountDialog(),
+                      onTap: ()=> Get.toNamed(Routes.INVITED_PAGE),
                       text: "分享送VIP"),
                 ]),
           ),

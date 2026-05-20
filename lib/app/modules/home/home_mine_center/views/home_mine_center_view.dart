@@ -44,100 +44,103 @@ class HomeMineCenterView extends GetView<HomeMineCenterController> {
             body: Stack(alignment: Alignment.topCenter, children: [
               Image.asset(R.assetsImgBgMineTop,
                   width: screen.screenWidth, fit: BoxFit.cover),
-              SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Container(
-                      width: screen.screenWidth,
-                      margin:
-                          EdgeInsets.only(top: screen.paddingTop + Dimens.pt45),
-                      child: Column(children: [
-                        _mineTopUtilsBuilder(logic, theme),
-                        SizedBox(height: Dimens.pt50),
-                        _buildVipButtonView(theme),
-                        SizedBox(height: Dimens.pt30),
-                        _buildMoreUtilsBtnView(),
-                        SizedBox(height: Dimens.pt30),
-                        _buildChangeIconView(logic),
-                        SizedBox(height: Dimens.pt30),
-                        Padding(
-                            padding:
-                                EdgeInsets.symmetric(horizontal: Dimens.pt25),
-                            child: Column(children: [
-                              CoverBanner(
-                                  //广告minSwiperAds
-                                  aspectRatio: 700 / 198,
-                                  radius: Dimens.pt20,
-                                  adsType: AdsType.homeSwiperAds,
-                                  onItemClick: (Advertise model) {
-                                    AppPages.jumpRouter(
-                                        path: model.href, id: model.id);
-                                  }),
-                              SizedBox(height: Dimens.pt30),
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(.05),
-                                    borderRadius:
-                                        BorderRadius.circular(Dimens.pt20)),
-                                child: Column(children: [
-                                  _buildMineUtilsBtnView(
-                                      title: "设置",
-                                      color: AppColors.textColorWhite,
-                                      onTap: () =>
-                                          Get.toNamed(Routes.SETTING_PAGE),
-                                      icon: R.assetsImgIconMineSetting),
-                                  _buildMineUtilsBtnView(
-                                      title: "绑定手机号",
-                                      color: AppColors.textColorWhite,
-                                      desc: "绑定成功送3元彩金！",
-                                      onTap: () => Get.toNamed(
-                                          Routes.BIND_MOBILE_PAGE,
-                                          arguments: {"type": "find"}),
-                                      icon: R.assetsImgIconMinePhone),
-                                  _buildMineUtilsBtnView(
-                                      onTap: () async {
-                                        await M3u8CacheManager().clearCache();
-                                        logic.cacheSize.value = 0;
-                                        showToast(msg: "缓存已清除");
-                                      },
-                                      title: "清除缓存",
-                                      color: AppColors.textColorWhite,
-                                      desc:
-                                          "${logic.cacheSize.toStringAsFixed(2)}MB",
-                                      icon: R.assetsImgIconMineDownload),
-                                  _buildMineUtilsBtnView(
-                                      onTap: () => Get.toNamed(
-                                          Routes.TICKET_MANAGE_PAGE,
-                                          arguments: {"type": 3}),
-                                      color: AppColors.textColorWhite,
-                                      title: "兑换码",
-                                      icon: R.assetsImgIconMineExchange),
-                                  _buildMineUtilsBtnView(
-                                      title: "检查更新",
-                                      color: AppColors.textColorWhite,
-                                      desc: "V${Pubspec.versionFull}",
-                                      onTap: () async {
-                                        ShareKeys shareKeys =
-                                            Get.find<ShareKeys>();
-                                        VersionBean? version =
-                                            shareKeys.version;
-                                        if (version != null &&
-                                            (version.hasNewVersion ?? false)) {
-                                          await showUpdateVersionDialog(
-                                              Get.context!,
-                                              version: shareKeys.version);
-                                        } else {
-                                          showToast(msg: "当前已经是最新版本");
-                                        }
-                                      },
-                                      icon: R.assetsImgIconMineCertif),
-                                ]),
-                              ),
+              Column(
+                children: [
+                  SizedBox(height:screen.paddingTop),
+                  Expanded(
+                    child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(children: [
+                          _mineTopUtilsBuilder(logic, theme),
+                          SizedBox(height: Dimens.pt50),
+                          _buildVipButtonView(theme),
+                          SizedBox(height: Dimens.pt30),
+                          _buildMoreUtilsBtnView(),
+                          SizedBox(height: Dimens.pt30),
+                          _buildChangeIconView(logic),
+                          SizedBox(height: Dimens.pt30),
+                          Padding(
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: Dimens.pt25),
+                              child: Column(children: [
+                                CoverBanner(
+                                    //广告minSwiperAds
+                                    aspectRatio: 700 / 198,
+                                    radius: Dimens.pt20,
+                                    adsType: AdsType.homeSwiperAds,
+                                    onItemClick: (Advertise model) {
+                                      AppPages.jumpRouter(
+                                          path: model.href, id: model.id);
+                                    }),
+                                SizedBox(height: Dimens.pt30),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white.withOpacity(.05),
+                                      borderRadius:
+                                          BorderRadius.circular(Dimens.pt20)),
+                                  child: Column(children: [
+                                    _buildMineUtilsBtnView(
+                                        title: "设置",
+                                        color: AppColors.textColorWhite,
+                                        onTap: () =>
+                                            Get.toNamed(Routes.SETTING_PAGE),
+                                        icon: R.assetsImgIconMineSetting),
+                                    _buildMineUtilsBtnView(
+                                        title: "绑定手机号",
+                                        color: AppColors.textColorWhite,
+                                        desc: "绑定成功送3元彩金！",
+                                        onTap: () => Get.toNamed(
+                                            Routes.BIND_MOBILE_PAGE,
+                                            arguments: {"type": "find"}),
+                                        icon: R.assetsImgIconMinePhone),
+                                    _buildMineUtilsBtnView(
+                                        onTap: () async {
+                                          await M3u8CacheManager().clearCache();
+                                          logic.cacheSize.value = 0;
+                                          showToast(msg: "缓存已清除");
+                                        },
+                                        title: "清除缓存",
+                                        color: AppColors.textColorWhite,
+                                        desc:
+                                            "${logic.cacheSize.toStringAsFixed(2)}MB",
+                                        icon: R.assetsImgIconMineDownload),
+                                    _buildMineUtilsBtnView(
+                                        onTap: () => Get.toNamed(
+                                            Routes.TICKET_MANAGE_PAGE,
+                                            arguments: {"type": 3}),
+                                        color: AppColors.textColorWhite,
+                                        title: "兑换码",
+                                        icon: R.assetsImgIconMineExchange),
+                                    _buildMineUtilsBtnView(
+                                        title: "检查更新",
+                                        color: AppColors.textColorWhite,
+                                        desc: "V${Pubspec.versionFull}",
+                                        onTap: () async {
+                                          ShareKeys shareKeys =
+                                              Get.find<ShareKeys>();
+                                          VersionBean? version =
+                                              shareKeys.version;
+                                          if (version != null &&
+                                              (version.hasNewVersion ?? false)) {
+                                            await showUpdateVersionDialog(
+                                                Get.context!,
+                                                version: shareKeys.version);
+                                          } else {
+                                            showToast(msg: "当前已经是最新版本");
+                                          }
+                                        },
+                                        icon: R.assetsImgIconMineCertif),
+                                  ]),
+                                ),
 
-                              // _buildDayTimeChange(theme, logic),
-                              SizedBox(
-                                  height: screen.bottomNavBarH + Dimens.pt40)
-                            ]))
-                      ])))
+                                // _buildDayTimeChange(theme, logic),
+                                SizedBox(
+                                    height: screen.bottomNavBarH + Dimens.pt40)
+                              ]))
+                        ])),
+                  ),
+                ],
+              )
             ])));
   }
 
