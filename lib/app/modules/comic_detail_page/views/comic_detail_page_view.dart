@@ -341,7 +341,7 @@ class ComicDetailPageView extends GetView<ComicDetailPageController> {
             Spacer(),
             GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                onTap: () => showShareAccountDialog(),
+                onTap: ()=> Get.toNamed(Routes.INVITED_PAGE),
                 child: Row(children: [
                   Image.asset(R.assetsImgIconMineShare,
                       width: Dimens.pt36,

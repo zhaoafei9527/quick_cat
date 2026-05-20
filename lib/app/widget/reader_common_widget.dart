@@ -3,6 +3,7 @@ import 'package:quick_cat_client/app/dialog/comic_chapter_dialog.dart';
 import 'package:quick_cat_client/app/dialog/common_dialog.dart';
 import 'package:quick_cat_client/app/model/comic_info_model.dart';
 import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
+import 'package:quick_cat_client/app/routes/app_pages.dart';
 import 'package:quick_cat_client/app/themes/app_colors.dart';
 import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:quick_cat_client/app/widget/common_widget.dart';
@@ -45,21 +46,24 @@ Widget buildReaderSettingBar(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (showSettingBar)
-            Container(
-                width: Dimens.pt255,
-                height: Dimens.pt85,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(Dimens.pt84)),
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Image.asset(R.assetsImgIconChapterShare,
-                      width: Dimens.pt44, color: Colors.black),
-                  SizedBox(width: Dimens.pt10),
-                  Text("分享好友",
-                      style:
-                          TextStyle(fontSize: Dimens.pt32, color: Colors.black))
-                ])),
+            GestureDetector(
+              onTap: ()=> Get.toNamed(Routes.INVITED_PAGE),
+              child: Container(
+                  width: Dimens.pt255,
+                  height: Dimens.pt85,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(Dimens.pt84)),
+                  child:
+                      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Image.asset(R.assetsImgIconChapterShare,
+                        width: Dimens.pt44, color: Colors.black),
+                    SizedBox(width: Dimens.pt10),
+                    Text("分享好友",
+                        style:
+                            TextStyle(fontSize: Dimens.pt32, color: Colors.black))
+                  ])),
+            ),
           SizedBox(height: Dimens.pt60),
           Container(
               height: trans,
