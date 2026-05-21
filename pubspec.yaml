@@ -1,5 +1,5 @@
 name: quick_cat_client
-version: 1.0.6+15
+version: 1.0.6+16
 publish_to: none
 app_id: 999
 debug: false
@@ -264,7 +264,7 @@ flutter:
     - assets/img/ticket_movie_view.png
     - assets/img/icon_radio.png
     - assets/img/icon_player_play.png
-    - assets/img/splash_page.png
+    - assets/img/splash_page.jpg
     - assets/img/logo_dialog.png
     - assets/img/update_tip.png
     - assets/img/full_logo.png
