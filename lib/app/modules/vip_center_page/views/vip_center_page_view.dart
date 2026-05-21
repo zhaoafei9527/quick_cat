@@ -386,7 +386,7 @@ class VipCenterPageView extends GetView<VipCenterPageController> {
                 inputType: TextInputType.number,
                 hintStyle:
                     TextStyle(color: Color(0xFFA19D98), fontSize: Dimens.pt26),
-                hintText: "¥ 10-300000",
+                hintText: "¥ 50-300000",
                 onChanged: logic.onInputAmountChanged,
                 onSubmitted: logic.onInputAmountChanged)),
         Transform.translate(

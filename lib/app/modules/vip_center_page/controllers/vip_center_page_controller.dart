@@ -200,10 +200,11 @@ class VipCenterPageController extends GetxController {
       showToast(msg: "请选择充值金额");
       return;
     }
-    if (showInputPriceView && inputAmount.value <= 0) {
-      showToast(msg: "请输入充值金额");
+    if (showInputPriceView && inputAmount.value <= 50) {
+      showToast(msg: "请输入充值金额，金额必须大于等于50元");
       return;
     }
+
     showLoading.value = true;
     int? payAmount = showInputPriceView
         ? inputAmount.value * 100
