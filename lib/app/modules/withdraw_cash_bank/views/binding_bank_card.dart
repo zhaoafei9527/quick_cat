@@ -61,7 +61,7 @@ class _BindingBankCardPageViewState extends State<BindingBankCardPageView> {
                           _buildBankCardBindingItem(
                               label: "银行卡号",
                               hintText: "请输入银行卡号",
-                              maxLength: 16,
+                              maxLength: 20,
                               focusNode: logic.cardNumberFocusNode,
                               textController: logic.cardNumberField,
                               inputType: TextInputType.text),
