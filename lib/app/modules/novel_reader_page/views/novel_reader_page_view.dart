@@ -5,8 +5,6 @@ import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:quick_cat_client/app/widget/ad_view.dart';
 import 'package:quick_cat_client/app/widget/common_widget.dart';
 import 'package:quick_cat_client/app/widget/reader_common_widget.dart';
-import 'package:quick_cat_client/plugins_utils/VideoPlayer/src/player_setting_panel.dart';
-import 'package:quick_cat_client/r.dart';
 import 'package:quick_cat_client/utils/dimens.dart';
 import 'package:quick_cat_client/utils/screen.dart';
 import 'package:flutter/material.dart';

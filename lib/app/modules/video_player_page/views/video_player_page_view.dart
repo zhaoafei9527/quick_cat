@@ -85,10 +85,13 @@ class VideoPlayerPageView extends GetView<VideoPlayerPageController> {
                       else
                         FIJKVideoPlayer(
                             url: logic.videoUrl.value,
-                            autoPlay: false,
+                            autoPlay: shareKeys.isVip(),
+                            prepareOnLoad: !shareKeys.isVip(),
                             mediaInfo: logic.mediaPlayModel?.mediaInfo,
                             cover: logic.coverImg),
-                      _BeforePlayAds(key: ValueKey(logic.videoUrl.value)),
+                      _BeforePlayAds(
+                          key: ValueKey(logic.videoUrl.value),
+                          showAds: !shareKeys.isVip()),
                     ]),
                     if (!shareKeys.isVip())
                       GestureDetector(
@@ -653,7 +656,9 @@ class VideoPlayerPageView extends GetView<VideoPlayerPageController> {
 }
 
 class _BeforePlayAds extends StatefulWidget {
-  const _BeforePlayAds({Key? key}) : super(key: key);
+  final bool showAds;
+
+  const _BeforePlayAds({Key? key, required this.showAds}) : super(key: key);
 
   @override
   State<_BeforePlayAds> createState() => _BeforePlayAdsState();
@@ -668,6 +673,11 @@ class _BeforePlayAdsState extends State<_BeforePlayAds> {
   @override
   void initState() {
     super.initState();
+    if (!widget.showAds) {
+      _closed = true;
+      adsTime = 0;
+      return;
+    }
     _adsFuture = getCommentAds(type: AdsType.beforePlayingAds);
     adsTimer = Timer.periodic(const Duration(seconds: 1), (time) {
       if (!mounted || _closed) return;
@@ -706,6 +716,7 @@ class _BeforePlayAdsState extends State<_BeforePlayAds> {
   @override
   Widget build(BuildContext context) {
     ThemeManager theme = Get.find<ThemeManager>();
+    if (!widget.showAds) return const SizedBox();
     if (adsTime <= 0) return const SizedBox();
     return FutureBuilder(
         future: _adsFuture,

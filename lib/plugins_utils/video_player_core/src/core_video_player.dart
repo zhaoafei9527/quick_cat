@@ -9,6 +9,7 @@ import 'core_video_models.dart';
 class CoreFijkVideoPlayer extends StatefulWidget {
   final CoreVideoItem item;
   final bool autoPlay;
+  final bool prepareOnLoad;
   final bool loop;
   final double aspectRatio;
   final BoxFit fit;
@@ -29,6 +30,7 @@ class CoreFijkVideoPlayer extends StatefulWidget {
     super.key,
     required this.item,
     this.autoPlay = true,
+    this.prepareOnLoad = false,
     this.loop = false,
     this.aspectRatio = 16 / 9,
     this.fit = BoxFit.contain,
@@ -75,6 +77,8 @@ class _CoreFijkVideoPlayerState extends State<CoreFijkVideoPlayer> {
 
   Future<void> _load(String url) async {
     final token = ++_operationToken;
+    _playableUrl = null;
+    _emit(const CoreVideoPlaybackState());
     await _detachPlayer(release: _player != widget.player);
     final player = widget.player ?? FijkPlayer();
     _player = player;
@@ -88,31 +92,76 @@ class _CoreFijkVideoPlayerState extends State<CoreFijkVideoPlayer> {
 
     var playableUrl = url;
     if (widget.cacheConfig.enabled) {
-      playableUrl = await CoreVideoCacheManager().preparePlayableUrl(
-        url,
-        cacheAheadSegmentCount: widget.cacheConfig.aheadSegmentCount,
-      );
+      try {
+        playableUrl = await CoreVideoCacheManager().preparePlayableUrl(
+          url,
+          cacheAheadSegmentCount: widget.cacheConfig.aheadSegmentCount,
+        );
+      } catch (_) {
+        // 缓存代理解析失败回退到原始地址，避免一直停在加载中。
+        playableUrl = url;
+      }
     }
     if (!mounted || token != _operationToken) return;
     _playableUrl = playableUrl;
     widget.onPlayableUrlResolved?.call(playableUrl);
-    if (player.dataSource != null && player.dataSource != playableUrl) {
-      await player.reset();
+
+    // 同地址且已经处于非 Idle 状态：保留当前播放，避免重复 setDataSource。
+    if (player.dataSource == playableUrl &&
+        player.state != FijkState.idle &&
+        player.state != FijkState.end &&
+        player.state != FijkState.error) {
+      return;
     }
-    await player.setDataSource(playableUrl, autoPlay: widget.autoPlay);
+
+    // 非 Idle 状态先 reset，避免 ijk 抛出 IllegalStateException。
+    if (player.state != FijkState.idle &&
+        player.state != FijkState.end &&
+        player.state != FijkState.error) {
+      try {
+        await player.reset();
+      } catch (_) {}
+      if (!mounted || token != _operationToken) return;
+    }
+
+    try {
+      await player.setDataSource(playableUrl, autoPlay: widget.autoPlay);
+    } catch (_) {
+      // 错误信息会通过 player.value.exception 传到 _onPlayerChanged。
+      return;
+    }
+    if (!mounted || token != _operationToken) return;
+    if (!widget.autoPlay &&
+        widget.prepareOnLoad &&
+        !player.value.prepared &&
+        player.state != FijkState.asyncPreparing) {
+      try {
+        await player.prepareAsync();
+      } catch (_) {}
+    }
   }
 
   void _onPlayerChanged() {
     final player = _player;
     if (player == null) return;
     final value = player.value;
-    final next = _state.copyWith(
-      duration: value.duration,
-      prepared: value.prepared,
-      playing: value.state == FijkState.started,
-      error: value.exception.message,
-    );
-    _emit(next);
+    final nextDuration = value.duration;
+    final nextPrepared = value.prepared;
+    final nextPlaying = value.state == FijkState.started;
+    final nextError = value.exception.message;
+    if (nextDuration == _state.duration &&
+        nextPrepared == _state.prepared &&
+        nextPlaying == _state.playing &&
+        nextError == _state.error) {
+      // 状态未变化，跳过 setState，降低重建开销。
+    } else {
+      _emit(_state.copyWith(
+        duration: nextDuration,
+        prepared: nextPrepared,
+        playing: nextPlaying,
+        error: nextError,
+      ));
+    }
     if (value.state == FijkState.completed) {
       widget.onCompleted?.call();
       if (widget.loop && _playableUrl != null) {
@@ -124,9 +173,13 @@ class _CoreFijkVideoPlayerState extends State<CoreFijkVideoPlayer> {
   Future<void> _restartLoop(String url) async {
     final player = _player;
     if (player == null) return;
-    await player.stop();
-    await player.reset();
-    await player.setDataSource(url, autoPlay: true);
+    try {
+      await player.stop();
+      await player.reset();
+      await player.setDataSource(url, autoPlay: true);
+    } catch (_) {
+      // 循环重启失败时静默忽略，由 _onPlayerChanged 的 error 字段反馈。
+    }
   }
 
   void _emit(CoreVideoPlaybackState state) {

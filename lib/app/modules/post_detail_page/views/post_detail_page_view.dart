@@ -34,23 +34,37 @@ class PostDetailPageView extends GetView<PostDetailPageController> {
         builder: (PostDetailPageController logic) {
       FIJKPlayerManager manager = FIJKPlayerManager();
       PostBase? base = logic.post.value.base;
-      return Scaffold(
-          backgroundColor: Color(0xFF0B0C13),
-          appBar: getCommonAppBar(base?.topicName??"", onBack: () async {
-            manager.disposePlayer();
-
-            WatchRecord.addWatchRecord(
-                PostBrief(base: base, node: logic.post.value.nodes?[0]),
-                MediaType.post);
-            Get.back();
-          }),
-          body: Stack(children: [
-            Offstage(
-                offstage: logic.imageViewer.value, child: _buildPostDetails()),
-            Offstage(
-                offstage: !logic.imageViewer.value, child: _buildImageViewer()),
-          ]));
+      return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, _) async {
+            if (didPop) return;
+            await _handlePageBack(manager, base, logic);
+          },
+          child: Scaffold(
+              backgroundColor: Color(0xFF0B0C13),
+              appBar: getCommonAppBar(base?.topicName ?? "",
+                  onBack: () => _handlePageBack(manager, base, logic)),
+              body: Stack(children: [
+                Offstage(
+                    offstage: logic.imageViewer.value,
+                    child: _buildPostDetails()),
+                Offstage(
+                    offstage: !logic.imageViewer.value,
+                    child: _buildImageViewer()),
+              ])));
     });
+  }
+
+  Future<void> _handlePageBack(
+    FIJKPlayerManager manager,
+    PostBase? base,
+    PostDetailPageController logic,
+  ) async {
+    await manager.disposePlayer();
+    WatchRecord.addWatchRecord(
+        PostBrief(base: base, node: logic.post.value.nodes?[0]),
+        MediaType.post);
+    Get.back();
   }
 
   Widget _buildImageViewer() {
@@ -192,14 +206,17 @@ class PostDetailPageView extends GetView<PostDetailPageController> {
         SizedBox(height: Dimens.pt25),
 
         FIJKVideoPlayer(
-            url: videoUri, autoPlay: false,
-            canPlay: logic.post.value.canPlay?? false,
-            simpleModel: true, cover: videoCover),
+            key: ValueKey(videoUri),
+            url: videoUri,
+            autoPlay: false,
+            canPlay: logic.post.value.canPlay ?? true,
+            simpleModel: true,
+            cover: videoCover),
 
         // SizedBox(height: Dimens.pt25),
         Text(base?.videoText ?? "视频文案视频文案",
-            style:
-                TextStyle(fontSize: Dimens.pt24, color: const Color(0xFFFDF6F2)))
+            style: TextStyle(
+                fontSize: Dimens.pt24, color: const Color(0xFFFDF6F2)))
       ]),
     );
   }

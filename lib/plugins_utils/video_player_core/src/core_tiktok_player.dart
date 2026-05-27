@@ -274,32 +274,33 @@ class _CoreTiktokItem extends StatelessWidget {
       color: Colors.black,
       child: holder == null
           ? _buildPlaceholder(context, const CoreVideoPlaybackState())
-          : ValueListenableBuilder<CoreVideoPlaybackState>(
-              valueListenable: holder!.stateNotifier,
-              builder: (context, state, _) {
-                final player = holder!.player;
-                return Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    if (state.prepared)
-                      AspectRatio(
-                        aspectRatio: aspectRatio,
-                        child: FijkView(
-                          player: player,
-                          fit: FijkFit.fill,
-                          panelBuilder: (player, data, context, size, rect) =>
-                              const SizedBox(),
-                        ),
-                      )
-                    else
+          : Stack(
+              alignment: Alignment.center,
+              children: [
+                // FijkView 与占位封面仅依赖 prepared 字段，避免随 position 重复重建。
+                _PreparedSwitcher(
+                  notifier: holder!.stateNotifier,
+                  preparedBuilder: (context) => AspectRatio(
+                    aspectRatio: aspectRatio,
+                    child: FijkView(
+                      player: holder!.player,
+                      fit: FijkFit.fill,
+                      panelBuilder: (player, data, context, size, rect) =>
+                          const SizedBox(),
+                    ),
+                  ),
+                  placeholderBuilder: (context, state) =>
                       _buildPlaceholder(context, state),
-                    if (overlayBuilder != null)
-                      Positioned.fill(
-                        child: overlayBuilder!(context, item, player, state),
-                      ),
-                  ],
-                );
-              },
+                ),
+                if (overlayBuilder != null)
+                  Positioned.fill(
+                    child: ValueListenableBuilder<CoreVideoPlaybackState>(
+                      valueListenable: holder!.stateNotifier,
+                      builder: (context, state, _) => overlayBuilder!(
+                          context, item, holder!.player, state),
+                    ),
+                  ),
+              ],
             ),
     );
   }
@@ -316,6 +317,29 @@ class _CoreTiktokItem extends StatelessWidget {
             const CircularProgressIndicator(color: Colors.white),
           ],
         );
+  }
+}
+
+/// 仅在 prepared 状态发生变化时切换 FijkView 与占位封面，避免随 position 频繁重建。
+class _PreparedSwitcher extends StatelessWidget {
+  final ValueNotifier<CoreVideoPlaybackState> notifier;
+  final WidgetBuilder preparedBuilder;
+  final Widget Function(BuildContext, CoreVideoPlaybackState) placeholderBuilder;
+
+  const _PreparedSwitcher({
+    required this.notifier,
+    required this.preparedBuilder,
+    required this.placeholderBuilder,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<CoreVideoPlaybackState>(
+      valueListenable: notifier,
+      builder: (context, state, _) => state.prepared
+          ? preparedBuilder(context)
+          : placeholderBuilder(context, state),
+    );
   }
 }
 
