@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 // 🐦 Flutter imports:
 import 'package:quick_cat_client/app/model/ai_generate_model.dart';
 import 'package:quick_cat_client/app/model/comic_chapter.dart';
@@ -1674,9 +1676,48 @@ class ApiRes {
       Function? onSuccess}) async {
     UploadImageRep? model;
     String? path = "upload/img";
-    model = await _baseUploadNet<UploadImageRep>(path, formData ?? FormData(),
-        onSendProgress: onSendProgress, type: UploadImageRep());
+    final raw = await _baseUploadNet<dynamic>(
+      path,
+      formData ?? FormData(),
+      onSendProgress: onSendProgress,
+    );
+    model = _parseUploadImageRep(raw);
+    if (model == null) {
+      onError?.call('图片上传返回格式异常');
+    } else {
+      onSuccess?.call();
+    }
     return model;
+  }
+
+  static UploadImageRep? _parseUploadImageRep(dynamic raw) {
+    if (raw == null) return null;
+    if (raw is UploadImageRep) return raw;
+    if (raw is Map<String, dynamic>) {
+      return UploadImageRep.fromJson(raw);
+    }
+    if (raw is Map) {
+      return UploadImageRep.fromJson(
+          raw.map((key, value) => MapEntry(key.toString(), value)));
+    }
+    if (raw is String) {
+      final value = raw.trim();
+      if (value.isEmpty) return null;
+      if (value.startsWith('{') && value.endsWith('}')) {
+        try {
+          final decoded = jsonDecode(value);
+          if (decoded is Map<String, dynamic>) {
+            return UploadImageRep.fromJson(decoded);
+          }
+          if (decoded is Map) {
+            return UploadImageRep.fromJson(
+                decoded.map((key, value) => MapEntry(key.toString(), value)));
+          }
+        } catch (_) {}
+      }
+      return UploadImageRep(path: value, name: '');
+    }
+    return null;
   }
 
   /// path ai/category 获取AI分类详情

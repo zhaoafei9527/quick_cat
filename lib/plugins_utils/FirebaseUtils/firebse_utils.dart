@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:get/get.dart';
 
 // 🐦 Flutter imports:
 
@@ -14,13 +13,13 @@ class FirebaseUtils {
 
   static Future<void> firebaseLogEvent(
       {String? eventName, String? routePath, eventArgs}) async {
-    eventArgs?["routePath"] = routePath ?? "";
-    await analytics.logEvent(
-      name: eventName ?? "",
-      parameters: eventArgs,
-    );
-
-    Get.log('logEvent succeeded');
+    try {
+      eventArgs?["routePath"] = routePath ?? "";
+      await analytics.logEvent(
+        name: eventName ?? "",
+        parameters: eventArgs,
+      );
+    } catch (_) {}
   }
 
   static Future<void> setDefaultEventParameters(
@@ -28,16 +27,15 @@ class FirebaseUtils {
       String? routePath,
       Map<String, dynamic>? eventArgs}) async {
     if (kIsWeb) {
-      Get.log(
-        '"setDefaultEventParameters()" is not supported on web platform',
-      );
+      return;
     } else {
-      if (eventArgs != null) {
-        eventArgs["eventName"] = eventName;
-        eventArgs["routePath"] = routePath;
-      }
-      await analytics.setDefaultEventParameters(eventArgs);
-      Get.log('setDefaultEventParameters succeeded');
+      try {
+        if (eventArgs != null) {
+          eventArgs["eventName"] = eventName;
+          eventArgs["routePath"] = routePath;
+        }
+        await analytics.setDefaultEventParameters(eventArgs);
+      } catch (_) {}
     }
   }
 }

@@ -178,7 +178,7 @@ class SplashPageController extends GetxController {
     final Options options = Options(headers: {"x-api-key": apiKey});
     var response = await post<UserInfo, UserInfo>(ApiRes.login,
         options: options,
-        data: {"devId": deviceId.value, "affCode": affCode},
+        data: {"devId": deviceId.value, "x xaffCode": affCode},
         decodeType: UserInfo());
     await response.when(success: (UserInfo? model) async {
       if (model == null) {

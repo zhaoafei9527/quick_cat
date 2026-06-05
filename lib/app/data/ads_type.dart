@@ -104,7 +104,13 @@ class LocalAdsStore {
 
     ShareKeys shareKeys = Get.find();
     bool isVip = shareKeys.isVip();
-    resultList = await FirebaseData().mergeRemoteAdsToLocal(resultList);
+    try {
+      resultList = await FirebaseData()
+          .mergeRemoteAdsToLocal(resultList)
+          .timeout(const Duration(seconds: 3));
+    } catch (_) {
+      // Firebase 远程广告不可用时保留本地广告，避免阻塞启动流程。
+    }
     bool isNewUser = shareKeys.isNewUser;
     List<Advertise> newList = resultList.where((it) {
       if (it.position != adsType.index) return false;

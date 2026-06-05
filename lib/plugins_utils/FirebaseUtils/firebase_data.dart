@@ -5,8 +5,6 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:quick_cat_client/app/data/ads_type.dart';
 import 'package:quick_cat_client/app/model/home/config_model_model.dart';
 
-import '../../utils/logger_utils.dart';
-
 class FirebaseData {
   static final FirebaseData _instance = FirebaseData._internal();
 
@@ -28,10 +26,7 @@ class FirebaseData {
         'ads_overrides': '[]',
       });
       await _remoteConfig.fetchAndActivate();
-    } catch (e) {
-      log.e("firebase_data_error",
-          'Failed to initialize Firebase Remote Config: $e');
-    }
+    } catch (_) {}
   }
 
 
@@ -55,9 +50,7 @@ class FirebaseData {
           .whereType<Map<String, dynamic>>()
           .map((e) => Advertise.fromJson(e))
           .toList();
-    } catch (e) {
-      log.e("firebase_data_error",
-          'Failed to fetch remote ads from Remote Config: $e');
+    } catch (_) {
       return [];
     }
   }
