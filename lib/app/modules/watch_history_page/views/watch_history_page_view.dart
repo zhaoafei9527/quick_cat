@@ -104,8 +104,7 @@ class WatchHistoryPageView extends GetView<WatchHistoryPageController> {
                             PostItem(postBrief: list[index]),
                             if (logic.editModel.value)
                               Container(
-                                  height: Dimens.pt600,
-                                  margin: EdgeInsets.only(top: Dimens.pt30),
+                                  height: Dimens.pt300,
                                   alignment: Alignment.center,
                                   color: theme
                                       .getColor(ThemeColor.bg)
@@ -146,8 +145,16 @@ class WatchHistoryPageView extends GetView<WatchHistoryPageController> {
             bool isComics = type == MediaType.comic || type == MediaType.novel;
             int crossAxisCount = isComics ? 3 : 2;
             double aspectRatio = isComics ? 226 / 435 : 345 / 243;
+
             double? width = isComics ? Dimens.pt238 : Dimens.pt345;
             double? height = isComics ? Dimens.pt330 : Dimens.pt195;
+            if(type == MediaType.videoShort){
+              crossAxisCount = 2;
+              aspectRatio = 9 / 15;
+              width = Dimens.pt340;
+              height = Dimens.pt500;
+            }
+
             List<MediaInfo> mediaList =
                 (logic.currentMedias[type] ?? []).cast<MediaInfo>();
             return GridView.builder(

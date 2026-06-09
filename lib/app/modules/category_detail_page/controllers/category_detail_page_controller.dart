@@ -70,7 +70,7 @@ class CategoryDetailPageController extends GetxController
     int p = payStatusIndex.value;
     int? payType = p;
     if (p == 0) payType = null;
-    if (p == 3) payType = 0;
+    if (p == 2) payType = 0;
 
     MediaList? model = await ApiRes.categorySearch(
         tagId: tagTypeChooseId[type.index]?.id ?? 0,

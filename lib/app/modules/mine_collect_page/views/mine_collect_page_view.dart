@@ -33,17 +33,17 @@ class MineCollectPageView extends GetView<MineCollectPageController> {
       return Scaffold(
           backgroundColor: theme.getColor(ThemeColor.bg),
           appBar: getCommonAppBar("我的收藏", actions: [
-            GestureDetector(
-                onTap: () {
-                  logic.editModel.value = !logic.editModel.value;
-                  logic.selectIds.clear();
-                },
-                child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
-                    child: Text("编辑",
-                        style: TextStyle(
-                            fontSize: Dimens.pt28,
-                            color: theme.getColor(ThemeColor.textYellow)))))
+            // GestureDetector(
+            //     onTap: () {
+            //       logic.editModel.value = !logic.editModel.value;
+            //       logic.selectIds.clear();
+            //     },
+            //     child: Padding(
+            //         padding: EdgeInsets.symmetric(horizontal: Dimens.pt25),
+            //         child: Text("编辑",
+            //             style: TextStyle(
+            //                 fontSize: Dimens.pt28,
+            //                 color: theme.getColor(ThemeColor.textYellow)))))
           ]),
           body: Stack(alignment: Alignment.bottomCenter, children: [
             Padding(
