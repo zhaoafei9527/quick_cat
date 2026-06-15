@@ -11,11 +11,11 @@ class Pubspec {
 
   static const publish_to = 'none';
 
-  static const versionFull = '1.0.8+19';
+  static const versionFull = '1.0.9+20';
 
-  static const version = '1.0.8';
+  static const version = '1.0.9';
 
-  static const versionSmall = '19';
+  static const versionSmall = '20';
 
   static const versionMajor = 1;
 
