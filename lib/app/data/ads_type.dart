@@ -127,9 +127,6 @@ class LocalAdsStore {
 
       return true;
     }).toList();
-    if (adsType == AdsType.homeSwiperAds) {
-      print("广告列表:${newList.map((e) => e.cover).toList()}");
-    }
     return newList;
   }
 
