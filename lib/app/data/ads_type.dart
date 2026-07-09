@@ -176,7 +176,12 @@ class LocalAdsStore {
       var adsJson = ads.map((it) {
         if (!it.cover!.startsWith("http")) {
           // print("在这里加上余名${it.cover},${Address.imgCdn}");
-          String imgCdn = Address.imgCdnV3 ?? Address.imgCdn ?? "";
+          String imgCdn = "";
+          if ((Address.imgCdnV3 ?? "").isNotEmpty) {
+            imgCdn = Address.imgCdnV3 ?? "";
+          } else {
+            imgCdn = Address.imgCdn ?? "";
+          }
           it.cover = path.join(imgCdn, it.cover);
         }
         return it.toJson();

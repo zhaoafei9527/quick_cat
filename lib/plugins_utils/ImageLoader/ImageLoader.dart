@@ -57,10 +57,11 @@ class ImageLoader {
     //   return buildDefaultImage(showError: true);
     // }
     if ((address ?? "").isNotEmpty) {
-      final decryptPath = address ?? "";
-      if (!address!.startsWith("http") && !address!.startsWith("https")) {
-        String imgCdn = Address.imgCdnV3 ?? Address.imgCdn ?? "";
-        address = path.join(imgCdn, "$address");
+      String imgCdn = "";
+      if ((Address.imgCdnV3 ?? "").isNotEmpty) {
+        imgCdn = Address.imgCdnV3 ?? "";
+      } else {
+        imgCdn = Address.imgCdn ?? "";
       }
       return ClipRRect(
           borderRadius: BorderRadius.circular(radius ?? 0),
