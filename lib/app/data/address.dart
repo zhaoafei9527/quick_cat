@@ -26,6 +26,8 @@ class Address {
 
   static String? _imgCdn = "";
 
+  static String? _imgCdnV3 = "";
+
   ///图片加载地址
   static String? get imgCdn {
     if (TextUtil.isEmpty(_imgCdn ?? "")) {
@@ -37,10 +39,27 @@ class Address {
     return _imgCdn;
   }
 
+  ///图片加载地址
+  static String? get imgCdnV3 {
+    if (TextUtil.isEmpty(_imgCdnV3 ?? "")) {
+      () async {
+        _imgCdnV3 =
+        (await lightKV.getString("_key_last_img_cdn_v3${AppConfig.DEBUG}"))??'';
+  }();
+    }
+    return _imgCdnV3;
+  }
+
   static set imgCdn(String? c) {
     _imgCdn = c;
     lightKV.setString("_key_last_img_cdn_${AppConfig.DEBUG}", c!);
   }
+
+  static set imgCdnV3(String? c) {
+    _imgCdnV3 = c;
+    lightKV.setString("_key_last_img_cdn_v3${AppConfig.DEBUG}", c!);
+  }
+
 
   ///官网地址
   static String? officeUrl;

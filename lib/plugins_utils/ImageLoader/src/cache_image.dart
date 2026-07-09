@@ -320,7 +320,11 @@ class _CachedImageState extends State<CachedImage>
       final Uint8List oldBytes = response.data;
 
       /// 重新解密图片数据
-      Uint8List? bytes = await decryptImageWithIsolate(oldBytes, url);
+      Uint8List bytes = await decryptImage({
+        "imgBytes": oldBytes,
+        "path": url,
+        "url": url,
+      });
       if (response.statusCode != 200) {
         String error = NetworkImageLoadException(
                 statusCode: response.statusCode ?? 0, uri: resolved)
@@ -336,18 +340,18 @@ class _CachedImageState extends State<CachedImage>
       /// 下载完成重新设置状态
       _progressData.isDownloading = false;
 
-      if ((bytes??[]).isEmpty && mounted) {
+      if (bytes.isEmpty && mounted) {
         setState(() => _imageResponse =
-            _ImageResponse(imageData: bytes!, error: 'Image is empty.'));
+            _ImageResponse(imageData: bytes, error: 'Image is empty.'));
         return;
       }
       if (mounted) {
         setState(() =>
-            _imageResponse = _ImageResponse(imageData: bytes!, error: null));
+            _imageResponse = _ImageResponse(imageData: bytes, error: null));
         if (widget.loadingBuilder == null) _animationController.forward();
       }
 
-      await CachedImageConfig._saveImage(url, bytes!);
+      await CachedImageConfig._saveImage(url, bytes);
     } catch (e) {
       if (mounted) {
         setState(() => _imageResponse = _ImageResponse(
@@ -593,8 +597,12 @@ class CachedImageProvider extends ImageProvider<NetworkImage>
       );
 
       final Uint8List oldBytes = response.data;
-      final Uint8List? bytes = await decryptImageWithIsolate(oldBytes, url);
-      if (bytes!.lengthInBytes == 0) {
+      final Uint8List bytes = await decryptImage({
+        "imgBytes": oldBytes,
+        "path": url,
+        "url": url,
+      });
+      if (bytes.lengthInBytes == 0) {
         throw Exception('NetworkImage is an empty file: $resolved');
       }
 

@@ -12,8 +12,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:quick_cat_client/app/data/address.dart';
 import 'decrypt_image.dart';
 
+const imageDecryptPathHeader = 'x-image-decrypt-path';
+
 class MyImageCacheManager extends CacheManager {
-  static const key = "customCache";
+  static const key = "customCacheV3";
   static const maxMemoryCacheSize = 100; // 最大内存缓存数量
 
   static final MyImageCacheManager _instance = MyImageCacheManager._();
@@ -39,20 +41,24 @@ class MyImageCacheManager extends CacheManager {
 
   // 预加载图片
   Future<void> preloadImage(String url) async {
+    final decryptPath = url;
     if (!url.startsWith("http") && !url.startsWith("https")) {
       String imgCdn = Address.imgCdn ?? "";
       url = path.join(imgCdn, url);
     }
 
-    if (_memoryCache.containsKey(url)) return;
+    final cacheKey = _cacheKey(url, decryptPath);
+    if (_memoryCache.containsKey(cacheKey)) return;
 
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
-        final bytes = await decryptImageWithIsolate(response.bodyBytes, url);
-        if (bytes != null) {
-          _addToMemoryCache(url, bytes);
-        }
+        final bytes = await decryptImage({
+          "imgBytes": response.bodyBytes,
+          "path": decryptPath,
+          "url": url,
+        });
+        _addToMemoryCache(cacheKey, bytes);
       }
     } catch (e) {
       debugPrint('预加载图片失败: $e');
@@ -87,6 +93,8 @@ class MyImageCacheManager extends CacheManager {
     _memoryCache.clear();
     _memoryCacheOrder.clear();
   }
+
+  String _cacheKey(String url, String decryptPath) => "$url::$decryptPath";
 }
 
 class CustomFileResponse extends HttpFileService {
@@ -95,6 +103,8 @@ class CustomFileResponse extends HttpFileService {
   @override
   Future<FileServiceResponse> get(String url,
       {Map<String, String>? headers = const {}}) async {
+    final requestHeaders = Map<String, String>.from(headers ?? {});
+    final decryptPath = requestHeaders.remove(imageDecryptPathHeader) ?? url;
     if (!url.startsWith("http") && !url.startsWith("https")) {
       String imgCdn = Address.imgCdn ?? "";
       url = path.join(imgCdn, url);
@@ -102,32 +112,37 @@ class CustomFileResponse extends HttpFileService {
 
     // 检查内存缓存
     final cacheManager = MyImageCacheManager();
-    final cachedBytes = cacheManager.getFromMemoryCache(url);
+    final cacheKey = cacheManager._cacheKey(url, decryptPath);
+    final cachedBytes = cacheManager.getFromMemoryCache(cacheKey);
     if (cachedBytes != null) {
       return HttpGetResponse(StreamedResponse(
         Stream.fromFuture(Future.value(cachedBytes)),
         200,
         contentLength: cachedBytes.length,
         request: http.Request('GET', Uri.parse(url)),
-        headers: headers ?? {},
+        headers: requestHeaders,
       ));
     }
 
     final response = http.Request('GET', Uri.tryParse(url)!);
-    headers?['cache-control'] = 'max-age=31104000';
-    response.headers.addAll(headers ?? {});
+    requestHeaders['cache-control'] = 'max-age=31104000';
+    response.headers.addAll(requestHeaders);
     final httpResponse = await _httpClient.send(response);
 
     var stream = await httpResponse.stream.toBytes();
-    final decryptedBytes = await decryptImage({"imgBytes": stream, "path": url});
+    final decryptedBytes = await decryptImage({
+      "imgBytes": stream,
+      "path": decryptPath,
+      "url": url,
+    });
 
     // 添加到内存缓存
-    cacheManager._addToMemoryCache(url, decryptedBytes);
+    cacheManager._addToMemoryCache(cacheKey, decryptedBytes);
 
     StreamedResponse streamedResponse = StreamedResponse(
-        Stream.fromFuture(Future.value(decryptedBytes ?? stream)),
+        Stream.fromFuture(Future.value(decryptedBytes)),
         httpResponse.statusCode,
-        contentLength: httpResponse.contentLength,
+        contentLength: decryptedBytes.length,
         request: httpResponse.request,
         headers: httpResponse.headers,
         isRedirect: httpResponse.isRedirect,

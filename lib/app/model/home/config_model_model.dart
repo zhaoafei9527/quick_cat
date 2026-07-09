@@ -57,7 +57,7 @@ class ConfigModel extends BaseNetModel {
     }
     version =
         json['version'] != null ? VersionBean.fromJson(json['version']) : null;
-
+//https://kohgusip.spirivision.com/res/v2/
     if (json['advertise'] != null) {
       advertise = <Advertise>[];
       json['advertise'].forEach((v) {

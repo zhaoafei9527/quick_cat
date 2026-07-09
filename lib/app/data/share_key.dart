@@ -192,6 +192,9 @@ class ShareKeys extends GetxController {
         case "IMAGE":
           Address.imgCdn = it.urls![Random().nextInt(it.urls!.length)];
           break;
+        case "IMAGEV3":
+          Address.imgCdnV3 = it.urls![Random().nextInt(it.urls!.length)];
+          break;
         case "LAND":
           Address.officeUrl = it.urls![Random().nextInt(it.urls!.length)];
           break;

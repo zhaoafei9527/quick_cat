@@ -11,11 +11,11 @@ class Pubspec {
 
   static const publish_to = 'none';
 
-  static const versionFull = '1.0.9+20';
+  static const versionFull = '1.1.0+21';
 
-  static const version = '1.0.9';
+  static const version = '1.1.0';
 
-  static const versionSmall = '20';
+  static const versionSmall = '21';
 
   static const versionMajor = 1;
 
@@ -29,7 +29,7 @@ class Pubspec {
 
   static const versionIsPreRelease = false;
 
-  static const debug = false;
+  static const debug = true;
 
   static const qiye = false;
 

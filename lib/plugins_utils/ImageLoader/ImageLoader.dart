@@ -53,12 +53,13 @@ class ImageLoader {
       this.loadError});
 
   Widget load() {
-    if ((address ?? "").startsWith("v3/")) {
-      return buildDefaultImage(showError: true);
-    }
+    // if ((address ?? "").startsWith("v3/")) {
+    //   return buildDefaultImage(showError: true);
+    // }
     if ((address ?? "").isNotEmpty) {
+      final decryptPath = address ?? "";
       if (!address!.startsWith("http") && !address!.startsWith("https")) {
-        String imgCdn = Address.imgCdn ?? "";
+        String imgCdn = Address.imgCdnV3 ?? "";
         address = path.join(imgCdn, "$address");
       }
       return ClipRRect(
@@ -71,6 +72,7 @@ class ImageLoader {
               fit: fit ?? BoxFit.cover,
               // 图片填充方式
               cacheManager: MyImageCacheManager(),
+              httpHeaders: {imageDecryptPathHeader: decryptPath},
               fadeInDuration: const Duration(milliseconds: 200),
               fadeOutDuration: const Duration(milliseconds: 300),
               imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,

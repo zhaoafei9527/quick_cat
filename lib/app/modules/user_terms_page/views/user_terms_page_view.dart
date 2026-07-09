@@ -39,6 +39,7 @@ class UserTermsPageView extends GetView<UserTermsPageController> {
                         fontSize: Dimens.pt28,
                         color: theme.getColor(ThemeColor.primary)))),
             SizedBox(width: Dimens.pt25)
+
           ]),
           body: logic.initOk.value
               ? SingleChildScrollView(
