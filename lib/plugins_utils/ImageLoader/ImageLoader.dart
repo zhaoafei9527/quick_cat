@@ -59,7 +59,7 @@ class ImageLoader {
     if ((address ?? "").isNotEmpty) {
       final decryptPath = address ?? "";
       if (!address!.startsWith("http") && !address!.startsWith("https")) {
-        String imgCdn = Address.imgCdnV3 ?? "";
+        String imgCdn = Address.imgCdnV3 ?? Address.imgCdn ?? "";
         address = path.join(imgCdn, "$address");
       }
       return ClipRRect(
