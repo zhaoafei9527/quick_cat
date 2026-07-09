@@ -66,6 +66,7 @@ class _AdBannerState extends State<CoverBanner> {
     } else if (widget.adsType != null) {
       adsList = await LocalAdsStore().where(widget.adsType) ?? [];
     }
+
     setState(() {});
   }
 

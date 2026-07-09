@@ -127,7 +127,9 @@ class LocalAdsStore {
 
       return true;
     }).toList();
-
+    if (adsType == AdsType.homeSwiperAds) {
+      print("广告列表:${newList.map((e) => e.cover).toList()}");
+    }
     return newList;
   }
 
@@ -173,10 +175,12 @@ class LocalAdsStore {
     if (ArrayUtil.isEmpty(ads)) return false;
     try {
       _adsList = ads;
+
       var adsJson = ads.map((it) {
         if (!it.cover!.startsWith("http")) {
           // print("在这里加上余名${it.cover},${Address.imgCdn}");
-          it.cover = path.join(Address.imgCdn ?? "", it.cover);
+          String imgCdn = Address.imgCdnV3 ?? Address.imgCdn ?? "";
+          it.cover = path.join(imgCdn, it.cover);
         }
         return it.toJson();
       }).toList();
