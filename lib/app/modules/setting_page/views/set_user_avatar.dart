@@ -109,7 +109,7 @@ class SetUserAvatarPage extends GetView<SettingPageController> {
           }
         },
         child: ImageLoader.withP(avatars[index].avatar,
-                width: Dimens.pt140, height: Dimens.pt140,radius: Dimens.pt140)
+                width: Dimens.pt140, height: Dimens.pt140, radius: Dimens.pt140)
             .load());
   }
 }

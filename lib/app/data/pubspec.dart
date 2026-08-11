@@ -58,15 +58,15 @@ class Pubspec {
   ];
 
   static const prod_h5_lines = <dynamic>[
-    "https://kmutzacn.sccw-cn.com",
+    "https://kmutzacn.qnhnt.com",
     "https://kmzxsa.0913.org",
-    "https://api.lbsone.com",
+    "https://api.calfmedia.com",
     "https://apikm.nineoneapp.com",
     "https://d2fztf6d01of6d.cloudfront.net",
   ];
 
   static const prod_app_lines = <dynamic>[
-    "https://kmutzacn.sccw-cn.com",
+    "https://kmutzacn.qnhnt.com",
     "https://kmzxsa.0913.org",
     "https://api.calfmedia.com",
     "https://apikm.nineoneapp.com",

@@ -1,5 +1,5 @@
 name: quick_cat_client
-version: 2.1.0+22
+version: 2.1.1+23
 publish_to: none
 app_id: 999
 debug: false
