@@ -12,7 +12,6 @@ import 'package:quick_cat_client/app/data/enum.dart';
 import 'package:quick_cat_client/app/dialog/common_dialog.dart';
 import 'package:quick_cat_client/app/model/home/topic_list_model.dart';
 import 'package:quick_cat_client/app/routes/app_pages.dart';
-import 'package:quick_cat_client/plugins_utils/FirebaseUtils/firebse_utils.dart';
 import '../../../../conf/api_res.dart';
 import '../../../../plugins_utils/VideoPlayer/fijk_player.dart';
 import '../../../../plugins_utils/VideoPlayer/src/barrage_builder.dart';
@@ -84,6 +83,9 @@ class VideoPlayerPageController extends GetxController
   }
 
   Future<void> startInitPlayVideo(videoId) async {
+    final int targetVideoId = videoId ?? 0;
+    if (targetVideoId <= 0) return;
+    this.videoId = targetVideoId;
     // GlobalPlayerController player = GlobalPlayerController();
     // int? tempVid = player.videoId;
     // 画中画模式关闭画中画
@@ -92,9 +94,16 @@ class VideoPlayerPageController extends GetxController
     // pipEnter = player.isPiPModel && videoId == tempVid;
     FIJKPlayerManager playerManager = FIJKPlayerManager();
 
-    mediaPlayModel = playerManager.isShrinkModel
-        ? playerManager.mediaPlayModel
-        : await _getNetData(videoId: videoId);
+    final MediaPlayModel? shrinkMedia = playerManager.mediaPlayModel;
+    final bool canReuseShrinkMedia = playerManager.isShrinkModel &&
+        shrinkMedia?.mediaInfo?.id == targetVideoId;
+    if (playerManager.isShrinkModel && !canReuseShrinkMedia) {
+      playerManager.closeShrinkModel();
+    }
+
+    mediaPlayModel = canReuseShrinkMedia
+        ? shrinkMedia
+        : await _getNetData(videoId: targetVideoId);
     if (mediaPlayModel == null) {
       showToast(msg: "获取视频信息失败，请稍后再试");
       return;

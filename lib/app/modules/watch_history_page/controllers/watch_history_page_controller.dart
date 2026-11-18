@@ -14,7 +14,13 @@ class WatchHistoryPageController extends GetxController
   RxBool editModel = false.obs;
   RxBool allSelect = false.obs;
   RxBool refreshTag = false.obs;
-  List<String> tabList = ["吃瓜", "视频", "抖阴", "动漫", "小说",];
+  List<String> tabList = [
+    "吃瓜",
+    "视频",
+    "抖阴",
+    "动漫",
+    "小说",
+  ];
   List<MediaType> typeList = [
     MediaType.post,
     MediaType.videoLong,
@@ -48,9 +54,16 @@ class WatchHistoryPageController extends GetxController
     } else {}
   }
 
-  void mediaItemOnTap(MediaInfo model, MediaType type) {
+  void mediaItemOnTap(MediaInfo model, MediaType type,
+      {int? index, List<MediaInfo>? mediaList}) {
     if (editModel.value) {
       toggleSelect(model.id ?? 0);
+    } else if (type == MediaType.videoShort) {
+      shortVideoItemOnTap(
+          index: index ?? 0,
+          mediaList: mediaList ?? [model],
+          insertAds: false,
+          dataGetter: (_) async => <MediaInfo>[]);
     } else {
       itemOnTap(model, type);
     }

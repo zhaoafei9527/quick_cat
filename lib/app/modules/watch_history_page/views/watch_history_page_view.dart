@@ -117,7 +117,7 @@ class WatchHistoryPageView extends GetView<WatchHistoryPageController> {
                                       width: Dimens.pt50))
                           ]))),
               separatorBuilder: (c, index) => SizedBox(height: Dimens.pt25),
-              itemCount: mediaList.length ?? 0);
+              itemCount: mediaList.length);
         });
   }
 
@@ -140,7 +140,7 @@ class WatchHistoryPageView extends GetView<WatchHistoryPageController> {
             return ListView.separated(
                 itemBuilder: (c, index) => PostItem(postBrief: list[index]),
                 separatorBuilder: (c, index) => SizedBox(height: Dimens.pt25),
-                itemCount: list.length ?? 0);
+                itemCount: list.length);
           } else {
             bool isComics = type == MediaType.comic || type == MediaType.novel;
             int crossAxisCount = isComics ? 3 : 2;
@@ -148,7 +148,7 @@ class WatchHistoryPageView extends GetView<WatchHistoryPageController> {
 
             double? width = isComics ? Dimens.pt238 : Dimens.pt345;
             double? height = isComics ? Dimens.pt330 : Dimens.pt195;
-            if(type == MediaType.videoShort){
+            if (type == MediaType.videoShort) {
               crossAxisCount = 2;
               aspectRatio = 9 / 15;
               width = Dimens.pt340;
@@ -169,12 +169,13 @@ class WatchHistoryPageView extends GetView<WatchHistoryPageController> {
                 itemCount: mediaList.length,
                 itemBuilder: (c, index) {
                   MediaInfo? model = mediaList[index];
-                  return Obx(() => GestureDetector(
-                      onTap: () => logic.mediaItemOnTap(model, type),
-                      child: Stack(children: [
+                  return Obx(() => Stack(children: [
                         getMediaCoverItemWidget(mediaList[index], type,
                             width: width,
+
                             height: height,
+                            onTap: () => logic.mediaItemOnTap(model, type,
+                                index: index, mediaList: mediaList),
                             coverType: CoverType.coverVertical),
                         if (logic.editModel.value)
                           Container(
@@ -187,7 +188,7 @@ class WatchHistoryPageView extends GetView<WatchHistoryPageController> {
                                       ? R.assetsImgIconEditSelected
                                       : R.assetsImgIconEditSelect,
                                   width: Dimens.pt50))
-                      ])));
+                      ]));
                 });
           }
         });

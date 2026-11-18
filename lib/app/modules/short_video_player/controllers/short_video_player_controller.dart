@@ -26,11 +26,19 @@ class ShortVideoPlayerController extends GetxController
   RxBool initOk = false.obs; // 是否初始化完成
   bool playable = true; // 默认会员可以直接播放
   bool useTicketed = false; // 是否使用了观影券
+  bool insertAds = true; // 是否在播放列表中插入广告
   String? getVideoPath;
   TabController? tabController;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   FijkTiktokFeedController tiktokPlayer = FijkTiktokFeedController();
+
+  String get playlistKey {
+    final ids = mediaList
+        .map((media) => media.id ?? media.videoUrl ?? media.coverImg ?? '')
+        .join(',');
+    return '${initIndex}_${insertAds}_$ids';
+  }
 
   @override
   void onInit() async {
@@ -44,6 +52,7 @@ class ShortVideoPlayerController extends GetxController
     if (Get.arguments?['dataGetter'] != null) {
       dataGetter = Get.arguments?['dataGetter'];
     }
+    insertAds = Get.arguments?['insertAds'] ?? true;
     List<MediaInfo> list = [];
     if (Get.arguments?['mediaList'] != null) {
       list = Get.arguments['mediaList'] ?? [];

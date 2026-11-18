@@ -73,6 +73,7 @@ class Pubspec {
     "https://d2fztf6d01of6d.cloudfront.net",
   ];
 
+
   static List<String> getBackupLine() {
     List<String> backup = [];
     String pathHead = "https://dns.alidns.com/resolve?type=16&short=1&name=";

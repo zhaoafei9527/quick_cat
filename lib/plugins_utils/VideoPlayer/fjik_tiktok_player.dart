@@ -35,6 +35,7 @@ class FijkTiktokFeedPage extends StatefulWidget {
   final Function(int pageNum)? onLoadMore; // 可选：加载更多回调
   final Function(int id)? onVideoPlay; // 可选：播放视频回调（用于广告等）
   final Function(int adsId)? onAdsClick; // 可选：广告点击回调
+  final bool insertAds; // 是否在播放列表中插入广告
 
   const FijkTiktokFeedPage(
       {super.key,
@@ -46,7 +47,8 @@ class FijkTiktokFeedPage extends StatefulWidget {
       this.onVideoPlay,
       this.onAdsClick,
       this.initIndex = 0,
-      this.firstPlay = false});
+      this.firstPlay = false,
+      this.insertAds = true});
 
   @override
   State<FijkTiktokFeedPage> createState() => _FijkTiktokFeedPageState();
@@ -58,6 +60,7 @@ class _FijkTiktokFeedPageState extends State<FijkTiktokFeedPage>
   final CoreFijkTiktokFeedController _coreController =
       CoreFijkTiktokFeedController();
   int pageNum = 1; // 当前页码
+  int _effectiveInitIndex = 0;
   bool initOk = false;
 
   @override
@@ -69,9 +72,58 @@ class _FijkTiktokFeedPageState extends State<FijkTiktokFeedPage>
   }
 
   Future<void> _initMediaList() async {
-    _medias = await getAdsMediaList(widget.medias);
+    final sourceMedias = await _resolvePlayableMedias(widget.medias);
+    _medias = widget.insertAds
+        ? await getAdsMediaList(sourceMedias)
+        : List.of(sourceMedias);
+    _effectiveInitIndex =
+        _resolveInitIndex(widget.initIndex, sourceMedias, _medias);
     widget.controller?._attach(this);
     if (mounted) setState(() => initOk = true);
+  }
+
+  Future<List<MediaInfo>> _resolvePlayableMedias(List<MediaInfo> medias) async {
+    if (widget.insertAds || widget.onVideoPlay == null) return List.of(medias);
+
+    final resolved = <MediaInfo>[];
+    for (final media in medias) {
+      if ((media.isAds ?? false) || media.id == null) {
+        resolved.add(media);
+        continue;
+      }
+      try {
+        final playModel = await widget.onVideoPlay!(media.id!);
+        if (playModel is MediaPlayModel && playModel.mediaInfo != null) {
+          final detail = playModel.mediaInfo!;
+          detail.isCollect ??= media.isCollect;
+          detail.coverImg ??= media.coverImg;
+          detail.title ??= media.title;
+          resolved.add(detail);
+        } else {
+          resolved.add(media);
+        }
+      } catch (_) {
+        resolved.add(media);
+      }
+    }
+    return resolved;
+  }
+
+  int _resolveInitIndex(
+      int initIndex, List<MediaInfo> source, List<MediaInfo> resolved) {
+    if (resolved.isEmpty) return 0;
+    if (source.isEmpty) return initIndex.clamp(0, resolved.length - 1);
+    final int safeSourceIndex = initIndex.clamp(0, source.length - 1);
+
+    final MediaInfo target = source[safeSourceIndex];
+    final int? targetId = target.id;
+    if (targetId == null) return initIndex.clamp(0, resolved.length - 1);
+
+    final int resolvedIndex = resolved.indexWhere(
+        (media) => media.id == targetId && (media.isAds ?? false) == false);
+    return resolvedIndex >= 0
+        ? resolvedIndex
+        : initIndex.clamp(0, resolved.length - 1);
   }
 
   @override
@@ -105,7 +157,9 @@ class _FijkTiktokFeedPageState extends State<FijkTiktokFeedPage>
     if (widget.onLoadMore == null) return [];
     final model = await widget.onLoadMore!(nextPage);
     if (model.isEmpty) return [];
-    final withAds = await getAdsMediaList(model);
+    final sourceMedias = await _resolvePlayableMedias(model);
+    final withAds =
+        widget.insertAds ? await getAdsMediaList(sourceMedias) : sourceMedias;
     _medias.addAll(withAds);
     pageNum = nextPage;
     log.i("_tiktok_player", "_mediasLen:${_medias.length}");
@@ -127,7 +181,7 @@ class _FijkTiktokFeedPageState extends State<FijkTiktokFeedPage>
       backgroundColor: Colors.black,
       body: CoreFijkTiktokFeedPage(
         items: _medias.map(_toCoreVideoItem).toList(),
-        initIndex: widget.initIndex,
+        initIndex: _effectiveInitIndex,
         firstPlay: widget.firstPlay,
         playerCacheCount: widget.cacheCount,
         cacheConfig: CoreVideoCacheConfig(

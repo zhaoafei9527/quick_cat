@@ -3,7 +3,6 @@ import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:quick_cat_client/app/widget/comic_topic_builder.dart';
 import 'package:quick_cat_client/app/widget/full_bg.dart';
 import 'package:quick_cat_client/r.dart';
-import 'package:quick_cat_client/utils/screen.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -28,8 +27,6 @@ class MineCollectPageView extends GetView<MineCollectPageController> {
   Widget build(BuildContext context) {
     ThemeManager theme = Get.find<ThemeManager>();
     return GetX<MineCollectPageController>(builder: (logic) {
-      double editHeight = Dimens.pt100 + screen.paddingBottom;
-
       return Scaffold(
           backgroundColor: theme.getColor(ThemeColor.bg),
           appBar: getCommonAppBar("我的收藏", actions: [
@@ -97,7 +94,7 @@ class MineCollectPageView extends GetView<MineCollectPageController> {
           return ListView.separated(
               itemBuilder: (c, index) => PostItem(postBrief: list[index]),
               separatorBuilder: (c, index) => SizedBox(height: Dimens.pt25),
-              itemCount: list.length ?? 0);
+              itemCount: list.length);
         });
   }
 
@@ -109,20 +106,33 @@ class MineCollectPageView extends GetView<MineCollectPageController> {
         dataGetter: (int pageNum, int size) async {
           MediaList? model =
               await ApiRes.getCollectList(collectType: type, pageNum: pageNum);
-          List<MediaInfo> medias = model?.mediaList ?? [];
-          if(type == MediaType.novel) medias =  model?.novelList ?? [];
-          logic.currentMedias[type] = medias;
+          List<MediaInfo> medias = getMediaListOfList(model, type);
+          if (pageNum <= 1) {
+            logic.currentMedias[type] = medias;
+          } else {
+            logic.currentMedias[type] = [
+              ...(logic.currentMedias[type] ?? []),
+              ...medias
+            ];
+          }
           return medias;
         },
         emptyView: buildCommonEmptyView("宝贝,没有找到东西哦～"),
         widgetBuilder:
             (BuildContext context, List<dynamic> list, Widget? child) {
-          bool isComics = type == MediaType.comic || type == MediaType.novel;
-          int crossAxisCount = isComics ? 3 : 2;
-          double aspectRatio = isComics ? 226 / 435 : 345 / 243;
-          double? width = isComics ? Dimens.pt238 : Dimens.pt345;
-          double? height = isComics ? Dimens.pt330 : Dimens.pt195;
-          List<MediaInfo> mediaList = logic.currentMedias[type] ?? [];
+              bool isComics = type == MediaType.comic || type == MediaType.novel;
+              int crossAxisCount = isComics ? 3 : 2;
+              double aspectRatio = isComics ? 226 / 435 : 345 / 243;
+
+              double? width = isComics ? Dimens.pt238 : Dimens.pt345;
+              double? height = isComics ? Dimens.pt330 : Dimens.pt195;
+              if(type == MediaType.videoShort){
+                crossAxisCount = 2;
+                aspectRatio = 9 / 15;
+                width = Dimens.pt340;
+                height = Dimens.pt500;
+              }
+          List<MediaInfo> mediaList = list.cast<MediaInfo>();
 
           return GridView.builder(
               physics: BouncingScrollPhysics(),
@@ -135,25 +145,25 @@ class MineCollectPageView extends GetView<MineCollectPageController> {
               itemCount: mediaList.length,
               itemBuilder: (c, index) {
                 MediaInfo? model = mediaList[index];
-                return Obx(() => GestureDetector(
-                    onTap: () => logic.mediaItemOnTap(model, type),
-                    child: Stack(children: [
-                      getMediaCoverItemWidget(mediaList[index], type,
-                          width: width,
-                          height: height,
-                          coverType: CoverType.coverVertical),
-                      if (logic.editModel.value)
-                        Container(
-                            height: height,
-                            alignment: Alignment.center,
-                            color:
-                                theme.getColor(ThemeColor.bg).withOpacity(.7),
-                            child: Image.asset(
-                                logic.selectIds.contains(model.id ?? 0)
-                                    ? R.assetsImgIconEditSelected
-                                    : R.assetsImgIconEditSelect,
-                                width: Dimens.pt50))
-                    ])));
+                return Obx(() => Stack(children: [
+                  getMediaCoverItemWidget(mediaList[index], type,
+                      onTap: () => logic.mediaItemOnTap(model, type,
+                          index: index, mediaList: mediaList),
+                      width: width,
+                      height: height,
+                      coverType: CoverType.coverVertical),
+                  if (logic.editModel.value)
+                    Container(
+                        height: height,
+                        alignment: Alignment.center,
+                        color:
+                            theme.getColor(ThemeColor.bg).withOpacity(.7),
+                        child: Image.asset(
+                            logic.selectIds.contains(model.id ?? 0)
+                                ? R.assetsImgIconEditSelected
+                                : R.assetsImgIconEditSelect,
+                            width: Dimens.pt50))
+                ]));
               });
         });
   }

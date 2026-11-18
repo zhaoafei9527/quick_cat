@@ -4,6 +4,7 @@ import 'package:quick_cat_client/app/themes/app_colors.dart';
 import 'package:quick_cat_client/app/themes/theme_manager.dart';
 import 'package:quick_cat_client/app/widget/common_widget.dart';
 import 'package:quick_cat_client/conf/api_res.dart';
+import 'package:quick_cat_client/app/modules/short_video_player/controllers/short_video_player_controller.dart';
 import 'package:quick_cat_client/plugins_utils/ImageLoader/ImageLoader.dart';
 import 'package:quick_cat_client/r.dart';
 import 'package:quick_cat_client/utils/common_util.dart';
@@ -751,6 +752,10 @@ void onTapMediaTopic(TopicList topic, MediaType type, {bool? showRank}) {
 }
 
 List<MediaInfo> getMediaListOfList(MediaList? list, MediaType type) {
+  List<MediaInfo> prefer(List<MediaInfo>? primary, List<MediaInfo>? fallback) {
+    return (primary ?? []).isNotEmpty ? primary! : fallback ?? [];
+  }
+
   if (type == MediaType.comic) {
     return list?.comicsList ?? [];
   } else if (type == MediaType.novel) {
@@ -758,9 +763,9 @@ List<MediaInfo> getMediaListOfList(MediaList? list, MediaType type) {
   } else if (type == MediaType.cartoon) {
     return list?.mediaList ?? [];
   } else if (type == MediaType.videoShort) {
-    return list?.mediaList ?? [];
+    return prefer(list?.shortMediaList, list?.mediaList);
   } else if (type == MediaType.videoLong) {
-    return list?.mediaList ?? [];
+    return prefer(list?.longMediaList, list?.mediaList);
   } else {
     return list?.list ?? [];
   }
@@ -769,11 +774,16 @@ List<MediaInfo> getMediaListOfList(MediaList? list, MediaType type) {
 void shortVideoItemOnTap(
     {int? index,
     Function(int pageNum)? dataGetter,
-    List<MediaInfo>? mediaList}) {
+    List<MediaInfo>? mediaList,
+    bool insertAds = true}) {
+  if (Get.isRegistered<ShortVideoPlayerController>()) {
+    Get.delete<ShortVideoPlayerController>(force: true);
+  }
   Get.toNamed(Routes.SHORT_VIDEO_PLAYER, arguments: {
     "initIndex": index,
     "dataGetter": dataGetter,
-    "mediaList": mediaList
+    "mediaList": mediaList,
+    "insertAds": insertAds
   });
 }
 

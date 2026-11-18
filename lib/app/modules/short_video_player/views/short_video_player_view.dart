@@ -39,6 +39,7 @@ class ShortVideoPlayerView extends GetView<ShortVideoPlayerController> {
                     bottom: screen.paddingBottom, top: screen.paddingTop),
                 child: Center(
                     child: FijkTiktokFeedPage(
+                        key: ValueKey(logic.playlistKey),
                         medias: logic.mediaList,
                         firstPlay: true,
                         initIndex: logic.initIndex,
@@ -47,7 +48,8 @@ class ShortVideoPlayerView extends GetView<ShortVideoPlayerController> {
                         onLoadMore: (int pageNum) => logic.dataGetter != null
                             ? logic.dataGetter!(pageNum)
                             : logic.getMediasNetData(pageNum: pageNum),
-                        controller: logic.tiktokPlayer)))
+                        controller: logic.tiktokPlayer,
+                        insertAds: logic.insertAds)))
           else
             Container(
                 height: screen.screenHeight,
@@ -131,7 +133,6 @@ class ShortVideoPlayerView extends GetView<ShortVideoPlayerController> {
   }
 
   Widget _buildPageHeader(ShortVideoPlayerController logic) {
-    ThemeManager theme = Get.find<ThemeManager>();
     return Container(
         width: screen.screenWidth,
         height: Dimens.pt60,
